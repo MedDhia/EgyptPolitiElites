@@ -19,41 +19,82 @@ interwar Egypt has to a systematic elite affiliation register.
 
 ## Where each wave stands
 
-| Year | Édition | Place | Located? | Lead |
+**Searched result: only 1932 is digitised.** The CEAlex diffusion tree was
+probed by full-text search restricted to `bdd.cealex.org`, which indexes the
+PDFs themselves — searches return other volumes' contents by their inside text,
+so the index is real and the absence is informative. Across a dozen query
+formulations, the *Annuaire des sociétés égyptiennes par actions* returns
+`LVR_000323` (1932) and nothing else. HathiTrust, Internet Archive,
+Bibliotheca Alexandrina and Google Books were searched the same way; none holds
+a Politi volume.
+
+| Year | Édition | Place | Online? | Where |
 |---|---|---|---|---|
-| 1932 | 3 *(inferred)* | Cairo | **direct PDF** | `bdd.cealex.org/diffusion/etud_anc_alex/LVR_000323_w.pdf` |
-| 1938 | 9 *(inferred)* | Cairo | not yet | resolve via the CEAlex LVR index |
-| 1942 | 13 *(inferred)* | Cairo | not yet | resolve via the CEAlex LVR index |
-| 1947 | **18** | Alexandria | catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1947/) |
-| 1950 | **21** | Alexandria | catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1950/) |
+| 1932 | 3 *(inferred)* | Cairo | **yes, full PDF** | `bdd.cealex.org/diffusion/etud_anc_alex/LVR_000323_w.pdf` |
+| 1938 | 9 *(inferred)* | Cairo | **no** | print only |
+| 1942 | 13 *(inferred)* | Cairo | **no** | print only |
+| 1947 | **18** | Alexandria | **no** — catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1947/) |
+| 1950 | **21** | Alexandria | **no** — catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1950/) |
+
+The 1947 and 1950 CEAlex pages sit under `/evenement/` — announcements of
+volumes held or acquired, not digitised items. They carry the édition numbers
+(18e, 21e) but no PDF.
 
 ### On the édition numbers
 
 Only 1947 (18e) and 1950 (21e) are attested. Both satisfy
 `year − édition = 1929`, which implies an unbroken annual run and yields the
 inferred numbers above. **This is an inference, not a finding.** Check the
-title page of each volume before citing an édition number, and correct
-`EDITIONS` in `src/politi/config.py` if it is wrong. A break in the run — the
-war years 1940–45 are the obvious risk — would shift 1942 and everything after
-it.
+title page before citing an édition number, and correct `EDITIONS` in
+`src/politi/config.py` if it is wrong. A break in the run — the war years are
+the obvious risk — would shift 1942 and everything after it.
 
-## The main repository: CEAlex
+## Getting the four missing volumes
 
-The Centre d'Études Alexandrines runs a digital library, *Études rares et
-anciennes sur Alexandrie*, which serves this collection as **OCR'd,
-text-searchable PDFs** — which is why the pipeline can use the PDF text layer
-directly rather than running OCR from scratch.
+In rough order of effort:
 
-- Collection index: <https://bdd.cealex.org/ressources-documentaires/lvr_i.php>
-- File pattern: `https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_XXXXXX_w.pdf`
+1. **Ask CEAlex directly.** They digitised 1932 and hold the series; a
+   researcher request for four further volumes is exactly the kind of thing
+   they field. This is the highest-value single email in this project.
+2. **AUC Rare Books and Special Collections** (Cairo) — the strongest
+   Egyptian-directory holdings outside CEAlex.
+3. **IFAO** (Cairo) and **BnF** — both hold Egyptian commercial annuaires;
+   BnF will quote for reproduction.
+4. **Bibliotheca Alexandrina** — check `dar.bibalex.org` on site; its catalogue
+   is not fully exposed to outside search.
 
-**Next step for 1938, 1942, 1947 and 1950:** open the index, find each
-annuaire, read its `LVR_` identifier off the link, and paste it into
-`EDITIONS` in `src/politi/config.py`. The `url` field then builds itself and
-`python -m politi fetch` will pull all five. Neighbouring identifiers confirm
-the collection holds this genre densely (`LVR_000164` = *Annuaire des Juifs
-d'Égypte et du Proche-Orient*, 1942; `LVR_000249` = the 1943 volume), so the
-missing years are likely to be present.
+Whatever arrives, drop it at `data/raw/politi_<year>.pdf` and the pipeline
+takes it from there. Put any new `LVR_` identifier into `EDITIONS` in
+`src/politi/config.py` and `fetch` handles the download.
+
+## Adjacent volumes that *are* digitised
+
+Confirmed present in the CEAlex diffusion tree (identifiers verified by
+full-text search; `config.ADJACENT` holds them):
+
+| Identifier | Volume | Year |
+|---|---|---|
+| `LVR_000251` | Les Juifs en Égypte | 1938 |
+| `LVR_000091` | Le Mondain Égyptien | 1939 |
+| `LVR_000055_I/II` | Le Mondain Égyptien | 1941 |
+| `LVR_000164` | Annuaire des Juifs d'Égypte et du Proche-Orient | 1942 |
+| `LVR_000018_I/II` | Le Mondain Égyptien | 1943 |
+| `LVR_000249` | Annuaire des Juifs d'Égypte et du Proche-Orient | 1943 |
+| `LVR_000315` | L'Annuaire Mondain | 1950 |
+| `LVR_000084_IV` | Egyptian Directory | 1913 |
+
+These land close to the missing waves — 1938, 1941/42, 1943, 1950. **They are
+not substitutes.** Politi is a *company* register: its selection rule is
+"every registered joint-stock company", which is what makes a clean affiliation
+network. *Le Mondain Égyptien* and the *Annuaire des Juifs* are *social and
+community* registers: they list persons and often their directorships, so the
+network is built from the person side, with a selection rule that is social
+standing or community membership rather than incorporation. Interlock measures
+from the two genres are not comparable, and mixing them across waves would put
+a source change exactly where the historical change is supposed to be.
+
+Used deliberately they are still valuable: as biographical enrichment on
+persons resolved from 1932, and as a validity check on name resolution.
 
 ## Other places to try
 
