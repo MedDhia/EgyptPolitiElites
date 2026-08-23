@@ -1,0 +1,16 @@
+# Source scans are CEAlex's to distribute; keep digests, not content.
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/manifest.json
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
