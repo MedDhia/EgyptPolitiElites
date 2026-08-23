@@ -96,28 +96,28 @@ a source change exactly where the historical change is supposed to be.
 Used deliberately they are still valuable: as biographical enrichment on
 persons resolved from 1932, and as a validity check on name resolution.
 
-## Other places to try
+## Other leads, now checked
 
 - **Google Books** record `OvnmkmUwfIEC` — an *Annuaire des sociétés
-  égyptiennes par actions* volume. Snippet view is likely; check.
+  égyptiennes par actions* volume, year unconfirmed. Snippet view at best; the
+  one lead still worth opening by hand.
 - **Bibliotheca Alexandrina** (`dar.bibalex.org`) — holds much Egyptian
-  francophone print.
-- **HathiTrust / Internet Archive** — no record surfaced in searching, but
-  neither was searchable from this session.
-- **AUC and IFAO libraries** in Cairo hold print runs; CEAlex will answer
-  reference queries about its own holdings.
+  francophone print, and its catalogue is not fully exposed to outside search,
+  so a null result here is weak evidence. Worth checking on site.
+- **HathiTrust / Internet Archive** — searched; no Politi volume. Internet
+  Archive's `TheEgyptianWhosWho1941` item matches the phrase only because
+  *Le Mondain Égyptien* 1943 mentions Politi's annuaire in its pages.
+- **AUC and IFAO** (Cairo) hold print runs.
 
-## Adjacent sources worth pairing with Politi
+Two further sources are worth pairing with Politi whatever happens to the
+missing waves:
 
 - *Annuaire de la finance égyptienne* (Google Books `IXsUAAAAIAAJ`) — overlaps
-  and can be used to cross-check board rosters.
-- *Annuaire des Juifs d'Égypte et du Proche-Orient*, 1942 and 1943 (CEAlex
-  `LVR_000164`, `LVR_000249`) — biographical enrichment for a community heavily
-  represented on these boards.
-- *Le Mondain Égyptien* / *The Egyptian Who's Who* — social-register attributes
-  (kinship, address, club) to attach to resolved persons.
-- *Journal des Tribunaux Mixtes* (CEAlex, `pfe.cealex.org`) — company
-  constitutions and board changes between annuaire waves.
+  the same firms and can cross-check board rosters.
+- *Journal des Tribunaux Mixtes* (CEAlex, `pfe.cealex.org`, digitised) —
+  company constitutions and board changes *between* annuaire waves. With only
+  1932 in hand this becomes more important, not less: it is the one digitised
+  source that can carry board composition forward through the 1930s and 1940s.
 
 ## Prior scholarly use
 
