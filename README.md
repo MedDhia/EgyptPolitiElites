@@ -13,7 +13,7 @@ Egyptianisation of the late 1940s.
 
 ## Status
 
-The pipeline is **complete and tested** (46 tests). The **source scans are not
+The pipeline is **complete and tested** (55 tests). The **source scans are not
 in the repository** and had to be left out: the session that built this ran
 behind an egress policy that blocked every host except GitHub, so no volume
 could be downloaded. `docs/SOURCES.md` records exactly where each of the five
@@ -21,7 +21,13 @@ volumes is, including a direct PDF URL for 1932 and the collection index needed
 to resolve the other four.
 
 Run `python -m politi fetch` from any machine with ordinary network access and
-the dataset builds itself.
+the dataset builds itself. If the pipeline host *can't* reach CEAlex, a volume
+can be handed over through git or Google Drive — `docs/HANDOFF.md` has the
+tested routes and their limits.
+
+Searching also produced a finding that changes the project's scope: **only the
+1932 volume is digitised anywhere.** 1938, 1942, 1947 and 1950 appear to exist
+in print only. See `docs/SOURCES.md`.
 
 ## Quick start
 
@@ -30,6 +36,7 @@ pip install -e .
 
 python -m politi sources    # what each wave is, and whether it is on disk
 python -m politi fetch      # download the annuaire PDFs
+python -m politi split      # cut a volume into connector-sized parts
 python -m politi extract    # PDF -> text (OCR fallback for bad pages)
 python -m politi build      # parse, resolve, export to data/processed/
 ```
@@ -76,9 +83,9 @@ GEXF opens directly in Gephi; GraphML in igraph, Cytoscape and NetworkX.
 
 ```
 src/politi/     config  fetch  pdftext  parse  names  resolve  build  network  export  cli
-docs/           SOURCES.md   CODEBOOK.md   EXTRACTION.md
-tests/          46 tests, incl. a synthetic volume reproducing Politi's layout
-data/           raw/ (git-ignored scans)  interim/ (text)  processed/ (output)
+docs/           SOURCES.md   CODEBOOK.md   EXTRACTION.md   HANDOFF.md
+tests/          55 tests, incl. a synthetic volume reproducing Politi's layout
+data/           raw/ (ignored)  incoming/ (git hand-off)  interim/  processed/
 ```
 
 ## Development

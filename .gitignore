@@ -7,6 +7,10 @@ data/interim/*
 data/processed/*
 !data/processed/.gitkeep
 
+# data/incoming/ is NOT ignored: it is the drop point for volumes delivered
+# through git when the pipeline host cannot reach the source directly.
+!data/incoming/
+
 __pycache__/
 *.py[cod]
 *.egg-info/

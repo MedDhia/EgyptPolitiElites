@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 RAW = DATA / "raw"            # the annuaire PDFs, as downloaded
+INCOMING = DATA / "incoming"  # volumes delivered through git (see docs/SOURCES.md)
 INTERIM = DATA / "interim"    # extracted page text, one .txt per volume
 PROCESSED = DATA / "processed"  # analysis-ready tables and graph files
 
@@ -42,6 +43,27 @@ class Edition:
     @property
     def text_path(self) -> Path:
         return INTERIM / f"politi_{self.year}.txt"
+
+    def pdf_sources(self) -> list[Path]:
+        """Every PDF making up this volume, in reading order.
+
+        A volume may arrive whole (``politi_1932.pdf``) or split into parts
+        (``politi_1932_part01.pdf``, ``_part02.pdf``, …). Splitting is how a
+        volume gets through the Google Drive connector, which refuses any
+        download over 10 MB. Parts are concatenated as one continuous
+        document, so page numbering runs across the whole volume.
+        """
+        for folder in (RAW, INCOMING):
+            parts = sorted(folder.glob(f"politi_{self.year}_part*.pdf"))
+            if parts:
+                return parts
+            whole = folder / f"politi_{self.year}.pdf"
+            if whole.exists():
+                return [whole]
+        return []
+
+    def has_source(self) -> bool:
+        return bool(self.pdf_sources()) or self.text_path.exists()
 
 
 # The CEAlex digital library serves this collection as OCR'd, text-searchable
@@ -112,5 +134,5 @@ def edition(year: int) -> Edition:
 
 
 def available_waves() -> list[int]:
-    """Waves whose PDF is actually present on disk."""
-    return [y for y in WAVES if EDITIONS[y].pdf_path.exists()]
+    """Waves whose source is actually present on disk."""
+    return [y for y in WAVES if EDITIONS[y].pdf_sources()]

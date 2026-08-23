@@ -42,18 +42,33 @@ def _ocr_page(pdf: Path, page_no: int, lang: str = "fra") -> str:
         return out.stdout or ""
 
 
-def extract_pdf(pdf: Path, ocr_fallback: bool = True, lang: str = "fra") -> str:
-    """Extract the full text of *pdf*, page-marked for later provenance."""
+def extract_pdf(pdf: Path | list[Path], ocr_fallback: bool = True,
+                lang: str = "fra") -> str:
+    """Extract the full text of a volume, page-marked for later provenance.
+
+    *pdf* may be a single file or a list of parts. Parts are read as one
+    continuous document: page numbering runs across the whole volume, so a
+    volume split for transport still yields the page numbers a reader would
+    cite. Page numbers are positions in the scan, not the printed folio.
+    """
     import pdfplumber
 
+    paths = [pdf] if isinstance(pdf, (str, Path)) else list(pdf)
+    if not paths:
+        raise ValueError("no PDF given")
+
     chunks: list[str] = []
-    with pdfplumber.open(str(pdf)) as doc:
-        for i, page in enumerate(doc.pages, start=1):
-            text = page.extract_text() or ""
-            if ocr_fallback and len(text.strip()) < MIN_CHARS:
-                text = _ocr_page(pdf, i, lang=lang) or text
-            chunks.append(_PAGE_SEP.format(n=i))
-            chunks.append(text)
+    page_no = 0
+    for path in paths:
+        with pdfplumber.open(str(path)) as doc:
+            for local_i, page in enumerate(doc.pages, start=1):
+                page_no += 1
+                text = page.extract_text() or ""
+                if ocr_fallback and len(text.strip()) < MIN_CHARS:
+                    # OCR addresses the page by its index within its own file.
+                    text = _ocr_page(Path(path), local_i, lang=lang) or text
+                chunks.append(_PAGE_SEP.format(n=page_no))
+                chunks.append(text)
     return "".join(chunks)
 
 

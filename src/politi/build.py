@@ -16,16 +16,18 @@ def load_volume_text(year: int) -> str:
     ed = config.edition(year)
     if ed.text_path.exists():
         return ed.text_path.read_text(encoding="utf-8")
-    if ed.pdf_path.exists():
+    sources = ed.pdf_sources()
+    if sources:
         from .pdftext import extract_pdf
 
-        text = extract_pdf(ed.pdf_path)
+        text = extract_pdf(sources)
         ed.text_path.parent.mkdir(parents=True, exist_ok=True)
         ed.text_path.write_text(text, encoding="utf-8")
         return text
     raise FileNotFoundError(
-        f"No source for {year}. Expected {ed.pdf_path} or {ed.text_path}. "
-        f"See docs/SOURCES.md for where to obtain the volume."
+        f"No source for {year}. Expected a PDF in data/raw/ or data/incoming/ "
+        f"(politi_{year}.pdf, or politi_{year}_partNN.pdf), or extracted text "
+        f"at {ed.text_path}. See docs/SOURCES.md."
     )
 
 
@@ -143,8 +145,7 @@ def parse_available(years: list[int] | None = None) -> dict[int, list[Company]]:
     years = years or list(config.WAVES)
     out: dict[int, list[Company]] = {}
     for y in years:
-        ed = config.edition(y)
-        if not (ed.pdf_path.exists() or ed.text_path.exists()):
+        if not config.edition(y).has_source():
             continue
         out[y] = parse_volume(load_volume_text(y))
     return out

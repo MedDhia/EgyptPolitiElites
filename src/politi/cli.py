@@ -10,12 +10,18 @@ from . import config
 
 
 def _cmd_sources(args: argparse.Namespace) -> int:
-    print(f"{'year':<6}{'ed.':<6}{'place':<12}{'pdf on disk':<13}source")
+    print(f"{'year':<6}{'ed.':<6}{'place':<12}{'on disk':<20}source")
     for y in config.WAVES:
         ed = config.edition(y)
         num = f"{ed.edition}{'' if ed.edition_verified else '?'}"
-        have = "yes" if ed.pdf_path.exists() else "no"
-        print(f"{y:<6}{num:<6}{ed.place:<12}{have:<13}{ed.url or ed.note}")
+        sources = ed.pdf_sources()
+        if sources:
+            have = f"yes ({len(sources)} file{'s' if len(sources) > 1 else ''})"
+        elif ed.text_path.exists():
+            have = "yes (text)"
+        else:
+            have = "no"
+        print(f"{y:<6}{num:<6}{ed.place:<12}{have:<20}{ed.url or ed.note}")
     return 0
 
 
@@ -38,11 +44,45 @@ def _cmd_extract(args: argparse.Namespace) -> int:
         return 1
     for y in years:
         ed = config.edition(y)
-        print(f"[{y}] extracting {ed.pdf_path.name}")
-        text = extract_pdf(ed.pdf_path, ocr_fallback=not args.no_ocr)
+        sources = ed.pdf_sources()
+        print(f"[{y}] extracting {', '.join(p.name for p in sources)}")
+        text = extract_pdf(sources, ocr_fallback=not args.no_ocr)
         ed.text_path.parent.mkdir(parents=True, exist_ok=True)
         ed.text_path.write_text(text, encoding="utf-8")
         print(f"[{y}] -> {ed.text_path} ({len(text):,} chars)")
+    return 0
+
+
+def _cmd_split(args: argparse.Namespace) -> int:
+    """Split a volume into parts small enough to travel through a connector."""
+    from .drive import split_pdf
+
+    src = Path(args.pdf)
+    if not src.exists():
+        print(f"no such file: {src}", file=sys.stderr)
+        return 1
+    out = Path(args.out) if args.out else config.INCOMING
+    stem = f"politi_{args.year}" if args.year else None
+    parts = split_pdf(src, out, max_bytes=int(args.max_mb * 1024 * 1024), stem=stem)
+    if parts == [src]:
+        print(f"{src.name} is already under {args.max_mb} MB — no split needed")
+        return 0
+    for part in parts:
+        print(f"{part}  ({part.stat().st_size / 1e6:.1f} MB)")
+    print(f"\n{len(parts)} parts in {out}")
+    return 0
+
+
+def _cmd_drive_import(args: argparse.Namespace) -> int:
+    """Land a saved download_file_content result into data/raw/."""
+    from .drive import save_tool_result
+
+    try:
+        dest = save_tool_result(Path(args.result), args.year, part=args.part)
+    except (ValueError, OSError) as exc:
+        print(f"import failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"wrote {dest} ({dest.stat().st_size / 1e6:.1f} MB)")
     return 0
 
 
@@ -98,6 +138,21 @@ def main(argv: list[str] | None = None) -> int:
     e.add_argument("--year", type=int, choices=config.WAVES)
     e.add_argument("--no-ocr", action="store_true", help="skip the OCR fallback")
     e.set_defaults(func=_cmd_extract)
+
+    sp = sub.add_parser("split", help="split a volume into connector-sized parts")
+    sp.add_argument("--pdf", required=True)
+    sp.add_argument("--year", type=int, help="name parts politi_<year>_partNN.pdf")
+    sp.add_argument("--out", help="output directory (default data/incoming)")
+    sp.add_argument("--max-mb", type=float, default=9.0,
+                    help="part size ceiling in MB (default 9, under the Drive cap)")
+    sp.set_defaults(func=_cmd_split)
+
+    di = sub.add_parser("drive-import",
+                        help="land a saved download_file_content result in data/raw")
+    di.add_argument("--result", required=True, help="path to the saved tool-result JSON")
+    di.add_argument("--year", type=int, required=True)
+    di.add_argument("--part", type=int, help="part number, if the volume was split")
+    di.set_defaults(func=_cmd_drive_import)
 
     b = sub.add_parser("build", help="parse, resolve, and export the dataset")
     b.add_argument("--year", type=int)
