@@ -35,6 +35,10 @@ class Edition:
     cealex_id: str | None        # CEAlex "Études rares et anciennes" identifier
     url: str | None              # direct PDF, when known
     note: str = ""
+    # True when the PDF's embedded text layer is too corrupt to parse and the
+    # volume must be re-OCR'd from the page images. Measured, not assumed —
+    # see docs/EXTRACTION.md.
+    bad_text_layer: bool = False
 
     @property
     def pdf_path(self) -> Path:
@@ -91,7 +95,9 @@ EDITIONS: dict[int, Edition] = {
         cealex_id="LVR_000078",
         url=CEALEX_PDF.format(cealex_id="LVR_000078"),
         note="Digitised by CEAlex (95.7 Mo). Identifier read from the "
-             "collection index.",
+             "collection index. Its embedded text layer is defective; the "
+             "volume is re-OCR'd on extraction.",
+        bad_text_layer=True,
     ),
     1947: Edition(
         year=1947, edition=18, edition_verified=True, place="Alexandrie",

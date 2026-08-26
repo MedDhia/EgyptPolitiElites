@@ -23,9 +23,42 @@ Tesseract (`fra`) at 300 dpi, if `pdftoppm` and `tesseract` are installed. Page
 markers `<<<PAGE n>>>` are injected so every extracted row keeps a
 `source_page` pointing back into the scan.
 
-If a whole volume comes out badly, re-OCR it yourself and drop the result at
-`data/interim/politi_<year>.txt`; the parser reads that in preference to the
-PDF.
+### The 1942 volume ships a defective text layer
+
+The short-page fallback catches pages with *no* text. It does not catch a page
+whose text is present, long, and wrong — which is what the 1942 scan has
+throughout. There, "Société" reads as `Sociétt'l`, "Banque Belge et
+Internationale" as `Banquf' Belge Pl Tnlernationale`. Every mention of a firm
+is corrupted differently, so no two mentions match, and the wave's interlock
+network collapses into isolated fragments.
+
+The damage was not obvious in the counts. 1942 had a normal share of
+multi-board directors (33%, against 33% in 1938 and 35% in 1947) — the ties
+were being read, they simply could not be linked. What gave it away was the
+largest connected component: **3.2%, against 46-62% in every other wave**. Read
+as history that would have said the wartime corporate network disintegrated.
+It was an artefact.
+
+Re-OCR'ing the volume from its page images fixes it:
+
+| | text layer | re-OCR |
+|---|---|---|
+| Directors | 360 | **719** |
+| Interlock edges | 556 | **1,774** |
+| Largest component | 3.2% | **35.5%** |
+
+`config.EDITIONS[1942].bad_text_layer` records this, so `politi extract`
+re-OCRs that volume automatically. `--force-ocr` does the same for any volume.
+It costs about 30 minutes for a 680-page scan.
+
+**The general lesson:** a plausible network statistic can be produced entirely
+by OCR quality. Before reading a cross-wave difference as history, check that
+the waves are of comparable transcription quality. Component share is a useful
+canary — it collapses long before the raw counts look wrong.
+
+If a whole volume comes out badly, you can also re-OCR it yourself and drop the
+result at `data/interim/politi_<year>.txt`; the parser reads that in preference
+to the PDF.
 
 ## 2. Text → records (`parse.py`)
 

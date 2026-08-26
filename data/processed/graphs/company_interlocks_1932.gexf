@@ -78,7 +78,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00172" label="Société Générale de Pressage cl de Dépôts">
+      <node id="C00172" label="Société Générale de Pressage el de Dépôts">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -502,7 +502,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00073" label="The Egyptian Salt &amp; Soda Cy. Ltd">
+      <node id="C00073" label="Egyptian Salt &amp; Soda">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -534,7 +534,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00118" label="S. A. du Wadi Kom Ombo">
+      <node id="C00118" label="S. A. de Wadi- Kom-Ombo">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -926,7 +926,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00139" label="Société Anonyme des Chemins de Fer de la Basse-Egypte">
+      <node id="C00139" label="Société Anonyme des Chemins de Fer de la Basse Egypte">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -934,7 +934,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00144" label="!.a Société Anonyme des Tramways du Caire">
+      <node id="C00144" label="Société Anonyme des Tramways du Caire">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -990,7 +990,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00036" label="The Cairo Sand Bricks Co. S. A">
+      <node id="C00036" label="The Cairo Sand Bricks Co., S.A">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -1022,7 +1022,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00200" label="The Commercial &amp; Esta tes Co">
+      <node id="C00200" label="The Commercial &amp; Estates Co">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -1158,7 +1158,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00006" label="Alexandria &amp; Ramleh Rail ways Co">
+      <node id="C00006" label="Alexandria &amp; Ramleh Rail- ways Co">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />
@@ -1630,7 +1630,7 @@
           <attvalue for="3" value="0.0" />
         </attvalues>
       </node>
-      <node id="C00001" label="A lexandria Insurance">
+      <node id="C00001" label="A- lexandria Insurance Co">
         <attvalues>
           <attvalue for="0" value="1" />
           <attvalue for="1" value="company" />

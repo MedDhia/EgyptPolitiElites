@@ -279,7 +279,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00040" label="Cattaui E:mile">
+      <node id="P00040" label="Cattaui Emile">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -440,7 +440,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00063" label="Fumaroli J">
+      <node id="P00063" label="Fumaroli">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -776,7 +776,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00113" label="Nathan J. Edward">
+      <node id="P00113" label="Nathan Edward">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -839,7 +839,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00122" label="Ràbbath Sélim">
+      <node id="P00122" label="Rabbath Sélim">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -909,7 +909,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00132" label="Safouat Pacha Mohamed">
+      <node id="P00132" label="Safwat Mohamed">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -937,7 +937,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00136" label="Shamà Elie F">
+      <node id="P00136" label="Shama Elie F">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -1070,7 +1070,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00156" label="Wellhoff Salomon">
+      <node id="P00156" label="Wellhoïf Salomon">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -1098,7 +1098,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00160" label="Zerbini Dimitri J">
+      <node id="P00160" label="Zorbini Dimitri">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />

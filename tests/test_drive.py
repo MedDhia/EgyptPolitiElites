@@ -89,3 +89,27 @@ def test_single_path_and_list_agree(tmp_path):
 def test_empty_source_list_is_an_error():
     with pytest.raises(ValueError, match="no PDF given"):
         extract_pdf([])
+
+
+def test_a_defective_text_layer_is_recorded_in_the_edition():
+    """1942 ships a text layer that is present, long, and wrong; the short-page
+    fallback cannot catch it, so the defect is recorded explicitly."""
+    from politi import config
+    assert config.edition(1942).bad_text_layer
+    assert not config.edition(1932).bad_text_layer
+
+
+def test_force_ocr_ignores_the_embedded_text_layer(tmp_path, monkeypatch):
+    from politi import pdftext
+
+    pdf = _make_pdf(tmp_path / "v.pdf", pages=2)
+    calls = []
+
+    def fake_ocr(path, page_no, lang="fra"):
+        calls.append(page_no)
+        return f"OCR page {page_no}"
+
+    monkeypatch.setattr(pdftext, "_ocr_page", fake_ocr)
+    text = pdftext.extract_pdf(pdf, force_ocr=True)
+    assert calls == [1, 2], "every page must be re-read from its image"
+    assert "OCR page 1" in text

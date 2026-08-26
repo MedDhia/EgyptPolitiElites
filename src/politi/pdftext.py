@@ -43,8 +43,13 @@ def _ocr_page(pdf: Path, page_no: int, lang: str = "fra") -> str:
 
 
 def extract_pdf(pdf: Path | list[Path], ocr_fallback: bool = True,
-                lang: str = "fra") -> str:
+                lang: str = "fra", force_ocr: bool = False) -> str:
     """Extract the full text of a volume, page-marked for later provenance.
+
+    With *force_ocr*, the embedded text layer is ignored and every page is
+    re-read from its image. Some volumes ship a text layer that is present and
+    long — so the short-page fallback never fires — yet so corrupt that
+    "Société" reads as "Sociétt'l". Those need this.
 
     *pdf* may be a single file or a list of parts. Parts are read as one
     continuous document: page numbering runs across the whole volume, so a
@@ -63,8 +68,8 @@ def extract_pdf(pdf: Path | list[Path], ocr_fallback: bool = True,
         with pdfplumber.open(str(path)) as doc:
             for local_i, page in enumerate(doc.pages, start=1):
                 page_no += 1
-                text = page.extract_text() or ""
-                if ocr_fallback and len(text.strip()) < MIN_CHARS:
+                text = "" if force_ocr else (page.extract_text() or "")
+                if (force_ocr or ocr_fallback) and len(text.strip()) < MIN_CHARS:
                     # OCR addresses the page by its index within its own file.
                     text = _ocr_page(Path(path), local_i, lang=lang) or text
                 chunks.append(_PAGE_SEP.format(n=page_no))

@@ -45,8 +45,10 @@ def _cmd_extract(args: argparse.Namespace) -> int:
     for y in years:
         ed = config.edition(y)
         sources = ed.pdf_sources()
-        print(f"[{y}] extracting {', '.join(p.name for p in sources)}")
-        text = extract_pdf(sources, ocr_fallback=not args.no_ocr)
+        force = args.force_ocr or ed.bad_text_layer
+        how = " (re-OCR)" if force else ""
+        print(f"[{y}] extracting {', '.join(p.name for p in sources)}{how}")
+        text = extract_pdf(sources, ocr_fallback=not args.no_ocr, force_ocr=force)
         ed.text_path.parent.mkdir(parents=True, exist_ok=True)
         ed.text_path.write_text(text, encoding="utf-8")
         print(f"[{y}] -> {ed.text_path} ({len(text):,} chars)")
@@ -158,6 +160,8 @@ def main(argv: list[str] | None = None) -> int:
     e = sub.add_parser("extract", help="PDF -> text")
     e.add_argument("--year", type=int, choices=config.WAVES)
     e.add_argument("--no-ocr", action="store_true", help="skip the OCR fallback")
+    e.add_argument("--force-ocr", action="store_true",
+                   help="ignore the embedded text layer and re-OCR every page")
     e.set_defaults(func=_cmd_extract)
 
     sp = sub.add_parser("split", help="split a volume into connector-sized parts")
