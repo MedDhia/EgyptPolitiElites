@@ -52,6 +52,8 @@ _FUNCTION_WORDS = {
     "pour", "par", "sur", "ou", "ce", "ces", "son", "ses", "dans", "avec",
     "chez", "comme", "sous", "vers", "entre", "que", "qui", "dont", "ainsi",
     "of", "the", "and", "in", "for", "to",
+    # Elided forms, left bare once the apostrophe is split off.
+    "d", "l", "qu", "n", "s", "c", "j", "m", "t",
 }
 
 
@@ -83,7 +85,10 @@ def join_lines(text: str) -> str:
         if not out or _is_entry_start(line):
             out.append(line)
             continue
-        first = re.split(r"[\s,;.]+", line, maxsplit=1)[0]
+        # Split on the apostrophe too: "d'Administration" must be seen as the
+        # function word "d", or the join produces "Conseild'Administration"
+        # and the role pattern then swallows the "d".
+        first = re.split(r"[\s,;.'’]+", line, maxsplit=1)[0]
         prev = out[-1]
         starts_word = (
             _fold(first).strip("'’") in _FUNCTION_WORDS
@@ -149,8 +154,21 @@ _ENTRY_RE = re.compile(
 )
 
 
+# A continuation line often opens with a company-name fragment followed by a
+# comma, which is shaped exactly like an entry start. Left unchecked it both
+# invents a person and truncates the entry it interrupted, so the fragment is
+# rejected and the line rejoins the entry above.
+_COMPANY_MARKER = re.compile(
+    r"(?i)(?:^|\s)(?:c[oy]|ltd|limited|works|usines|s\.?a\.?e|soci[eé]t[eé]|"
+    r"compagnie|banque|bank|company|industries|insurance|assurance|trading|"
+    r"navigation|hotels?|mining|filature|textiles?|petroleum|theatres?|"
+    r"pressing|propri[eé]taire|land)(?:\s|\.|,|$)|&")
+
+
 def _looks_like_person(name: str) -> bool:
     """Reject company names that happen to carry an internal comma."""
+    if _COMPANY_MARKER.search(name):
+        return False
     tokens = [t for t in re.split(r"[\s.]+", name.strip()) if t]
     if not (1 <= len(tokens) <= 6):
         return False
@@ -216,6 +234,7 @@ _ROLE_BY_GROUP = {f"r{i}": role for i, (_, role) in enumerate(ROLE_RULES)}
 # Organisations that are not joint-stock companies.
 _NOT_A_FIRM = re.compile(
     r"(?i)\b(commission|comit[eé]|conseil|chambre|syndicat|universit|facult|"
+    r"administration\s+d[eu]s|contributions|douanes|domaines\s+de\s+l|"
     r"minist|gouvernement|acad[eé]mie|ordre|club|association|institut|"
     r"tribunal|cour\b|municipalit)")
 _FIRM_HINT = re.compile(
@@ -226,11 +245,12 @@ _FIRM_HINT = re.compile(
 # Sits between a role and the organisation it governs: "Président *du Conseil
 # d'Administration* de X", "Président *Fondateur* de X".
 _CONNECTOR = re.compile(
-    r"(?i)^\s*(?:et\s+)?(?:d\W*administration|(?:du|[ec]lu|cle)\s+cons\w*"
+    r"(?i)^\s*(?:et\s+)?(?:d\W*administration|['’]\s*admini\w*|"
+    r"(?:du|des|[ec]lu|cle)\s+conseils?\w*"
     r"(?:\s+d\W*admi\w*)?|de\s+la\s+direction|"
     r"fondateur|honoraire|sortant|actuel|g[eé]n[eé]ral|local)\b[\s,]*")
 
-_LEAD_PREP = re.compile(r"^\s*(?:de\s+l['’]|de\s+la\s+|de\s+les\s+|des\s+|du\s+|de\s+|d['’]|l['’])\s*",
+_LEAD_PREP = re.compile(r"^\W*(?:de\s+l['’]|de\s+la\s+|de\s+les\s+|des\s+|du\s+|de\s+|d['’]|l['’])\s*",
                         re.I)
 
 
@@ -255,7 +275,7 @@ def _clean_org(s: str) -> str:
     s = _LEAD_PREP.sub("", s)
     # The scanner sometimes renders "la"/"le" with lookalike glyphs, so the
     # preposition strips but its article does not. Remove a stranded one.
-    s = re.sub(r"(?i)^(?:l[ae]|les|du|des)\s+(?=[A-Z0-9])", "", s)
+    s = re.sub(r"(?i)^(?:l[ae]|les|du|des)[\s.\-]+(?=[A-Z0-9])", "", s)
     # Drop a trailing place, which Politi appends to some firms.
     s = re.sub(r",\s*(?:Le Caire|Alexandrie|Cairo|Alexandria|Port[- ]Sa[iï]d)\s*$",
                "", s, flags=re.I)

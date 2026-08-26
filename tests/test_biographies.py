@@ -119,3 +119,39 @@ def test_each_entry_becomes_its_own_line():
     text = ("Adda, Achille, Administrateur de la S.A. du Béhéra.\n"
             "Adda, Me. Charles, Président de la Banque Misr.\n")
     assert len(join_lines(text).split("\n")) == 2
+
+
+def test_elided_article_keeps_its_space_when_lines_join():
+    """Regression: 'Conseil' + 'd'Administration' joined tight produced
+    'Conseild'Administration', and the role pattern then ate the 'd',
+    leaving "'Administration de X" as the firm name."""
+    joined = join_lines("Abboud Mohamed, Président du Conseil\n"
+                        "d'Administration de The Egyptian General Omnibus Co.")
+    assert "Conseil d'Administration" in joined
+    assert _orgs(joined) == [("president", "The Egyptian General Omnibus Co")]
+
+
+def test_a_government_administration_is_not_a_firm():
+    positions = parse_entry(
+        "Abdel Hadi Mohamed Bey, Directeur de l'Administration des "
+        "Contributions Directes."
+    ).positions
+    assert positions and not positions[0].is_firm
+
+
+def test_a_company_fragment_never_starts_an_entry():
+    """A continuation line opening with a company name is shaped like an entry
+    start. Treating it as one invents a person and truncates the real entry."""
+    from politi.biographies import _looks_like_person
+    for fragment in ("Copper Works", "Enterprise & Development Co", "Land Cy",
+                     "Textile", "Propriétaire National Hotel Cairo"):
+        assert not _looks_like_person(fragment), fragment
+    for person in ("Cattaui René Bey", "Adda Achille", "Abaza", "Klat Jules"):
+        assert _looks_like_person(person), person
+
+
+def test_a_split_entry_rejoins_rather_than_forking():
+    text = ("Sadek Wahba Pacha, Administrateur de la Société Misr de Filature\n"
+            "Copper Works, Administrateur de la Société Misr d'Egrenage.\n")
+    lines = join_lines(text).split("\n")
+    assert len(lines) == 1, "the company fragment must not open a second entry"

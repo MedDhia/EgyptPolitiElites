@@ -3,6 +3,14 @@
 Five waves: **1932, 1938, 1942, 1947, 1950**. The unit of observation is the
 *printed directorship* — one person, one company, one volume.
 
+The released tables are built from each volume's **biographical roster** of
+directors (`politi build --roster`), not from the company-by-company section.
+The roster is person-side, so each printed entry is already one person. One
+consequence matters for anyone reading the schema: **`city`,
+`capital_currency` and `capital_amount` are empty**, because those fields exist
+only in the company section. The columns are retained so the schema does not
+change when that section is merged in.
+
 ## `affiliations.csv` — the artefact of record
 
 Everything else in the dataset is derived from this table. One row per printed
@@ -21,10 +29,10 @@ directorship.
 | `company_label` | str | Canonical company name. |
 | `company_printed` | str | Company name as printed in this volume. |
 | `role` | str | Controlled vocabulary, below. |
-| `order` | int | Position in the printed roster. A proxy for seniority — **use with care**, since some volumes list alphabetically. |
-| `city` | str | `Cairo`, `Alexandria`, `Port Said`, … from the `Siège social` line. |
-| `capital_currency` | str | `LE` (Egyptian pound), `GBP`, `FRF`, `USD`, `PT`. |
-| `capital_amount` | float | Nominal capital. **Not deflated** — do not compare across waves without an index. |
+| `order` | int | Position within a company's printed board list. **0 in roster builds**, where entries are ordered by person, not by board. |
+| `city` | str | `Cairo`, `Alexandria`, … from the `Siège social` line. **Empty in roster builds.** |
+| `capital_currency` | str | `LE` (Egyptian pound), `GBP`, `FRF`, … **Empty in roster builds.** |
+| `capital_amount` | float | Nominal capital, not deflated. **Empty in roster builds.** |
 | `source_edition` | int | Édition number; inferred for 1932/1938/1942 (see SOURCES.md). |
 | `source_page` | int | PDF page the entry was read from. For going back to the scan. |
 
@@ -43,6 +51,36 @@ directorship.
 | `auditor` | Commissaire aux comptes, Censeur | no |
 | `liquidator` | Liquidateur | no |
 | `other` | unmatched label | no |
+
+### Roles the roster adds
+
+The roster records positions the company section does not, so these appear in
+the released tables alongside the vocabulary above:
+
+| Value | Printed as | In `BOARD_ROLES`? |
+|---|---|---|
+| `council_member` | Membre du Conseil (not d'Administration) | no |
+| `committee_member` | Membre du Comité | no |
+| `member` | Membre (of a commission, chamber, bourse) | no |
+| `adviser` | Conseiller | no |
+| `partner` | Associé | no |
+| `delegate` | Délégué | no |
+
+Observed counts across all five waves: `director` 3,193 · `president` 1,019 ·
+`managing_director` 647 · `vice_president` 343 · `council_member` 205 ·
+`manager` 173 · `member` 156 · `delegate` 87.
+
+### Firms and other bodies
+
+The roster mixes companies with councils, chambers, commissions and government
+administrations. Each position is classified, and **only firms are exported by
+default**; `politi build --roster --include-bodies` keeps the rest. The
+classification is a heuristic over the organisation's name and the role: a
+name carrying a company marker (*Société*, *Banque*, *Cy*, *Ltd*, *S.A.E.*) is
+a firm; one naming a commission, chamber or *administration des …* is not.
+Ambiguous cases follow the role, since "Membre du Conseil …" with no company
+marker is usually a public body. Expect errors at the margin, and check
+`is_firm`-driven filtering if a specific organisation matters to your argument.
 
 **The default tie definition is board membership**, so `BOARD_ROLES` excludes
 executives (`general_manager`, `manager`, `secretary`) and the statutory
