@@ -173,11 +173,27 @@ def split_entries(joined: str) -> list[str]:
 # --- roles -------------------------------------------------------------------
 # Stems, not whole words: OCR eats the leading capital far too often.
 ROLE_RULES: list[tuple[str, str]] = [
+    # Abbreviated forms. The 1947 volume sets the roster in a compressed style
+    # ("Adm. Sté. Al Chark"), so these must be tried before the spelled-out
+    # patterns or those entries yield no positions at all.
+    (r"\bAdm\.?[- ]?D[ée]l[ée]gu[ée]?\b\.?", "managing_director"),
+    (r"\bVice[- ]?Pr[ée]s\.", "vice_president"),
+    (r"\bPr[ée]s\.\s*d[ue]\s*[Cc]ons\w*\.?", "president"),
+    (r"\bPr[ée]s\.", "president"),
+    (r"\bAdm\.", "director"),
+    (r"\bDir\.\s*G[ée]n\w*\.?", "general_manager"),
+    (r"\bDir\.", "manager"),
+    (r"\bMemb\.", "member"),
+    (r"\bCens\.", "auditor"),
     (r"[Pp]r[eé]sident\w*\s+d[ue]\s+[Cc]ons\w*(?:\s+d\W*[Aa]dmi\w*)?", "president"),
     (r"[Vv]ice[- ]?[Pp]r[eé]sident", "vice_president"),
     (r"[Pp]r[eé]sident", "president"),
     (r"\w*dministrateur[- ]?D[eé]l[eé]gu\w*", "managing_director"),
-    (r"\w*dministrateur[- ]?[GgDd][eé]?r?\w*", "managing_director"),
+    # Must name the second office explicitly: a bare "[- ]?[GgDd]…" also
+    # matches the "de" in "Administrateur de la S.A.", which would relabel
+    # every ordinary directorship as a managing directorship.
+    (r"\w*dministrateur[- ]?(?:[Gg][ée]rant|[Dd]irecteur|[Dd][ée]l[ée]gu[ée]?)\w*",
+     "managing_director"),
     (r"\w*dministrateur", "director"),
     (r"\w*embre\w*\s+d[ue]\s+[Cc]ons\w*\s+d\W*[Aa]dmi\w*", "director"),
     (r"\w*embre\w*\s+d[ue]\s+[Cc]omit\w*", "committee_member"),
@@ -203,7 +219,7 @@ _NOT_A_FIRM = re.compile(
     r"minist|gouvernement|acad[eé]mie|ordre|club|association|institut|"
     r"tribunal|cour\b|municipalit)")
 _FIRM_HINT = re.compile(
-    r"(?i)(soci[eé]t|compagnie|banque|bank|company|c[oy]\b|ltd|limited|s\.\s?a\b|"
+    r"(?i)(soci[eé]t|st[eé]\.|compagnie|banque|bank|company|c[oy]\b|ltd|limited|s\.\s?a\b|"
     r"cie\b|corporation|assurance|insurance|filature|sucrer|cr[eé]dit|"
     r"land\b|hotels?\b|mining|railway|tramway|press|industr)")
 
@@ -262,15 +278,64 @@ def _classify(org: str, role: str = "") -> bool:
     return bool(re.search(r"[A-Z]", org))
 
 
+_NAME_TITLE_WORDS = {"me", "dr", "rt", "hon", "sir", "bart", "mp", "cav", "uff",
+                     "comm", "mme", "mlle", "st", "ste", "van", "von", "de", "di",
+                     "el", "al", "abou", "abu", "ben", "bin", "la", "le"}
+
+
+def _looks_like_given_names(seg: str) -> bool:
+    """Is this segment a given-name run rather than the start of the body?
+
+    Volumes differ: 1932 and 1947 print "Cattaui René Bey, <positions>", while
+    1938, 1942 and 1950 invert to "Adda, Achille, <positions>". Without this
+    test the inverted volumes yield a bare surname, and every person sharing a
+    surname collapses into one node.
+    """
+    seg = seg.strip()
+    if not (2 <= len(seg) <= 40):
+        return False
+    if _ROLE_RE.search(seg):
+        return False
+    bare = re.sub(r"\([^)]*\)", " ", seg)          # drop "(Bey)", "(Baron)"
+    tokens = [t for t in re.split(r"[\s.;,]+", bare) if t]
+    if not tokens:
+        return False
+    for tok in tokens:
+        if tok[:1].isupper() or not tok[:1].isalpha():
+            continue
+        if _fold(tok).strip("'’") in _NAME_TITLE_WORDS:
+            continue
+        return False
+    return True
+
+
+_INVERTED_RE = re.compile(r"([^,;]{2,40}),\s+(?=\S)")
+
+
+def _split_name_and_body(entry: str) -> tuple[str | None, str, str] | None:
+    """Return (honorific, full name, body) for one roster entry."""
+    m = _ENTRY_RE.match(entry)
+    if not m:
+        return None
+    hon = (m.group("hon") or "").strip() or None
+    name = re.sub(r"\s+", " ", m.group("name")).strip()
+    rest = entry[m.end():]
+    m2 = _INVERTED_RE.match(rest)
+    if m2 and _looks_like_given_names(m2.group(1)):
+        given = re.sub(r"\s+", " ", m2.group(1)).strip(" .,;")
+        name = f"{name} {given}"
+        rest = rest[m2.end():]
+    name = re.sub(r"[()]", " ", name)   # "(Bey)" -> " Bey ", so rank is read
+    return hon, re.sub(r"\s+", " ", name).strip(" .,;"), rest
+
+
 def parse_entry(entry: str, page: int | None = None) -> Biography:
     printed = entry
     entry = repair_ocr_spacing(entry)
-    m = _ENTRY_RE.match(entry)
-    if not m:
+    split = _split_name_and_body(entry)
+    if split is None:
         return Biography(printed=printed, name="", honorific=None, page=page)
-    hon = (m.group("hon") or "").strip() or None
-    name = re.sub(r"\s+", " ", m.group("name")).strip()
-    body = entry[m.end():]
+    hon, name, body = split
 
     bio = Biography(printed=printed, name=name, honorific=hon, page=page)
     last_roles: list[str] = []
@@ -324,28 +389,31 @@ def _entry_count(body: str) -> int:
     return n
 
 
-def find_roster_pages(pages: dict[int, str], min_entries: int = 4) -> tuple[int, int] | None:
+def find_roster_pages(pages: dict[int, str], min_entries: int = 3,
+                      lookahead: int = 8) -> tuple[int, int] | None:
     """Locate the roster: from its heading to the last page of entries.
 
     The heading phrase also appears in the front matter's table of contents, so
-    a candidate only counts if the pages after it actually carry entries.
+    a candidate only counts if pages soon after it actually carry entries. The
+    gap between heading and first entry varies between volumes — 1932 runs the
+    heading two pages ahead of the entries, 1942 has a second title page in
+    between — hence the lookahead rather than a fixed offset.
     """
     ordered = sorted(pages)
     for idx, n in enumerate(ordered):
         if not ROSTER_HEADING.search(pages[n] or ""):
             continue
-        follow = ordered[idx + 1: idx + 4]
-        if not any(_entry_count(pages[m]) >= min_entries for m in follow):
-            continue  # a mention, not the section itself
-        start = next(m for m in follow if _entry_count(pages[m]) >= min_entries)
-        end = start
-        gap = 0
+        follow = ordered[idx + 1: idx + 1 + lookahead]
+        start = next((m for m in follow if _entry_count(pages[m]) >= min_entries), None)
+        if start is None:
+            continue  # a mention in the contents, not the section itself
+        end, gap = start, 0
         for m in ordered[ordered.index(start):]:
-            if _entry_count(pages[m]) >= 3:
+            if _entry_count(pages[m]) >= min_entries:
                 end, gap = m, 0
             else:
                 gap += 1
-                if gap > 1:
+                if gap > 2:   # roster pages can carry a sparse page or two
                     break
         return start, end
     return None
