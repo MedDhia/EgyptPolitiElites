@@ -1,0 +1,32 @@
+{
+  "1932": {
+    "url": "https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_000323_w.pdf",
+    "file": "politi_1932.pdf",
+    "bytes": 64800064,
+    "sha256": "3c95a0532015b519caa7ae8524c3d8479c1deb9401e7f3fed7bd92f1f6b054df"
+  },
+  "1938": {
+    "url": "https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_000191_w.pdf",
+    "file": "politi_1938.pdf",
+    "bytes": 144045679,
+    "sha256": "f6bd506951954d5180f28d25310ea04dd17f46e5d839f8e30ec0e3a3146ffbca"
+  },
+  "1942": {
+    "url": "https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_000078_w.pdf",
+    "file": "politi_1942.pdf",
+    "bytes": 95664167,
+    "sha256": "ee9bd0c2b9a837881e599e4a29802abd2cc5d69121e029438f245e86bf175ab5"
+  },
+  "1947": {
+    "url": "https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_000173_w.pdf",
+    "file": "politi_1947.pdf",
+    "bytes": 193260898,
+    "sha256": "467ef51b503bfe15b137eb39f5384cb123a4ddfef69d6581a02cf2d6469f15a8"
+  },
+  "1950": {
+    "url": "https://bdd.cealex.org/diffusion/etud_anc_alex/LVR_000332_w.pdf",
+    "file": "politi_1950.pdf",
+    "bytes": 208481115,
+    "sha256": "d816977c3196a711cd1f6ca674281638269cf3032139f1b792d3ed345853d97f"
+  }
+}

@@ -73,32 +73,39 @@ CEALEX_INDEX = "https://bdd.cealex.org/ressources-documentaires/lvr_i.php"
 
 EDITIONS: dict[int, Edition] = {
     1932: Edition(
-        year=1932, edition=3, edition_verified=False, place="Le Caire",
+        year=1932, edition=3, edition_verified=False, place="Alexandrie",
         cealex_id="LVR_000323",
         url=CEALEX_PDF.format(cealex_id="LVR_000323"),
-        note="Digitised. Direct PDF in the CEAlex digital library.",
+        note="Digitised by CEAlex (64.8 Mo). Identifier read from the "
+             "collection index.",
     ),
     1938: Edition(
-        year=1938, edition=9, edition_verified=False, place="Le Caire",
-        cealex_id=None, url=None,
-        note="No digitisation found anywhere. Print only — see docs/SOURCES.md.",
+        year=1938, edition=9, edition_verified=False, place="Alexandrie",
+        cealex_id="LVR_000191",
+        url=CEALEX_PDF.format(cealex_id="LVR_000191"),
+        note="Digitised by CEAlex (144 Mo). Identifier read from the "
+             "collection index.",
     ),
     1942: Edition(
-        year=1942, edition=13, edition_verified=False, place="Le Caire",
-        cealex_id=None, url=None,
-        note="No digitisation found anywhere. Print only — see docs/SOURCES.md.",
+        year=1942, edition=13, edition_verified=False, place="Alexandrie",
+        cealex_id="LVR_000078",
+        url=CEALEX_PDF.format(cealex_id="LVR_000078"),
+        note="Digitised by CEAlex (95.7 Mo). Identifier read from the "
+             "collection index.",
     ),
     1947: Edition(
         year=1947, edition=18, edition_verified=True, place="Alexandrie",
-        cealex_id=None, url=None,
-        note="18e édition. CEAlex holds a catalogue record but no PDF in the "
-             "diffusion tree. Print only — see docs/SOURCES.md.",
+        cealex_id="LVR_000173",
+        url=CEALEX_PDF.format(cealex_id="LVR_000173"),
+        note="Digitised by CEAlex (193.3 Mo). Identifier read from the "
+             "collection index.",
     ),
     1950: Edition(
         year=1950, edition=21, edition_verified=True, place="Alexandrie",
-        cealex_id=None, url=None,
-        note="21e édition. CEAlex holds a catalogue record but no PDF in the "
-             "diffusion tree. Print only — see docs/SOURCES.md.",
+        cealex_id="LVR_000332",
+        url=CEALEX_PDF.format(cealex_id="LVR_000332"),
+        note="Digitised by CEAlex (208.5 Mo). Identifier read from the "
+             "collection index.",
     ),
 }
 

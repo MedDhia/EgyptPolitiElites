@@ -25,9 +25,9 @@ the dataset builds itself. If the pipeline host *can't* reach CEAlex, a volume
 can be handed over through git or Google Drive — `docs/HANDOFF.md` has the
 tested routes and their limits.
 
-Searching also produced a finding that changes the project's scope: **only the
-1932 volume is digitised anywhere.** 1938, 1942, 1947 and 1950 appear to exist
-in print only. See `docs/SOURCES.md`.
+**All five volumes are digitised by CEAlex** and download with
+`python -m politi fetch`. (An earlier pass concluded only 1932 existed online;
+that was wrong — see the correction in `docs/SOURCES.md`.)
 
 ## Quick start
 

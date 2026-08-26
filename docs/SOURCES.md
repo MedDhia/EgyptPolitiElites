@@ -19,53 +19,46 @@ interwar Egypt has to a systematic elite affiliation register.
 
 ## Where each wave stands
 
-**Searched result: only 1932 is digitised.** The CEAlex diffusion tree was
-probed by full-text search restricted to `bdd.cealex.org`, which indexes the
-PDFs themselves — searches return other volumes' contents by their inside text,
-so the index is real and the absence is informative. Across a dozen query
-formulations, the *Annuaire des sociétés égyptiennes par actions* returns
-`LVR_000323` (1932) and nothing else. HathiTrust, Internet Archive,
-Bibliotheca Alexandrina and Google Books were searched the same way; none holds
-a Politi volume.
+**All five volumes are digitised by CEAlex and have been downloaded.**
 
-| Year | Édition | Place | Online? | Where |
-|---|---|---|---|---|
-| 1932 | 3 *(inferred)* | Cairo | **yes, full PDF** | `bdd.cealex.org/diffusion/etud_anc_alex/LVR_000323_w.pdf` |
-| 1938 | 9 *(inferred)* | Cairo | **no** | print only |
-| 1942 | 13 *(inferred)* | Cairo | **no** | print only |
-| 1947 | **18** | Alexandria | **no** — catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1947/) |
-| 1950 | **21** | Alexandria | **no** — catalogue record only | [CEAlex record](https://www.cealex.org/evenement/annuaire-des-societes-egyptiennes-par-actions-alexandrie-1950/) |
+| Year | Édition | Place | CEAlex id | Size | SHA-256 (head) |
+|---|---|---|---|---|---|
+| 1932 | 3 | Alexandrie | `LVR_000323` | 64.8 MB | `3c95a0532015b519` |
+| 1938 | 9 *(inferred)* | Alexandrie | `LVR_000191` | 144.0 MB | `f6bd506951954d51` |
+| 1942 | 13 *(inferred)* | Alexandrie | `LVR_000078` | 95.7 MB | `ee9bd0c2b9a83788` |
+| 1947 | 18 | Alexandrie | `LVR_000173` | 193.3 MB | `467ef51b503bfe15` |
+| 1950 | 21 | Alexandrie | `LVR_000332` | 208.5 MB | `d816977c3196a711` |
 
-The 1947 and 1950 CEAlex pages sit under `/evenement/` — announcements of
-volumes held or acquired, not digitised items. They carry the édition numbers
-(18e, 21e) but no PDF.
+Full digests are in `data/raw/manifest.json`. All five are listed in the
+collection index under the author heading **Élie I. POLITI**, together with his
+*Indicateur cotonnier d'Égypte* (`LVR_000317`, 105.6 MB, Alexandrie 1932).
 
-### On the édition numbers
+### A correction worth recording
 
-Only 1947 (18e) and 1950 (21e) are attested. Both satisfy
-`year − édition = 1929`, which implies an unbroken annual run and yields the
-inferred numbers above. **This is an inference, not a finding.** Check the
-title page before citing an édition number, and correct `EDITIONS` in
-`src/politi/config.py` if it is wrong. A break in the run — the war years are
-the obvious risk — would shift 1942 and everything after it.
+An earlier pass through this project concluded that *only* the 1932 volume was
+digitised, and wrote that into this file. **That was wrong.** The conclusion
+came from full-text search restricted to `bdd.cealex.org`, which returns the
+1932 volume and no other — so the absence looked like evidence. It was not:
+the search index simply does not cover every PDF in the collection. The index
+page itself, once actually fetched, lists all five.
 
-## Getting the four missing volumes
+The methodological lesson is worth keeping: a search engine's silence is not
+the archive's silence. Read the finding aid before concluding a thing does not
+exist.
 
-In rough order of effort:
+### On place and édition numbers
 
-1. **Ask CEAlex directly.** They digitised 1932 and hold the series; a
-   researcher request for four further volumes is exactly the kind of thing
-   they field. This is the highest-value single email in this project.
-2. **AUC Rare Books and Special Collections** (Cairo) — the strongest
-   Egyptian-directory holdings outside CEAlex.
-3. **IFAO** (Cairo) and **BnF** — both hold Egyptian commercial annuaires;
-   BnF will quote for reproduction.
-4. **Bibliotheca Alexandrina** — check `dar.bibalex.org` on site; its catalogue
-   is not fully exposed to outside search.
+All five volumes are published in **Alexandria**, not Cairo — the 1932 title
+page reads `IMPRIMERIE A. PROCACCIA / ALEXANDRIE`. An earlier version of this
+file said Cairo for the early waves; that is corrected.
 
-Whatever arrives, drop it at `data/raw/politi_<year>.pdf` and the pipeline
-takes it from there. Put any new `LVR_` identifier into `EDITIONS` in
-`src/politi/config.py` and `fetch` handles the download.
+The 1932 preface confirms the édition numbering independently: it thanks
+readers for the reception of "notre **seconde** édition" and notes that "l'édition
+1931 est totalement épuisée", making the 1932 volume the **third**. That fits
+`year − édition = 1929`, the offset implied by the two attested numbers (1947 =
+18e, 1950 = 21e), so the inferred numbers for 1938 (9e) and 1942 (13e) now rest
+on a confirmed pattern rather than an assumption — though they should still be
+checked against their own title pages.
 
 ## Adjacent volumes that *are* digitised
 

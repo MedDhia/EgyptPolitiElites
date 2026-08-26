@@ -87,11 +87,32 @@ def _cmd_drive_import(args: argparse.Namespace) -> int:
 
 
 def _cmd_build(args: argparse.Namespace) -> int:
-    from .build import build_tables, parse_available
+    from .build import (build_from_rosters, build_tables, parse_available,
+                        parse_rosters)
     from .export import export_all
     from .parse import parse_volume
 
     outdir = Path(args.out) if args.out else config.PROCESSED
+
+    if args.roster:
+        # Build from the volume's biographical roster of directors, which is
+        # person-side and needs no within-volume person resolution.
+        rosters = parse_rosters([args.year] if args.year else None)
+        if not rosters:
+            print("no biographical roster found. `python -m politi sources` shows "
+                  "what is on disk; docs/SOURCES.md says where to get it.",
+                  file=sys.stderr)
+            return 1
+        for y, bios in sorted(rosters.items()):
+            n = sum(len(b.positions) for b in bios)
+            print(f"[{y}] {len(bios):,} directors, {n:,} printed positions")
+        tables = build_from_rosters(rosters, firms_only=not args.include_bodies)
+        written = export_all(tables, outdir)
+        print(f"\npersons        {len(tables['persons']):,}")
+        print(f"companies      {len(tables['companies']):,}")
+        print(f"affiliations   {len(tables['affiliations']):,}")
+        print(f"\nwrote {sum(len(v) for v in written.values())} files to {outdir}")
+        return 0
 
     if args.text:
         # Build straight from a text file, bypassing the source registry.
@@ -158,6 +179,10 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--year", type=int)
     b.add_argument("--text", help="build from a single text file instead")
     b.add_argument("--out", help="output directory (default data/processed)")
+    b.add_argument("--roster", action="store_true",
+                   help="build from the biographical roster of directors")
+    b.add_argument("--include-bodies", action="store_true",
+                   help="keep councils, chambers and commissions alongside firms")
     b.set_defaults(func=_cmd_build)
 
     args = ap.parse_args(argv)

@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pandas as pd
 
 from . import config
+from .biographies import Biography, parse_roster
+from .names import parse_person
 from .parse import Company, parse_volume
 from .resolve import Mention, cluster_companies, cluster_persons
 
@@ -149,3 +152,115 @@ def parse_available(years: list[int] | None = None) -> dict[int, list[Company]]:
             continue
         out[y] = parse_volume(load_volume_text(y))
     return out
+
+
+# --- the biographical roster -------------------------------------------------
+
+def page_map(text: str) -> dict[int, str]:
+    """Split page-marked volume text into {page number: body}."""
+    parts = re.split(r"<<<PAGE (\d+)>>>", text)
+    return {int(parts[i]): parts[i + 1] for i in range(1, len(parts) - 1, 2)}
+
+
+def roster_mentions(bios: list[Biography], year: int,
+                    start_id: int = 0, firms_only: bool = True) -> list[Mention]:
+    """Turn parsed biographies into affiliation mentions.
+
+    The roster is person-side, so each printed entry is already one person —
+    which is why it needs no within-volume person resolution, only the
+    cross-volume linking every wave gets.
+    """
+    out: list[Mention] = []
+    mid = start_id
+    for bio in bios:
+        printed = f"{bio.honorific + ' ' if bio.honorific else ''}{bio.name}"
+        person = parse_person(printed)
+        for pos in bio.positions:
+            if firms_only and not pos.is_firm:
+                continue
+            out.append(Mention(mention_id=mid, year=year, company=pos.organisation,
+                               role=pos.role, order=0, person=person, page=bio.page))
+            mid += 1
+    return out
+
+
+def parse_rosters(years: list[int] | None = None) -> dict[int, list[Biography]]:
+    """Parse the biographical roster of every wave present on disk."""
+    years = years or list(config.WAVES)
+    out: dict[int, list[Biography]] = {}
+    for y in years:
+        if not config.edition(y).has_source():
+            continue
+        bios = parse_roster(page_map(load_volume_text(y)))
+        if bios:
+            out[y] = bios
+    return out
+
+
+def build_from_rosters(rosters: dict[int, list[Biography]],
+                       person_threshold: int = 88,
+                       company_threshold: int = 92,
+                       firms_only: bool = True) -> dict[str, pd.DataFrame]:
+    """Build the affiliation tables from the biographical rosters."""
+    mentions: list[Mention] = []
+    for year, bios in sorted(rosters.items()):
+        mentions.extend(roster_mentions(bios, year, start_id=len(mentions),
+                                        firms_only=firms_only))
+    if not mentions:
+        return {k: pd.DataFrame() for k in
+                ("affiliations", "persons", "companies",
+                 "person_crosswalk", "company_crosswalk")}
+
+    m2p, people = cluster_persons(mentions, threshold=person_threshold)
+    pairs = [(m.year, m.company) for m in mentions]
+    m2c, firms = cluster_companies(pairs, threshold=company_threshold)
+
+    aff = pd.DataFrame([{
+        "mention_id": m.mention_id,
+        "year": m.year,
+        "person_id": m2p[m.mention_id],
+        "person_label": people[m2p[m.mention_id]]["label"],
+        "person_printed": m.person.raw,
+        "rank": m.person.rank or "",
+        "honorific": m.person.prefix or "",
+        "company_id": m2c[(m.year, m.company)],
+        "company_label": firms[m2c[(m.year, m.company)]]["label"],
+        "company_printed": m.company,
+        "role": m.role,
+        "order": m.order,
+        "city": "",
+        "capital_currency": "",
+        "capital_amount": None,
+        "source_edition": config.edition(m.year).edition,
+        "source_page": m.page,
+    } for m in mentions])
+
+    persons = pd.DataFrame([{
+        "person_id": p["person_id"], "label": p["label"], "name_key": p["name_key"],
+        "highest_rank": p["highest_rank"] or "", "n_mentions": p["n_mentions"],
+        "years_present": ";".join(str(y) for y in p["years_present"]),
+        "n_waves": len(p["years_present"]),
+        "name_variants": " | ".join(p["variants"]),
+    } for p in people.values()])
+
+    companies = pd.DataFrame([{
+        "company_id": c["company_id"], "label": c["label"], "name_key": c["name_key"],
+        "years_present": ";".join(str(y) for y in c["years_present"]),
+        "n_waves": len(c["years_present"]),
+        "name_variants": " | ".join(c["variants"]),
+    } for c in firms.values()])
+
+    person_crosswalk = pd.DataFrame([{
+        "person_id": m2p[m.mention_id], "year": m.year, "printed_name": m.person.raw,
+        "display": m.person.display, "name_key": m.person.key,
+        "rank": m.person.rank or "", "company_printed": m.company,
+        "role": m.role, "source_page": m.page,
+    } for m in mentions])
+    company_crosswalk = pd.DataFrame([{
+        "company_id": cid, "year": y, "printed_name": n,
+        "name_key": firms[cid]["name_key"],
+    } for (y, n), cid in sorted(m2c.items())])
+
+    return {"affiliations": aff, "persons": persons, "companies": companies,
+            "person_crosswalk": person_crosswalk,
+            "company_crosswalk": company_crosswalk}
