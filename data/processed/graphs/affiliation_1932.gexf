@@ -1,0 +1,5206 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2026-08-26">
+    <creator>NetworkX 3.6.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="edge">
+      <attribute id="5" title="role" type="string" />
+      <attribute id="6" title="order" type="long" />
+      <attribute id="7" title="year" type="long" />
+    </attributes>
+    <attributes mode="static" class="node">
+      <attribute id="0" title="bipartite" type="long" />
+      <attribute id="1" title="kind" type="string" />
+      <attribute id="2" title="rank" type="string" />
+      <attribute id="3" title="city" type="string" />
+      <attribute id="4" title="capital" type="double" />
+    </attributes>
+    <nodes>
+      <node id="P00001" label="Abdel Hadi Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00035" label="Banque de Crédit Agricole">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00002" label="Badaoui">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00036" label="Banque du Crédit Agricole d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00003" label="Abaza">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00224" label="The United Egyptian Nile Transport Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00004" label="Abdy Richard">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00096" label="Land Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00105" label="National Insurance Company of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00013" label="Alexandria &amp; Ramleh RaihYay Cy Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00019" label="Alexandria Water Company">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00005" label="Adda Abram">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00071" label="Eastern Export Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00175" label="Société Générale de Pressage cl de Dépôts">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00006" label="Adda César V">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00145" label="Société Anonyme des Immeubles de l'Est">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00007" label="Adda Fernand C.A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00008" label="Adda Joseph A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00126" label="S. A. des Immeubles de l'Est">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00128" label="S.A. du Béhéra">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00038" label="The Building Lands">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00086" label="The Gharbieh Land Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00094" label="Koubbeh Gardens">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00070" label="Easlern Export Cy. S. A">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00135" label="Société Anonyme Agricole et Industrielle d'Egyptc">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00009" label="Adly Yeghen">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00056" label="Société Anonyme des Eaux du Caire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00011" label="Aghion Gustave">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00016" label="Alexandria Insurance Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00012" label="Aghion Is. Jacques">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00046" label="Chemins de Fer Keneh-Assouan">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00156" label="Société Egyptienne d'Entreprises Urbaines et Rurales">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00013" label="Aghion Maurice">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00230" label="Tramwaysd'Alexandrie. Aghion Max">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00170" label="Société Franco-Egyptienne d'Importation">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00014" label="Ahmed Midhat Yeghen">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00248" label="tian de la Banque )1isr">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00168" label="Société Foncière d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00015" label="Abboud">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00184" label="Société des Automobiles">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00109" label="Omnibus du Caire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00228" label="Tilbury Contracting &amp;">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00016" label="Egypt">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00049" label="Clothing &amp; Equipment Company S. A">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00106" label="National Petroleum Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00161" label="Société Egyptienne de Pétrole (S.E. P.)">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00017" label="Ahmed Pacha Abdel Wahab">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00018" label="Alby Albert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00129" label="S.A. de Nettoyage et Pressage de Coton, S.A.E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00019" label="Allam Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00021" label="Alexandria Pressing Cy">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00022" label="Arcache Antoine">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00017" label="Alexandria Pressing Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00023" label="Arcoudaris P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00085" label="Gabbary Land">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00024" label="Bacos Lebnan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00231" label="Union Foncière d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00025" label="Baehler Charles Commandeur Medjidié">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00213" label="Egyptian Hotels">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00120" label="S. A. Les Grands Hôtelscl'Egyptc">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00110" label="Palestine Hotels Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00002" label="'Administration de The Electric Light &amp; Power Supply Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00225" label="The Upper Egypt Hotcls Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00118" label="S.E. de Ciment Portland Tourah">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00026" label="Banoun Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00177" label="Société Immobilière elu Domaine de Siouf. Baron Louis de Benoist d'Erquennes, Agent Supérieur de la Compagnf&lt;&gt; Universelle du Canal Maritime de Suez">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00027" label="Barker Henry Kniglll Bachelor">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00108" label="New Egyptian Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00152" label="Société Belgo-Egyptienne de l'Ezbékieh">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00020" label="The Alexandria vVater Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00081" label="Filature Nationale d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00102" label="National Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00103" label="National Insurance Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00162" label="Société Egyptienne de la Bourse Commerciale de Minet El Bassal">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00028" label="Biagi Dr. Enrico">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00100" label="National Bank of Egypl, The Agr.icultural Bank of Egypt el elu Crédil Foncier Egyptien">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00029" label="Blattner C. D. Henry">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00242" label="inistraleur-Directcnr en Egypte de The Sinaï Mining Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00031" label="Bourre Edouard">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00104" label="National Insurance Co. of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00032" label="Boyé Jean André">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00012" label="« Al-Chark » (L'Orient), Société Anonyme Egyptienne cl' Assurances sur la Vie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00033" label="Brereton H. K">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00064" label="Crédit Agricole d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00034" label="Campos A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00117" label="S. A. Agricole et Industrielle d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00035" label="Campos Benvenuto">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00173" label="Société Générale d'Electricité">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00099" label="Mécanique">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00036" label="Campos Giuseppe">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00037" label="Cantoni Charles">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00061" label="Crown Brewery">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00038" label="Carver H. B">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00043" label="Car ver Br os &amp; Co Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00027" label="The Associated Cotton Gin· ners of Egypt, Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00039" label="Cattaui Aslan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00078" label="The Egyptian Salt &amp; Soda Cy. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00040" label="Cattaui Edgard de">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00150" label="Société Anonyme du Chemin de Fer Ken eh-Assouan">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00246" label="suivantes Sociétés">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00041" label="Cattaui Elie J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00042" label="Cattaui E:mile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00093" label="Kafr El Zay at Cotton Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00043" label="Cattaui Joseph A.">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00121" label="S. A. du Wadi Kom Ombo">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00054" label="Compagnie Frigorifique d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00187" label="Société des Halles Centrales">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00062" label="Crown Egypt Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00174" label="Société Générale d'Irrigation">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00167" label="Société Foncière du">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00044" label="Cattaui René">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00051" label="Commercial Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00045" label="Chafik Pacha Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00029" label="Banco Ilalo-Egiziano ct de The Electric Light &amp; Power Supply">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00046" label="Constantin Jean Choremi Assocjé de la Y.Iaison Choremi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00022" label="Alexandrin Exchange Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00021" label="Alexandrie &amp; Ramleh Rail ways Cy. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00047" label="Choucry Mahmoud Pacha Ancien :\Iinistrc">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00031" label="Banque Hypothécaire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00048" label="Christomanos A. Max">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00252" label="üsociation dll Commerced'lm.portation">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00049" label="Cicurel David">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00050" label="Cicurel Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00032" label="Banque Misr">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00051" label="Cohen Alfred N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00182" label="Société d'Avances Commerciales">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00208" label="The Egypt and Sudan Export Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00052" label="Edward Cook C.S.I">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00011" label="The Agricultural Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00053" label="Cook John Lt.-Col. A. Gt. D.S.O">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00076" label="Egyptian Markets">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00054" label="G. Corsi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00227" label="The nited Egyptian Nile Transport Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00055" label="Diacono Robert M.B.E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00195" label="The Anglo-Ame- rican Nile &amp; Tourist Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00056" label="Emine Yehia">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00214" label="The Egyptian Produce Trading Cy. S. A. E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00030" label="Banque Belge et Internationale en Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00075" label="Egyptian Joint Cotton Committee">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00082" label="Fédération Egyptienne des Industries en E~gypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00057" label="Empain François">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00042" label="Cairo-Heliopolis">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00229" label="Tramways du Caire, ainsi que de nombreuses autres Sociétés Belges et Etrangères">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00058" label="Fakhry Mahmoud">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00200" label="The Cairo Electric Railways and Heliopolis Oases Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00059" label="Fenderl Hugo">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00113" label="Presses Libres Egyptiennes">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00060" label="Finney Harold E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00127" label="S.A. des Presses Libres Egyptiennes">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00061" label="Finney Oswald J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00238" label="del'Alexandria Commercial Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00130" label="S.A.I. des Terrains Ghizeh et Rodah">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00155" label="Société Egyptienne d'Egrenage">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00080" label="Entrepôts">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00180" label="Société Orientale de Publicité (S.A.E.)">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00149" label="Société Anonyme du Béhéra">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00159" label="Société Egyptienne de Ja Bourse Commerciale de ~li net El Bass al">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00062" label="Fitzgerard Francis C. R. E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00024" label="The Anglo-Belgian Co. of Egypt Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00063" label="Foster G. C">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00064" label="Friend Astley P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00025" label="Anglo-American Nile et Tou rist Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00097" label="The Menzaleh Canal Navigation Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00065" label="Fumaroli J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00089" label="Gérance Immobilière ct de la Yiodern Buildings">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00139" label="Société Anonyme de Nettoyage et Pressage du Coton">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00084" label="The Gabbari Lands">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00066" label="Galal Fahim">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00067" label="Gallini Fahmi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00068" label="GarofaiiO Douca">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00146" label="Tramways d'Alexandrie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00069" label="Gasche Linus">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00070" label="Gianotti Vittorio">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00160" label="Société Egyptienne de Pétrole (S.A.E.)">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00154" label="Société Delta (Società Edile Egiziana)">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00178" label="Société Misr pour l'Exportation du Coton (ex-Lindemann)">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00073" label="Grimprel Maurice">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00116" label="Réunion des Compagnies d'Assurances sur la Vie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00247" label="suppléant de l'Union Syndicale des Compagnies. d'Assurances à primes fixes detoute nature">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00074" label="Hassan Said">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00075" label="Hault">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00142" label="Société Anonyme des Chemins de Fer de la Basse-Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00147" label="!.a Société Anonyme des Tramways du Caire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00076" label="Hecht Van Der L">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00077" label="Henein Sadik">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00234" label="Upper Egypt Ratels">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00078" label="Nationale&gt;&gt;">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00079" label="Home John">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00087" label="Grands Hôtels d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00124" label="S. A. des Chemins de Fer Keneh-Assouan">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00226" label="The Upper Egypt Hotels">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00080" label="Home F. J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00081" label="Homsby Bertram">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00101" label="National Bank of Egypt, The Agricultural Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00066" label="Crédit Foncier Egyptien. Ismalum René. Chevalier de la Légion d'Honneur">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00082" label="Ithier Gaston">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00083" label="Jacobs Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00084" label="Jacot J. G. Descombes Ing">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00040" label="The Cairo Sand Bricks Co. S. A">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00132" label="Sidi Salem Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00085" label="Jullien Léopold Ingénieur Agricole">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00023" label="Alliance Française">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00068" label="Dakahlieh Land Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00086" label="Karam Edouard">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00202" label="The Commercial &amp; Esta tes Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00144" label="Société Anonyme des Immeubles d'Egyptc">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00193" label="The Alexandrie Pressing Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00188" label="Société des Tramwaysd'Alexandrie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00087" label="Kerihuel V. J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00088" label="Kitroeff Alex. Th">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00197" label="The Associated Cotton Ginners">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00089" label="Klat Bey Dimitri">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00015" label="The Alexandria &amp; Ramleh Railways Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00090" label="Klat Jules">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00207" label="The Egypban Bonded 'iVarehouses Cy. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00091" label="Labruyère René Julien">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00095" label="Land Bank">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00093" label="Lascaris Mario">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00245" label="pour l'Egypte de la Banque d'Athènes">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00065" label="Crédit Foncier Egyptien">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00095" label="Lian Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00192" label="The Alexandria Central Buildings">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00096" label="Lindemann Hugo">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00119" label="S. A. E. Fiat Oriente">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00166" label="Société Financière et Industrielle d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00133" label="Société &lt;( Maarad l&gt;">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00097" label="Lowe A. J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00233" label="United Egyptian Salt Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00098" label="Lozi Bey Abd el Fattah el">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00099" label="Lumbroso Jean">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00194" label="The Alexandrin Ex change Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00014" label="Alexandria &amp; Ramleh Rail ways Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00100" label="Marcovitch Jacques">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00179" label="Société Orienta le de Publicité">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00101" label="Mazloum Hassan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00074" label="The Egyptian Delta Land &amp; Investment Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00102" label="Menasce Baron Félix de">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00053" label="Communauté Israélite d'Alexandrie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00044" label="Cassa di Sconto et di Risparmio">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00125" label="S. A. des Entreprises Urbaines et Rurales">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00103" label="Minost Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00104" label="Mohamed Mahmoud Bey Khalil Avocat">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00026" label="The Anglo-Egyptian Land Allotment Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00163" label="Société Egyptienne des Madina">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00105" label="Monnerat E. Ing">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00215" label="The Electric Light &amp; Power Supply Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00106" label="Morin Jean">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00136" label="Société Anonyme Immobilière d'Alexandrie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00107" label="Mosséri Elie N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00196" label="The Anglo-Egyptian Land Allotment Company etde la Fayoum Light Railways">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00047" label="Chemins de Fer de la S. A. de W a di Kom Ombo">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00108" label="Mosseri Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00091" label="J os y Film, S. A. E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00110" label="Mosseri J. Nessim">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00111" label="Nakhla Pacha El Motei Ancien Magistrat">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00112" label="Naeff Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00039" label="Cairo Sand Bricks">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00113" label="Naggiar F. Victor">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00114" label="Nahman Enrico">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00172" label="Société Gé .. nérale d'Electricité">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00115" label="Nathan J. Edward">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00116" label="Naus Henry">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00083" label="Fédération Egyptienne des Industries">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00176" label="Société Générale des Sucreries">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00114" label="Raffinerie d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00157" label="Société Egyptienne d'Irrigation">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00232" label="Union des Agriculteurs">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00140" label="Société Anonyme de Wadi Kom Ombo">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00199" label="The Cairo Electric Railways &amp; Helio polis Oases Cy.~ de l'African Enterprise et Development Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00138" label="Société Anonyme d.es Eaux du Caire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00143" label="Société Anonyme des Ciments d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00117" label="Nubar Arakel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00050" label="Comité de Londres de The Mortgage Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00118" label="Pegna E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00210" label="Egyptian Bonded Warehouses Co. Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00119" label="Perrott C.H">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00219" label="The Man ure Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00120" label="Pilavachi C">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00211" label="The Egyptian Cotton Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00058" label="Constructions Modernes, S. A. E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00121" label="Pinto Silvio">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00123" label="S. A. de Pressage et Dépôts">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00131" label="Salonica Cigarette Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00122" label="Piot Bey J.B">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00212" label="The Egyptian Enterprise &amp; Development Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00123" label="Polnauer L">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00239" label="del'Alexandria Navigation Cy., S. A. E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00243" label="la« Ganz S. A. E">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00124" label="Ràbbath Sélim">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00069" label="Delta Trading Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00125" label="Raybaud Max">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00060" label="Cro\Yn Brewery">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00126" label="Reinhart Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00077" label="The Egyptian Motor Transport Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00191" label="The Alex andria Insurance Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00127" label="Richmond T.S">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00206" label="The Eastern Automobiles Supplies &amp; Transport Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00217" label="The General Accident Fire and Life Assurance Corporation Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00073" label="Egyptian Consolidated Land Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00221" label="The Si di Salem of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00220" label="The Mortgage Co. of Egypt Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00128" label="Riquez Cav. Uff. Giuseppe">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00137" label="Société Anonyme Immobilière du Domaine de Siouf">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00129" label="Rolin Léon">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00141" label="Société Anonyme des Anciennes Entreprises L. Rolin et Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00151" label="Société Belge-Egyptienne de l'Ezbékieh">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00201" label="The Cairo Suburban">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00130" label="Rolo Max">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00131" label="Rolo Robert J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00063" label="Crownegypt Cu">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00153" label="Société Cotonnière Maarad">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00132" label="Rom François">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00041" label="The Cairo Suburban Building Land Co">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00133" label="Rowlatt Sir F.T. K.B.E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00098" label="Mortgage Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00134" label="Safouat Pacha Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00005" label="'Administration de la S. A. Immobilière du Domaine de Siouf">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00135" label="Salvago Micliel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00052" label="Communauté Hellénique d'Alexandrie">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00240" label="del'Alexandria Water Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00136" label="Salvago Constantin M">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00165" label="Société Egyptienne des Pétroles (S.E.P.) Salama Salvator,_ },1anaging-Dircctor de la Maison Bchrend &amp; Co Ltd">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00115" label="Rosetta &amp; Alex andria Riec MiJJs">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00137" label="Lionello Scelsi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00028" label="Banco Italo-Egiziano">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00045" label="Cass·t di Sconto e di. Risparmio">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00138" label="Shamà Elie F">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00139" label="Sidi Vitali">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00122" label="S. A. de Nettoyage">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00112" label="Pressage du Coton. S.E. Sir Ismail Sirry Pacha K.C.M.G., Anci('n">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00140" label="Spetseropoulo G. D">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00141" label="Strologo G. D">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00009" label="A lexandria Insurance">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00142" label="Suarès Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00143" label="Suarès Fernand">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00144" label="Suarès Jacques">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00203" label="The Commercial Bank of Egypt et Société Egyptienne d'Entreprises Urbaines et Rurales">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00146" label="Sultan Dr. Fouad">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00033" label="Banque Misr ct de toutes les institutions financières, commerciales et Industrielles, fondées par la Banque Misr, en Egypte et à l'Etranger">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00147" label="Sursock Nicolas A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00148" label="Sursock Vladimir">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00092" label="Ka fr El Zayat Cotton Company">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00149" label="Talaat Harb">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00249" label="toutes les institutions financières, commerciales et industrielles fondées par la Banque Misr en Egypte et à l'Etranger">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00150" label="Takla G.">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="C00164" label="Société Egyptienne des Pétroles">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00088" label="Gérance Immobilière">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00151" label="Toriel Elie">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00186" label="Société des Biens de Rapport d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00223" label="The Union Cotton Cy">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00152" label="Toriel Raphael">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00244" label="p. i. de la Société des Biens de Rapport d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00222" label="The Union Cotton Co of Alexandria">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00153" label="Trembley Ernest">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00250" label="~u Comptoir des Ciments">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00158" label="Société Egyptienne de Ciment Portland Tourah-Le Caire">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="C00067" label="Crédit Immobilier Suisse-Egyptien">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00154" label="Vais Ezio">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00134" label="Société Anonyme Agrico1e et Industrielle d'Egypte">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00155" label="Vannucci Comm. Gr·isante">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00156" label="Vincenot">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00055" label="Compagnie d'Assurances «Al Charkl). w">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00158" label="Wellhoff Salomon">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00209" label="The Egyptian Boncled Warehouses Cy Ltcl">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00159" label="Williamson John">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00160" label="Wood Smith K.B">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00018" label="Alexandria Water">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00161" label="Zarifi Th">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00162" label="Zerbini Dimitri J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="C00218" label="The Kafr El Z">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+      <node id="P00163" label="Sir Ziwer Ahmed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="C00107" label="Nationnl Bank of Egypt">
+        <attvalues>
+          <attvalue for="0" value="1" />
+          <attvalue for="1" value="company" />
+          <attvalue for="3" value="" />
+          <attvalue for="4" value="0.0" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="P00001" target="C00035" id="0">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00002" target="C00036" id="1">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00017" id="2">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00019" id="3">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00047" id="4">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00066" id="5">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00067" id="6">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00074" id="7">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00101" id="8">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00103" id="9">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00036" target="P00146" id="10">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00003" target="C00224" id="11">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00224" target="P00140" id="12">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00004" target="C00096" id="13">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00004" target="C00105" id="14">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00004" target="C00013" id="15">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00004" target="C00019" id="16">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00096" target="P00031" id="17">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00096" target="P00161" id="18">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00005" target="C00071" id="19">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00005" target="C00175" id="20">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00071" target="P00006" id="21">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00071" target="P00007" id="22">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00175" target="P00038" id="23">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00175" target="P00126" id="24">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00006" target="C00145" id="25">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00145" target="P00007" id="26">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00145" target="P00008" id="27">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00126" id="28">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00128" id="29">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00038" id="30">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00086" id="31">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00094" id="32">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00070" id="33">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00008" target="C00135" id="34">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00128" target="P00031" id="35">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00038" target="P00120" id="36">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00086" target="P00122" id="37">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00009" target="C00056" id="38">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00056" target="P00062" id="39">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00056" target="P00087" id="40">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00056" target="P00105" id="41">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00056" target="P00122" id="42">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00011" target="C00016" id="43">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00016" target="P00061" id="44">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00016" target="P00086" id="45">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00016" target="P00118" id="46">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00016" target="P00131" id="47">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00012" target="C00046" id="48">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00012" target="C00156" id="49">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00156" target="P00021" id="50">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00013" target="C00230" id="51">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00013" target="C00170" id="52">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00014" target="C00248" id="53">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00014" target="C00168" id="54">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00168" target="P00043" id="55">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00168" target="P00149" id="56">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00015" target="C00184" id="57">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00015" target="C00109" id="58">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00015" target="C00228" id="59">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00184" target="P00131" id="60">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00109" target="P00131" id="61">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00016" target="C00049" id="62">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00016" target="C00106" id="63">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00016" target="C00161" id="64">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00106" target="P00070" id="65">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00018" target="C00129" id="66">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00022" target="C00017" id="67">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00017" target="P00049" id="68">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00017" target="P00130" id="69">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00023" target="C00085" id="70">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00024" target="C00231" id="71">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00213" id="72">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00120" id="73">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00110" id="74">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00002" id="75">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00225" id="76">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00025" target="C00118" id="77">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00213" target="P00155" id="78">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00026" target="C00177" id="79">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00108" id="80">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00152" id="81">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00020" id="82">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00081" id="83">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00102" id="84">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00103" id="85">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00027" target="C00162" id="86">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00108" target="P00113" id="87">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00108" target="P00115" id="88">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00108" target="P00131" id="89">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00152" target="P00115" id="90">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00020" target="P00084" id="91">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00020" target="P00093" id="92">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00081" target="P00061" id="93">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00081" target="P00069" id="94">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00081" target="P00097" id="95">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00081" target="P00135" id="96">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00081" target="P00152" id="97">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00102" target="P00131" id="98">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00103" target="P00101" id="99">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00103" target="P00147" id="100">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00162" target="P00059" id="101">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00162" target="P00121" id="102">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00028" target="C00100" id="103">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00029" target="C00242" id="104">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00031" target="C00104" id="105">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00032" target="C00012" id="106">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00012" target="P00073" id="107">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00012" target="P00078" id="108">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00012" target="P00104" id="109">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00012" target="P00111" id="110">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00033" target="C00064" id="111">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00064" target="P00093" id="112">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00034" target="C00117" id="113">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00035" target="C00173" id="114">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00035" target="C00099" id="115">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00173" target="P00036" id="116">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00173" target="P00041" id="117">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00099" target="P00036" id="118">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00099" target="P00041" id="119">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00099" target="P00114" id="120">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00037" target="C00061" id="121">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00038" target="C00043" id="122">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00038" target="C00027" id="123">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00027" target="P00046" id="124">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00039" target="C00078" id="125">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00078" target="P00056" id="126">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00078" target="P00121" id="127">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00078" target="P00128" id="128">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00040" target="C00150" id="129">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00040" target="C00246" id="130">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00042" target="C00093" id="131">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00121" id="132">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00054" id="133">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00187" id="134">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00062" id="135">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00174" id="136">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00043" target="C00167" id="137">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00054" target="P00087" id="138">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00054" target="P00105" id="139">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00054" target="P00116" id="140">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00044" target="C00051" id="141">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00051" target="P00142" id="142">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00051" target="P00143" id="143">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00045" target="C00029" id="144">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00046" target="C00022" id="145">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00046" target="C00021" id="146">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00047" target="C00031" id="147">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00048" target="C00252" id="148">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00050" target="C00032" id="149">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00032" target="P00098" id="150">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00032" target="P00149" id="151">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00051" target="C00182" id="152">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00051" target="C00208" id="153">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00052" target="C00011" id="154">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00011" target="P00127" id="155">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00053" target="C00076" id="156">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00076" target="P00080" id="157">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00054" target="C00227" id="158">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00055" target="C00195" id="159">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00056" target="C00214" id="160">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00056" target="C00030" id="161">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00056" target="C00075" id="162">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00056" target="C00082" id="163">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00030" target="P00057" id="164">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00030" target="P00082" id="165">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00030" target="P00083" id="166">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00030" target="P00116" id="167">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00030" target="P00131" id="168">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00057" target="C00042" id="169">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00057" target="C00229" id="170">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00058" target="C00200" id="171">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00059" target="C00113" id="172">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00060" target="C00127" id="173">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00127" target="P00061" id="174">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00127" target="P00141" id="175">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00238" id="176">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00130" id="177">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00155" id="178">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00080" id="179">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00180" id="180">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00149" id="181">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00061" target="C00159" id="182">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00149" target="P00063" id="183">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00149" target="P00105" id="184">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00149" target="P00135" id="185">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00062" target="C00024" id="186">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00024" target="P00107" id="187">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00024" target="P00116" id="188">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00064" target="C00025" id="189">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00064" target="C00097" id="190">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00065" target="C00089" id="191">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00065" target="C00139" id="192">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00065" target="C00084" id="193">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00084" target="P00093" id="194">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00068" target="C00146" id="195">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00070" target="C00160" id="196">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00070" target="C00154" id="197">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00070" target="C00178" id="198">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00178" target="P00096" id="199">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00073" target="C00116" id="200">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00073" target="C00247" id="201">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00075" target="C00142" id="202">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00075" target="C00147" id="203">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00142" target="P00076" id="204">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00142" target="P00082" id="205">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00077" target="C00234" id="206">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00079" target="C00087" id="207">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00079" target="C00124" id="208">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00079" target="C00226" id="209">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00081" target="C00101" id="210">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00081" target="C00066" id="211">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00084" target="C00040" id="212">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00084" target="C00132" id="213">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00040" target="P00153" id="214">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00085" target="C00023" id="215">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00085" target="C00068" id="216">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00086" target="C00202" id="217">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00086" target="C00144" id="218">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00086" target="C00193" id="219">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00086" target="C00188" id="220">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00144" target="P00102" id="221">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00144" target="P00124" id="222">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00144" target="P00147" id="223">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00088" target="C00197" id="224">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00089" target="C00015" id="225">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00015" target="P00091" id="226">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00015" target="P00093" id="227">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00015" target="P00135" id="228">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00090" target="C00207" id="229">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00091" target="C00095" id="230">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00093" target="C00245" id="231">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00093" target="C00065" id="232">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00065" target="P00103" id="233">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00065" target="P00116" id="234">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00065" target="P00149" id="235">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00065" target="P00156" id="236">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00095" target="C00192" id="237">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00192" target="P00127" id="238">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00096" target="C00119" id="239">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00096" target="C00166" id="240">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00096" target="C00133" id="241">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00166" target="P00121" id="242">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00166" target="P00137" id="243">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00097" target="C00233" id="244">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00233" target="P00128" id="245">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00099" target="C00194" id="246">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00099" target="C00014" id="247">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00100" target="C00179" id="248">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00101" target="C00074" id="249">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00074" target="P00119" id="250">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00074" target="P00159" id="251">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00102" target="C00053" id="252">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00102" target="C00044" id="253">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00102" target="C00125" id="254">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00044" target="P00128" id="255">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00104" target="C00026" id="256">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00104" target="C00163" id="257">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00026" target="P00110" id="258">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00026" target="P00132" id="259">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00105" target="C00215" id="260">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00215" target="P00112" id="261">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00106" target="C00136" id="262">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00136" target="P00120" id="263">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00107" target="C00196" id="264">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00107" target="C00047" id="265">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00108" target="C00091" id="266">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00112" target="C00039" id="267">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00114" target="C00172" id="268">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00083" id="269">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00176" id="270">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00114" id="271">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00157" id="272">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00232" id="273">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00140" id="274">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00199" id="275">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00138" id="276">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00116" target="C00143" id="277">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00176" target="P00158" id="278">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00114" target="P00158" id="279">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00117" target="C00050" id="280">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00118" target="C00210" id="281">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00119" target="C00219" id="282">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00120" target="C00211" id="283">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00120" target="C00058" id="284">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00121" target="C00123" id="285">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00121" target="C00131" id="286">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00122" target="C00212" id="287">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00123" target="C00239" id="288">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00123" target="C00243" id="289">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00124" target="C00069" id="290">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00125" target="C00060" id="291">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00126" target="C00077" id="292">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00126" target="C00191" id="293">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00127" target="C00206" id="294">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00127" target="C00217" id="295">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00127" target="C00073" id="296">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00127" target="C00221" id="297">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00127" target="C00220" id="298">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00128" target="C00137" id="299">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="C00137" target="P00138" id="300">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00129" target="C00141" id="301">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00129" target="C00151" id="302">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00129" target="C00201" id="303">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00131" target="C00063" id="304">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00131" target="C00153" id="305">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00132" target="C00041" id="306">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00133" target="C00098" id="307">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00134" target="C00005" id="308">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00135" target="C00052" id="309">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00135" target="C00240" id="310">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00136" target="C00165" id="311">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00136" target="C00115" id="312">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00137" target="C00028" id="313">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00137" target="C00045" id="314">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00139" target="C00122" id="315">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00139" target="C00112" id="316">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00141" target="C00009" id="317">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00144" target="C00203" id="318">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00146" target="C00033" id="319">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00148" target="C00092" id="320">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00149" target="C00249" id="321">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00150" target="C00164" id="322">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00150" target="C00088" id="323">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00151" target="C00186" id="324">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00151" target="C00223" id="325">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00152" target="C00244" id="326">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00152" target="C00222" id="327">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00153" target="C00250" id="328">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00153" target="C00158" id="329">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00153" target="C00067" id="330">
+        <attvalues>
+          <attvalue for="5" value="vice_president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00154" target="C00134" id="331">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00156" target="C00055" id="332">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00158" target="C00209" id="333">
+        <attvalues>
+          <attvalue for="5" value="president" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00160" target="C00018" id="334">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00162" target="C00218" id="335">
+        <attvalues>
+          <attvalue for="5" value="managing_director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+      <edge source="P00163" target="C00107" id="336">
+        <attvalues>
+          <attvalue for="5" value="director" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="1932" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

@@ -1,0 +1,1735 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2026-08-26">
+    <creator>NetworkX 3.6.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="edge">
+      <attribute id="3" title="via" type="string" />
+    </attributes>
+    <attributes mode="static" class="node">
+      <attribute id="0" title="bipartite" type="long" />
+      <attribute id="1" title="kind" type="string" />
+      <attribute id="2" title="rank" type="string" />
+    </attributes>
+    <nodes>
+      <node id="P00614" label="Abaza Abdel Hamid">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00615" label="Abdel Fattah El Lozi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00618" label="Aboui-Fath">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00620" label="Adda Achille">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00008" label="Adda Joseph A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00621" label="Adès Emile N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00179" label="Adès Gaston N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00623" label="Dr. Afifi Hafez">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00624" label="T•tan~jorda1nie">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00011" label="Aghion Gustave">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00010" label="Aghion Max César">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00625" label="Alexander A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00019" label="Allam Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00185" label="Allemann Georges">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00626" label="Andraus Elias">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00628" label="Arslan Abdallah Bey Sénatf•·tu">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00200" label="Axeh·ood Matt M">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00631" label="Bahnass Soultan Mahmoud">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00632" label="Simon Arzt Stores">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00635" label="Bata Henri">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00636" label="Battino">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00208" label="Bégué Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00637" label="Belilos Maurice Youssef">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00638" label="Bella Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00639" label="Benderli Henri">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00215" label="Benderli Simon">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00640" label="Benoist Baron Louis de">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00642" label="Besso Sabino">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00644" label="Boels Jean">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00646" label="Bonenfant Cav. Luigi">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00221" label="Bordier Pierre">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00649" label="Bowring H">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00650" label="Brunner Frederic">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00651" label="Buccianti Ruggero E. lng">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00231" label="Buchlea Constantin Dr">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00652" label="El Bassa!">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00233" label="Burlet Charles de">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00238" label="Callens Auguste">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00653" label="Campos Amerigo">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00035" label="Campos Benvenuto">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00036" label="Campos Giuseppe">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00241" label="Campos Hans">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00654" label="Carter Robert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00038" label="Carver H. B">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00655" label="Cassar Paul">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00656" label="Castro Salvatore">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00657" label="Casulli">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00039" label="Cattaui Aslan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00042" label="Cattaui E:mile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00044" label="Cattaui René">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00658" label="Celier A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00659" label="Polaire de Suède">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00661" label="Chate Charles Geoffrey">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00253" label="Choremi Georges J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00662" label="Choremi Jean A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00664" label="Choukri">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00665" label="Cicurel Salvator">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00666" label="Cockinos Miltiade">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00667" label="Cogels">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00051" label="Cohen Alfred N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00264" label="Cohen Aron">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00668" label="Cohen Sir Robert Waley">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00266" label="Cohen">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00268" label="Cohenca Monis">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00463" label="Film">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00669" label="Collier Henry Deward">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00670" label="Constantinescu Michel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00671" label="Cook C.E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00672" label="Cornish J. E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00673" label="Couldrey Oscar">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00674" label="Cozzika Th. P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00675" label="Crawford John A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00676" label="Dabbah Maurice">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00677" label="Delany Gerald">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00287" label="Dellaporta Byron G">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00679" label="Ders Antonin">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00680" label="Dervieu P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00681" label="Dvac:ono Hector V">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00682" label="Dïmopoulo D">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00683" label="Doligez Marcel Auguste Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00684" label="Dorra Haim">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00685" label="Dorra Jacques">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00686" label="Doss Tewfik">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00295" label="Dubied Pierre">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00687" label="Totah Ibrahim Eid">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00688" label="El Chichini Hassan 1Kamel .">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00689" label="Empain M. le Baron Jean">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00691" label="Epaulard P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00316" label="El'l'era Isaac">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00693" label="Exbrayat J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00694" label="Ezri Raymond">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00695" label="Fahmi Gallini">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00696" label="Fanner William Rogers">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00697" label="Farghaly Mohamed Ahmed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00059" label="Fenderl Hugo">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00698" label="Garboua Maurice">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00069" label="Gasche Linus">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00699" label="Gasche Robert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00700" label="Ghazi Moustapha Kamel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00701" label="Gorra Oswald">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00352" label="Groppi J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00354" label="Guirguis Elias">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00702" label="Haerens R">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00703" label="Halter Hans">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00704" label="Harari Ralph A">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00705" label="Sir Harilri Victor">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00706" label="Hargreaves Clive R">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00707" label="8ir Hassan Hafez">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00712" label="Hopkinson Frank">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00377" label="Horne F. J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00713" label="Horthy">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00714" label="Hussein Mahmoud Enan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00083" label="Jacobs Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00717" label="Jacot-Descombes J. G">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00720" label="Jones">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00721" label="Kame.l Ibrahim">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00086" label="Karam Edouard">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00722" label="St. John's College Oxford">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00723" label="Kfoury Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00725" label="Kfoury Philippe">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00726" label="Khachaba Sayed Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00727" label="Khalil Aly El Gazzar">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00387" label="Khalil Mohamed Mahmoud">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00090" label="Klat Jules">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00729" label="Lambiotte E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00730" label="Landerer R">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00093" label="Lascaris Mario">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00016" label="Egypt">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00732" label="Leport Henry">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00403" label="Levi 1. G">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00095" label="Lian Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00407" label="Lloyd John Evans">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00734" label="Messrs. Davies">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00736" label="Lombardo Cesare">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00097" label="Lowe A. J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00418" label="Mac Ewen William G">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00738" label="Mackenzie W">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00740" label="Mahmoud Eff. Fahmy">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00741" label="Maksud Emile">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00426" label="Malone Peter">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00742" label="Marcarian A. D">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00101" label="Mazloum Hassan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00743" label="GEP">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00744" label="MBSsiqua B">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00441" label="Messiqua Marcel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00447" label="Misrahi Albert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00746" label="Moharrem Osman">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00458" label="Moreau E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00748" label="Moriatti Georges">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00749" label="Morpurgo Gustave">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00751" label="Mosseri Guido J">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00752" label="Mosseri Henri Victor">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00467" label="Mosseri Joseph Vita">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00109" label="Mosseri Maurice N">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00754" label="Mouratiadï C.M">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00756" label="Mullet">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00757" label="Murat E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00759" label="Mustaki Armand">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00760" label="Nacamuli Albert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00761" label="Nacamuli Isaac">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00762" label="Nachaat Hassan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00763" label="Franco-Egyptienne de Soieries">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00764" label="Neuville Paul">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00766" label="Papastratos E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00767" label="Paskelier Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00768" label="Passardi Renato">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00770" label="Pathy Polnauer Lé\dislas">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00118" label="Pegna E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00771" label="Philp E. L">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00772" label="Pierrakos Nicolas">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00773" label="Pinto 1runo B. Comm">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00774" label="Pinto Prof. Dott. Cav·. Uff. Carlo">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00778" label="Pollet Thiriez">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00779" label="Rachid Mohamed Abbas">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00780" label="Raemy">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00508" label="Ragheb Hanna">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="bey" />
+        </attvalues>
+      </node>
+      <node id="P00509" label="Ralli Alexandre">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00125" label="Raybaud Max">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00783" label="Richard Edouard">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00784" label="Riley E. C">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00785" label="Roberts Stanley P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00786" label="Roche De la Rigodière">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00787" label="Rofé Charries">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00788" label="Rolin Daniel Baron">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00789" label="Rolin Léon Baron">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00790" label="Rolo Jacques R">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00130" label="Rolo Max">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00530" label="Sabry Hussein">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00791" label="Sachs David">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00792" label="Sadek Wahba">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00532" label="Sadik Henein">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00793" label="Said Hassan">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00537" label="Salama Salvatore">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00540" label="Salvago Michel C">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00795" label="Scott Frank Douglas">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00797" label="Serageldine Anis">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00798" label="Sheridan J. P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00799" label="Sheriff Robert">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00801" label="Sims Marshall George">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00802" label="Sinadino Aug">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00805" label="Sir C. W. Spinks">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00806" label="Stiassny Ewald">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00146" label="Sultan Dr. Fouad">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00808" label="Ancien Ministre Ancien Sénateur">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00574" label="Taher Mohamed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00150" label="Takla G.">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+      <node id="P00809" label="Tilche Joseph">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00152" label="Toriel Raphael">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00811" label="Toriel Victor">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00812" label="Toutounji">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00153" label="Trembley Ernest">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00813" label="Tsekis Charles">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00814" label="Urban H">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00154" label="Vais Ezio">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00815" label="Van Damme L">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00816" label="Van Den Bosch Paul">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00817" label="Varvarian Garabed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00818" label="Vincenot Marcel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00819" label="Vivante Alfred">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00821" label="Vogt Stener H">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00824" label="Wahba E. H">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00827" label="Weissenberg Harold">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00158" label="Wellhoff Salomon">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00829" label="Wibaut P">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00830" label="Wild E. K">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00831" label="Wissa Fahm1y /Wissa">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00832" label="Wistenetzki Oscar">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00833" label="Wyler E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00834" label="E'conomique">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00835" label="Znbal Wa!:iie">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00836" label="Znccar Joseph E">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00837" label="Zayed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00838" label="Franco-Egyptienne">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00839" label="Zude Emmanuel">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="" />
+        </attvalues>
+      </node>
+      <node id="P00840" label="Zulfikar Ahmed">
+        <attvalues>
+          <attvalue for="0" value="0" />
+          <attvalue for="1" value="person" />
+          <attvalue for="2" value="pasha" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="P00008" target="P00537" id="0" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C01009" />
+        </attvalues>
+      </edge>
+      <edge source="P00623" target="P00815" id="1" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00065" />
+        </attvalues>
+      </edge>
+      <edge source="P00632" target="P00799" id="2" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C01154" />
+        </attvalues>
+      </edge>
+      <edge source="P00667" target="P00687" id="3" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00306" />
+        </attvalues>
+      </edge>
+      <edge source="P00667" target="P00816" id="4" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00306" />
+        </attvalues>
+      </edge>
+      <edge source="P00675" target="P00797" id="5" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00102" />
+        </attvalues>
+      </edge>
+      <edge source="P00687" target="P00816" id="6" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00306" />
+        </attvalues>
+      </edge>
+      <edge source="P00352" target="P00757" id="7" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00394" />
+        </attvalues>
+      </edge>
+      <edge source="P00705" target="P00158" id="8" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00114" />
+        </attvalues>
+      </edge>
+      <edge source="P00705" target="P00387" id="9" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00114" />
+        </attvalues>
+      </edge>
+      <edge source="P00387" target="P00158" id="10" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00114" />
+        </attvalues>
+      </edge>
+      <edge source="P00441" target="P00447" id="11" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00890" />
+        </attvalues>
+      </edge>
+      <edge source="P00768" target="P00819" id="12" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C01008" />
+        </attvalues>
+      </edge>
+      <edge source="P00780" target="P00788" id="13" weight="1">
+        <attvalues>
+          <attvalue for="3" value="C00215" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

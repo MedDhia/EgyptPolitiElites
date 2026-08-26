@@ -4,8 +4,16 @@ data/raw/*
 !data/raw/manifest.json
 data/interim/*
 !data/interim/.gitkeep
+# The built dataset is the deliverable, so the tables and the Gephi files are
+# tracked. GraphML and the pooled graphs are omitted: they duplicate the GEXF
+# and regenerate with `politi build --roster`.
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/*.csv
+!data/processed/graphs/
+data/processed/graphs/*
+!data/processed/graphs/*.gexf
+data/processed/graphs/*_pooled.gexf
 
 # data/incoming/ is NOT ignored: it is the drop point for volumes delivered
 # through git when the pipeline host cannot reach the source directly.
