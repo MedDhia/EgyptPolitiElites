@@ -25,7 +25,9 @@ import pandas as pd
 from .explore import (AQUA, BLUE, GRID, ORANGE, ORIGIN_COLOR, ORIGIN_LABEL,
                       _caption, _frame, _save, real_directors)
 from .origin import is_person
-from .politics import (OFFICE_LABEL, OFFICES, office_by_wave, origin_with_political,
+from .politics import (OFFICE_LABEL, OFFICES, office_by_wave,
+                       origin_with_political, persistence_models,
+                       persistence_panel, persistence_stratified,
                        political_panel)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
@@ -101,7 +103,7 @@ def fig_office_holders(aff: pd.DataFrame, flags: pd.DataFrame, out: Path) -> Pat
               columnspacing=1.4)
     _frame(ax)
 
-    _caption(fig, "One director in sixteen held a public office",
+    _caption(fig, "One director in sixteen is recorded in a public office",
              "Left: the share of each wave's directors recorded in a public office, by office. Right: whether the office was\n"
              "current or printed as past — the reason the total is not a count of serving officials.",
              FLOOR_NOTE + " A director holding two offices is counted under each, so the bars sum to slightly more than the "
@@ -109,7 +111,7 @@ def fig_office_holders(aff: pd.DataFrame, flags: pd.DataFrame, out: Path) -> Pat
     return _save(fig, out, rect=(0, 0.155, 1, 0.85))
 
 
-# --- 2. what office bought: seats ---------------------------------------------
+# --- 2. office and seat count -------------------------------------------------
 
 def fig_office_and_seats(aff: pd.DataFrame, flags: pd.DataFrame, out: Path,
                          n_boot: int = 2000, seed: int = 7) -> Path:
@@ -157,10 +159,10 @@ def fig_office_and_seats(aff: pd.DataFrame, flags: pd.DataFrame, out: Path,
     ax.set_ylim(0, max(d.hi) * 1.18)
     ax.set_ylabel("mean board seats held in the wave")
     _frame(ax)
-    _caption(fig, "Office holders sat on two to three times as many boards",
+    _caption(fig, "Office holders are recorded on two to three times as many boards",
              "Mean seats per director, with 95% bootstrap intervals. The multiple beneath each wave is the ratio of the two means.",
-             FLOOR_NOTE + "\nThis is a gap in seats, not evidence that office produced them: men were appointed to boards "
-             "because they were already prominent, and prominence is what the office records.")
+             FLOOR_NOTE + "\nA difference in seats held, and nothing more. Office and directorship are printed in the same "
+             "entry, so the two are simultaneous here and neither is shown to precede the other.")
     return _save(fig, out, rect=(0, 0.145, 1, 0.86))
 
 
@@ -203,7 +205,7 @@ def fig_connected_firms(firm: pd.DataFrame, out: Path) -> Path:
     ax.legend(frameon=False, fontsize=9.5, labelcolor=INK_SOFT)
     _frame(ax)
 
-    _caption(fig, "About a quarter of firms had a politically connected board",
+    _caption(fig, "About a quarter of firms are recorded with a connected director",
              "Left: firms with at least one director recorded in public office. Right: how many directors those firms are\n"
              "recorded through, against the rest.",
              FLOOR_NOTE + "\nThe right panel is partly mechanical: a firm recorded through more directors has more chances "
@@ -256,7 +258,7 @@ def fig_office_by_origin(panel: pd.DataFrame, out: Path) -> Path:
     ax.set_title("Pooled across waves", fontsize=12, color=INK, loc="left", pad=12)
     _frame(ax, xgrid=True)
 
-    _caption(fig, "Political office was the Egyptian route into the boardroom",
+    _caption(fig, "Office holding is concentrated among Egyptian directors",
              "Share of directors of each community recorded in a public office. 1932 is a selection of prominent men, which\n"
              "is why the Arab / Egyptian line starts so high.",
              FLOOR_NOTE + "\nOrigin is imputed from the name and carries error (docs/ORIGIN_CODING.md). Directors whose "
@@ -264,7 +266,7 @@ def fig_office_by_origin(panel: pd.DataFrame, out: Path) -> Path:
     return _save(fig, out, rect=(0, 0.155, 1, 0.85))
 
 
-# --- 5. what office bought: position ------------------------------------------
+# --- 5. office and position ---------------------------------------------------
 
 def _coef_panel(ax, d: pd.DataFrame, colour: str, label_x: str) -> None:
     y = np.arange(len(d))[::-1]
@@ -301,14 +303,15 @@ def fig_office_position(panel: pd.DataFrame, out: Path) -> Path:
         ax.set_xlim(-lim, lim)
         _frame(ax, xgrid=True)
 
-    _caption(fig, "Office bought seats, not a better position per seat",
+    _caption(fig, "The brokerage gap is a seat-count gap",
              "Difference in log projected betweenness between directors with and without a recorded office, by wave. Bars are\n"
              "95% intervals with heteroskedasticity-robust errors; * marks p < 0.05.",
              "Left, office holders broker substantially more. Right, once the number of boards they sit on is held constant "
-             "the difference mostly closes — what office is associated with is more seats, not a more central place among "
-             "the directors who hold the same number.\n"
-             "Associational throughout: men were recruited to boards because they were already prominent, and the office is "
-             "a record of that prominence. 1932 is a selection of prominent men and is not comparable with the rest.")
+             "most of the difference goes — office is associated with more seats, not with a more central place among the "
+             "directors holding the same number.\n"
+             "Association only, in neither direction: office and board seat are recorded in the same volume, so nothing here "
+             "separates a man reaching boards through his standing from one whose standing followed his boards. 1932 is a "
+             "selection of prominent men and is not comparable with the rest.")
     return _save(fig, out, rect=(0, 0.145, 1, 0.86))
 
 
@@ -338,7 +341,7 @@ def fig_origin_adjusted(panel: pd.DataFrame, out: Path) -> Path:
     ax.set_xlabel("European advantage over Arab / Egyptian directors, in log brokerage")
     ax.legend(frameon=False, fontsize=10, labelcolor=INK_SOFT, loc="lower right")
     _frame(ax, xgrid=True)
-    _caption(fig, "Office holding does not explain away the origin comparison",
+    _caption(fig, "The origin comparison is unchanged by holding office constant",
              "The European coefficient from the wave-by-wave model, before and after holding political office constant.\n"
              "Both specifications control for how many boards a director sat on.",
              "If office were the channel by which Arab/Egyptian directors reached brokerage positions, comparing directors "
@@ -347,6 +350,85 @@ def fig_origin_adjusted(panel: pd.DataFrame, out: Path) -> Path:
              "Only 1932 shifts materially, downward (0.70 to 0.53), and 1932 is a selection.\n"
              "1932 is a selection of prominent men. Origin is imputed from the name (docs/ORIGIN_CODING.md).")
     return _save(fig, out, rect=(0, 0.145, 1, 0.86))
+
+
+# --- 7. do connected firms persist? -------------------------------------------
+
+def fig_firm_persistence(panel: pd.DataFrame, out: Path, n_perm: int = 4000) -> Path:
+    """Reappearance in the next volume, before and after the artefact controls.
+
+    The raw gap is large and the controlled one is not, so the figure has to
+    show both or it misleads either way.
+    """
+    _style()
+    models = persistence_models(panel)
+    strat = persistence_stratified(panel, n_perm=n_perm)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.0),
+                             gridspec_kw={"width_ratios": [1.05, 1]})
+
+    # Left: the raw rates that prompt the question, and the composition that
+    # accounts for them.
+    ax = axes[0]
+    rates = (panel.groupby(["year", "connected"]).reappears.mean() * 100).unstack()
+    years = [str(y) for y in rates.index]
+    x = np.arange(len(rates))
+    ax.bar(x - 0.19, rates[False], width=0.36, color="#b8c8d8",
+           label="No connected director")
+    ax.bar(x + 0.19, rates[True], width=0.36, color=AQUA, label="At least one")
+    for i, (a, b) in enumerate(zip(rates[False], rates[True])):
+        ax.annotate(f"{a:.0f}", (i - 0.19, a), xytext=(0, 5), ha="center",
+                    textcoords="offset points", fontsize=9.5, color=INK_SOFT)
+        ax.annotate(f"{b:.0f}", (i + 0.19, b), xytext=(0, 5), ha="center",
+                    textcoords="offset points", fontsize=9.5, color=INK_SOFT)
+    ax.set_xticks(x, years)
+    ax.set_ylim(0, max(rates.max()) * 1.28)
+    ax.set_ylabel("firms appearing in the next volume (%)")
+    ax.set_title("Raw reappearance rate", fontsize=12, color=INK, loc="left",
+                 pad=12)
+    ax.legend(frameon=False, fontsize=9.5, labelcolor=INK_SOFT, ncol=2,
+              loc="upper center", bbox_to_anchor=(0.5, -0.09), handlelength=1.1)
+    _frame(ax)
+
+    # Right: what survives each control.
+    ax = axes[1]
+    y = np.arange(len(models))[::-1]
+    ax.axvline(1, color="#b8b5ac", linewidth=1.2, zorder=1)
+    colours = [AQUA if r.p < 0.05 else "#b8c8d8" for _, r in models.iterrows()]
+    for i, ((_, r), colour) in enumerate(zip(models.iterrows(), colours)):
+        ax.plot([r.lo, r.hi], [y[i], y[i]], color=colour, linewidth=2.4, zorder=2)
+        ax.plot([r["or"]], [y[i]], "D", color=colour, markersize=9,
+                markeredgecolor=SURFACE, markeredgewidth=1.4, zorder=3)
+        ax.annotate(f"{r['or']:.2f}" + ("*" if r.p < 0.05 else ""),
+                    (r.hi, y[i]), xytext=(8, 0), textcoords="offset points",
+                    va="center", fontsize=9.5, color=INK_SOFT)
+    ax.set_yticks(y, [_wrap_label(c) for c in models.controls])
+    ax.set_ylim(-0.7, len(models) - 0.3)
+    ax.set_xlim(0.5, max(models.hi) * 1.22)
+    ax.set_xlabel("odds ratio for reappearing in the next volume")
+    ax.set_title("What survives the controls", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    _frame(ax, xgrid=True)
+
+    _caption(fig, "The persistence gap is accounted for by how firms are recorded",
+             "Left: the share of firms appearing in the next volume. Right: the odds ratio on having a connected director,\n"
+             "adding one control at a time; * marks p < 0.05, with firm-clustered errors.",
+             "Firms with a connected director are recorded through 2.5 to 2.9 directors against 1.6 to 1.8 for the rest, and a "
+             "firm recorded through more directors is far likelier to be recorded again — 30% of one-director firms reappear "
+             "against 89% of those with four or more. Holding that constant, the gap goes. Comparing firms only with firms in "
+             f"the same wave recorded through the same number of directors leaves {strat['pooled_pts']:+.1f} points "
+             f"(permutation p = {strat['p_perm']:.2f}, {strat['n_cells']} cells).\n"
+             "This is not evidence of no association: the interval still admits odds a third higher or a fifth lower. And "
+             "reappearing in the annuaire is not surviving as a company — a firm can trade on unrecorded.")
+    return _save(fig, out, rect=(0, 0.185, 1, 0.85))
+
+
+def _wrap_label(text: str) -> str:
+    """Two lines at most, for a y-axis category."""
+    parts = text.split(", ")
+    if len(parts) < 3:
+        return text
+    return ", ".join(parts[:2]) + ",\n" + ", ".join(parts[2:])
 
 
 def build_all(processed: Path, outdir: Path) -> list[Path]:
@@ -363,5 +445,7 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
         fig_office_by_origin(panel, outdir / "office_by_origin.png"),
         fig_office_position(panel, outdir / "office_position.png"),
         fig_origin_adjusted(panel, outdir / "origin_adjusted.png"),
+        fig_firm_persistence(persistence_panel(processed),
+                             outdir / "firm_persistence.png"),
     ]
     return made

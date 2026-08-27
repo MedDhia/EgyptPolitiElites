@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import re
 
+import numpy as np
 import pandas as pd
 from unidecode import unidecode
 
@@ -228,6 +229,10 @@ def firm_flags(aff: pd.DataFrame, flags: pd.DataFrame) -> pd.DataFrame:
         d = d.merge(flags[["year", "person_id", "political", "national"]],
                     on=["year", "person_id"], how="left")
         d[["political", "national"]] = d[["political", "national"]].fillna(False)
+    # Cast before aggregating: summing an object-dtype boolean column returns
+    # `False` rather than 0 for a one-director firm, and the column then reads
+    # back from CSV as a string.
+    d[["political", "national"]] = d[["political", "national"]].astype(bool).astype(int)
     g = (d.groupby(["year", "company_id"])
           .agg(n_directors=("person_id", "nunique"),
                n_political=("political", "sum"),
@@ -275,8 +280,10 @@ def office_by_wave(panel: pd.DataFrame, outcome: str = "bcp_log",
 
     Same specification as `positional.by_wave`: OLS on the log of projected
     betweenness with a standardised projection-degree control and HC1 errors.
-    Interpretation is associational — office holders were recruited to boards
-    *because* they were connected, so this is not an effect of office.
+
+    Associational, and in neither direction: office and directorship are
+    printed in the same entry, so the two are simultaneous here. See the
+    Wording section of `docs/POLITICAL_CONNECTIONS.md`.
     """
     import warnings
 
@@ -336,3 +343,152 @@ def origin_with_political(panel: pd.DataFrame, outcome: str = "bcp_log",
                              "lo": ci[0], "hi": ci[1], "p": m.pvalues[t],
                              "n": int(chunk.shape[0])})
     return pd.DataFrame(rows)
+
+
+# --- persistence --------------------------------------------------------------
+
+def persistence_panel(processed=None) -> pd.DataFrame:
+    """Firm-wave observations with whether the firm appears in the next wave.
+
+    **The outcome is presence in the next volume, not survival of the firm.**
+    A firm is recorded in a wave only if at least one of its directors is
+    listed in that volume's roster, so a firm can vanish from the register
+    while trading on. Every quantity built from this is about the annuaire's
+    coverage as much as about the company.
+
+    The last wave has no successor and is dropped. `gap_years` records the
+    interval to the next wave, which is 6, 4, 5 and 3 years — a firm has more
+    time to disappear between 1932 and 1938 than between 1947 and 1950.
+    """
+    from pathlib import Path
+
+    from . import config
+    from .origin import is_person
+
+    processed = Path(processed) if processed else config.PROCESSED
+    aff = pd.read_csv(processed / "affiliations.csv")
+    aff = aff[aff.person_label.map(is_person)]
+    firm = pd.read_csv(processed / "firm_political.csv")
+
+    waves = sorted(aff.year.unique())
+    following = dict(zip(waves, waves[1:]))
+    present = set(zip(aff.year, aff.company_id))
+
+    # How many boards the firm's best-connected director sits on, this wave.
+    # A firm tied to a man with eight seats is likelier to be listed again
+    # whatever its politics, so this is the second artefact control.
+    seats = (aff.groupby(["year", "person_id"]).company_id.nunique()
+             .rename("seats").reset_index())
+    anchor = (aff.merge(seats, on=["year", "person_id"])
+              .groupby(["year", "company_id"]).seats.max()
+              .rename("max_seats").reset_index())
+
+    d = (firm[firm.year != waves[-1]]
+         .merge(anchor, on=["year", "company_id"], how="left"))
+    d["max_seats"] = d.max_seats.fillna(1)
+    d["reappears"] = [int((following[y], c) in present)
+                      for y, c in zip(d.year, d.company_id)]
+    d["gap_years"] = d.year.map(
+        {a: b - a for a, b in zip(waves, waves[1:])})
+    d["log_directors"] = np.log(d.n_directors)
+    d["log_max_seats"] = np.log(d.max_seats)
+    #: Capped so the top category is not a single firm.
+    d["directors_cat"] = d.n_directors.clip(upper=5)
+    return d
+
+
+#: Specifications reported by :func:`persistence_models`, in order.
+PERSISTENCE_SPECS = [
+    ("raw", "reappears ~ conn", "No controls"),
+    ("wave", "reappears ~ conn + C(year)", "Wave"),
+    ("directors", "reappears ~ conn + C(year) + C(directors_cat)",
+     "Wave, directors recorded"),
+    ("anchor", "reappears ~ conn + C(year) + C(directors_cat) + log_max_seats",
+     "Wave, directors recorded, their seat counts"),
+]
+
+
+def persistence_models(panel: pd.DataFrame, term: str = "connected") -> pd.DataFrame:
+    """Logistic models of reappearance, adding one artefact control at a time.
+
+    Reported as odds ratios with firm-clustered errors. These are associations
+    between how a firm is *recorded* and whether it is recorded again; they do
+    not identify an effect of political connection on anything, and the
+    direction of any association is not established by them.
+    """
+    import warnings
+
+    import statsmodels.formula.api as smf
+
+    d = panel.assign(conn=panel[term].astype(bool).astype(int))
+    rows = []
+    for key, formula, label in PERSISTENCE_SPECS:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            m = smf.logit(formula, data=d).fit(
+                disp=0, cov_type="cluster", cov_kwds={"groups": d.company_id})
+        ci = m.conf_int().loc["conn"]
+        rows.append({"spec": key, "controls": label,
+                     "coef": m.params["conn"], "or": np.exp(m.params["conn"]),
+                     "lo": np.exp(ci[0]), "hi": np.exp(ci[1]),
+                     "p": m.pvalues["conn"], "n": int(m.nobs)})
+    return pd.DataFrame(rows)
+
+
+def persistence_stratified(panel: pd.DataFrame, term: str = "connected",
+                           n_perm: int = 4000, seed: int = 11,
+                           min_cell: int = 5) -> dict:
+    """Exact comparison inside wave × recorded-directors cells.
+
+    The regression above imposes a functional form; this does not. Firms are
+    compared only with firms in the same wave recorded through the same number
+    of directors, and the cell differences are pooled with inverse-variance
+    weights. The null permutes the connection flag *within* each cell, so it
+    holds the composition that drives the raw gap exactly fixed.
+
+    Returns the cell table, the pooled difference in percentage points, the
+    two-sided permutation p, and the null interval.
+    """
+    rng = np.random.default_rng(seed)
+    flag = panel[term].astype(bool).to_numpy()
+    outcome = panel.reappears.to_numpy()
+    cells = [np.asarray(idx) for idx in
+             panel.reset_index(drop=True).groupby(["year", "directors_cat"])
+             .indices.values()]
+    usable = [c for c in cells
+              if flag[c].sum() >= min_cell and (~flag[c]).sum() >= min_cell]
+
+    def pooled(marks: np.ndarray) -> float:
+        num = den = 0.0
+        for c in usable:
+            a, b = marks[c], ~marks[c]
+            w = a.sum() * b.sum() / (a.sum() + b.sum())
+            num += (outcome[c][a].mean() - outcome[c][b].mean()) * w
+            den += w
+        return num / den if den else float("nan")
+
+    observed = pooled(flag)
+    draws = np.empty(n_perm)
+    for i in range(n_perm):
+        shuffled = flag.copy()
+        for c in usable:
+            v = shuffled[c].copy()
+            rng.shuffle(v)
+            shuffled[c] = v
+        draws[i] = pooled(shuffled)
+
+    table = pd.DataFrame([{
+        "year": int(panel.year.to_numpy()[c][0]),
+        "directors": int(panel.directors_cat.to_numpy()[c][0]),
+        "connected": outcome[c][flag[c]].mean(),
+        "unconnected": outcome[c][~flag[c]].mean(),
+        "difference": outcome[c][flag[c]].mean() - outcome[c][~flag[c]].mean(),
+        "n_connected": int(flag[c].sum()),
+        "n_unconnected": int((~flag[c]).sum()),
+    } for c in usable]).sort_values(["year", "directors"], ignore_index=True)
+
+    return {"cells": table, "pooled_pts": observed * 100,
+            "p_perm": float(np.mean(np.abs(draws) >= abs(observed))),
+            "null_lo_pts": float(np.percentile(draws, 2.5)) * 100,
+            "null_hi_pts": float(np.percentile(draws, 97.5)) * 100,
+            "n_cells": len(usable)}

@@ -79,13 +79,79 @@ Rendered by `python -m politi politics` into `figures/politics/`.
 | File | Finding |
 |---|---|
 | `office_holders.png` | About one director in sixteen is recorded in a public office; parliament and cabinet dominate |
-| `office_and_seats.png` | Office holders sat on 2.3–2.4× as many boards (1938 onward) |
+| `office_and_seats.png` | Office holders are recorded on 2.3–2.4× as many boards (1938 onward) |
 | `connected_firms.png` | 15–25% of firms had at least one connected director |
-| `office_by_origin.png` | 17.2% of Arab/Egyptian directors held office against 2.3% of Europeans — a 7.5× gap |
-| `office_position.png` | Office is associated with more seats, not a more central position per seat: the raw brokerage gap largely closes once seat count is held constant |
-| `origin_adjusted.png` | Holding office constant leaves the origin coefficients essentially unchanged, so office is not the channel behind them |
+| `office_by_origin.png` | Office holding is concentrated among Egyptian directors: 17.2% against 2.3% of Europeans |
+| `office_position.png` | The raw brokerage gap largely closes once seat count is held constant: office is associated with more seats, not with a more central position per seat |
+| `origin_adjusted.png` | The origin coefficients are essentially unchanged by holding office constant |
+| `firm_persistence.png` | Connected firms reappear more often in the raw data, and the gap is accounted for by how many directors the register records for them |
 
-The office variables are **associational**. Directors were recruited to boards
-because they were already prominent, and the office is a record of that
-prominence, not an instrument for it. Nothing here identifies an effect of
-holding office on corporate position.
+## Are politically connected firms more likely to persist?
+
+**Not detectably, once the register's own coverage is held constant.**
+
+`politics.persistence_panel()` builds firm-wave observations for 1932–1947 —
+1950 has no successor volume — with `reappears`, whether the firm is recorded
+again in the next wave. `persistence_models()` fits logistic models with
+firm-clustered errors, adding one control at a time.
+
+| Controls | Odds ratio | 95% CI | p |
+|---|---|---|---|
+| None | 1.84 | 1.48–2.28 | <0.001 |
+| Wave | 1.80 | 1.45–2.25 | <0.001 |
+| Wave, directors recorded | 1.07 | 0.84–1.37 | 0.59 |
+| Wave, directors recorded, their seat counts | 1.03 | 0.80–1.33 | 0.83 |
+
+The raw gap is large and it is compositional. Firms with a connected director
+are recorded through 2.5–2.9 directors against 1.6–1.8 for the rest, and how
+many directors a firm is recorded through is by far the strongest predictor of
+being recorded again: 30% of one-director firm-waves reappear against 89% of
+those with four or more. Connected firms are on the right side of that
+gradient, and that is most of what the raw comparison picks up.
+
+`persistence_stratified()` drops the functional form and compares firms only
+with firms in the same wave recorded through the same number of directors,
+pooling the 18 usable cells with inverse-variance weights. The null permutes
+the connection flag *within* each cell, so it holds that composition exactly
+fixed. The pooled difference is **+0.4 percentage points, permutation
+p = 0.88**, against a null interval of −4.1 to +4.3 points. Substituting
+national office only (−0.2 pts, p = 0.91) or two or more connected directors
+(+1.2 pts, p = 0.65) does not change the picture.
+
+### How to read that
+
+* **This is not evidence that no association exists.** The interval on the
+  fullest model still admits odds about a third higher or a fifth lower. With
+  508 connected firm-waves, a small association would not be visible here.
+* **The outcome is presence in the register, not survival of the firm.** A
+  company can trade on for years without a director listed in the annuaire.
+  Nothing here speaks to bankruptcy, liquidation or acquisition.
+* **The direction is not established either way.** Political connection is
+  measured in the same volume as the firm, so nothing separates a firm
+  recruiting a connected director from a connected director joining a firm
+  already doing well. Even had the association survived, the arrow would not
+  follow from these data.
+* **The controls are not innocent.** Number of directors recorded is
+  downstream of the same editorial choice that records the office, so it is a
+  collider risk as much as a confounder. It is used because leaving it out
+  guarantees an artefact; that does not make conditioning on it clean.
+
+## Wording
+
+The office variables support **associations, not directions**. Office and
+directorship are printed in the same entry, so the two are simultaneous in
+this data: nothing separates a man reaching boards through political standing
+from one whose standing followed his boards, and both are consistent with a
+third thing — family, capital, a name — producing each. State what covaries
+with what, in which wave, and stop there. In particular:
+
+* Write "office holders are recorded on more boards", not "office brought
+  board seats" or "boards brought office".
+* Write "is concentrated among", not "was the route into".
+* A control that removes an association shows that the association was not
+  independent of the control, not that the control is the mechanism.
+* A null result of the kind reported above is a failure to detect, bounded by
+  the interval, not a demonstration of absence.
+
+Nothing in this dataset identifies an effect of holding office on corporate
+position, or of corporate position on holding office.

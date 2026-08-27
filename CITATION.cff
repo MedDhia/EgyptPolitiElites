@@ -15,8 +15,7 @@ authors:
     orcid: "https://orcid.org/0000-0003-4498-8770"
 version: "0.1"
 date-released: "2026-08-27"
-# No licence has been selected for this repository yet, so none is asserted
-# here. See README section 9 before adding a `license:` field.
+license: MIT
 repository-code: "https://github.com/MedDhia/EgyptPolitiElites"
 url: "https://github.com/MedDhia/EgyptPolitiElites"
 keywords:

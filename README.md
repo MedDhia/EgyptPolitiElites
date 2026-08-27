@@ -233,7 +233,7 @@ python -m politi politics   # political-connection figures
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 127 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 130 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 
@@ -242,15 +242,17 @@ randomness except the permutation tests, which are seeded.
 
 ## 9. Terms of use
 
-**No licence has been selected for this repository.** In the absence of one,
-default copyright applies and reuse rights are not granted; a licence should be
-added before distribution. Two distinct rights questions arise:
+This repository is released under the **MIT Licence** (`LICENSE`): use, copy,
+modify and redistribute freely, keeping the copyright and permission notice.
+
+Two things the licence does not reach:
 
 1. **The source scans** are held and distributed by CEAlex under its own terms.
-   They are not redistributed here and their terms govern any republication.
-2. **The extracted data** are factual records of board composition. Whether the
-   compilation attracts protection, and under what terms it should be released,
-   is the depositor's decision.
+   They are not redistributed here, and those terms govern any republication of
+   the page images or the volumes themselves.
+2. **Attribution.** The MIT Licence requires the notice, not a citation. Cite
+   the dataset as in the Citation section above; scholarly convention, not the
+   licence, is what asks for it.
 
 ## 10. Version
 

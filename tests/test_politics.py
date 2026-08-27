@@ -84,7 +84,62 @@ def test_attach_and_flags():
     assert not bool(firms.loc["c2", "connected"])
 
 
+def test_firm_counts_are_integers():
+    """A one-director firm must count 0 political directors, not False.
+
+    Summing an object-dtype boolean column returns `False` for a single-row
+    group, which then reads back from CSV as the string "False".
+    """
+    aff = pd.DataFrame([{"year": 1947, "person_id": "p1", "company_id": "c1"}])
+    flags = pd.DataFrame(columns=["year", "person_id", "political", "national"])
+    firms = firm_flags(aff, flags)
+    assert firms.n_political.dtype.kind == "i"
+    assert firms.n_national.dtype.kind == "i"
+    assert firms.loc[0, "n_political"] == 0
+
+
 def test_flags_are_empty_not_broken_without_offices():
     flags = person_flags(pd.DataFrame(columns=["year", "person_id", "office",
                                                "former"]))
     assert flags.empty and "political" in flags.columns
+
+
+def test_persistence_stratified_finds_nothing_when_there_is_nothing():
+    """A cell where connection is unrelated to reappearance must pool to ~0."""
+    import numpy as np
+
+    from politi.politics import persistence_stratified
+
+    rng = np.random.default_rng(0)
+    n = 400
+    panel = pd.DataFrame({
+        "year": 1938,
+        "company_id": [f"c{i}" for i in range(n)],
+        "directors_cat": rng.integers(1, 4, n),
+        "connected": rng.random(n) < 0.4,
+    })
+    # Reappearance depends on the stratum only, never on connection.
+    panel["reappears"] = (rng.random(n) < panel.directors_cat / 5).astype(int)
+    out = persistence_stratified(panel, n_perm=300, seed=2)
+    assert abs(out["pooled_pts"]) < 12
+    assert out["p_perm"] > 0.05
+    assert out["n_cells"] == 3
+
+
+def test_persistence_stratified_recovers_a_planted_difference():
+    """And must find one when it is there, so the null above means something."""
+    import numpy as np
+
+    from politi.politics import persistence_stratified
+
+    rng = np.random.default_rng(1)
+    n = 400
+    connected = rng.random(n) < 0.5
+    panel = pd.DataFrame({
+        "year": 1938, "company_id": [f"c{i}" for i in range(n)],
+        "directors_cat": 2, "connected": connected,
+        "reappears": (rng.random(n) < np.where(connected, 0.85, 0.35)).astype(int),
+    })
+    out = persistence_stratified(panel, n_perm=300, seed=2)
+    assert out["pooled_pts"] > 30
+    assert out["p_perm"] < 0.01
