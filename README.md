@@ -1,148 +1,250 @@
-# EgyptPolitiElites
+# Egyptian Corporate Elite Network, 1932–1950
 
-Building a corporate elite network dataset from **Élie I. Politi,
-*Annuaire des sociétés égyptiennes par actions*** — five waves: **1932, 1938,
-1942, 1947, 1950**.
+A person–firm affiliation dataset covering the boards of Egyptian joint-stock
+companies at five points between 1932 and 1950, machine-extracted from Élie I.
+Politi's *Annuaire des sociétés égyptiennes par actions*.
 
-Politi's annual register prints, for every Egyptian joint-stock company, the
-full `Conseil d'Administration` with roles and Ottoman-Egyptian ranks. That
-makes it the closest thing interwar and wartime Egypt has to a systematic
-elite affiliation register, and it supports the standard interlocking-directorate
-design across a period spanning the 1930s depression, the war economy, and the
-Egyptianisation of the late 1940s.
+**7,363 directorships · 2,333 directors · 1,987 firms · 5 waves**
 
-## Status
+---
 
-**Built.** All five volumes are downloaded from CEAlex, parsed, and exported.
+## Citation
+
+> [AUTHOR]. (2026). *Egyptian Corporate Elite Network, 1932–1950* (Version 0.1)
+> [Data set]. [REPOSITORY]. [DOI]
+
+**These fields are unfilled and must be completed before circulation.** No DOI
+has been minted, no repository deposit has been made, and authorship has not
+been asserted by this repository. Cite the underlying source separately:
+
+> Politi, Élie I. *Annuaire des sociétés égyptiennes par actions*. Alexandria:
+> L'Informateur financier et commercial, 3e éd. 1932; 9e éd. 1938; 13e éd.
+> 1942; 18e éd. 1947; 21e éd. 1950. Digitised by the Centre d'Études
+> Alexandrines.
+
+---
+
+## 1. Summary
+
+The dataset records which individuals sat on the boards of which Egyptian
+joint-stock companies, at five observation points spanning the 1930s
+depression, the wartime economy, and the Egyptianisation measures of the late
+1940s. It is intended for the study of interlocking directorates, elite
+persistence and turnover, and the changing composition of Egypt's corporate
+leadership across that period.
+
+Each observation is a **printed directorship**: one named person, one named
+company, one volume. Person and company identities are resolved across waves,
+so the file supports both cross-sectional and panel analysis.
+
+## 2. Scope and coverage
 
 | | |
 |---|---|
-| Directorships | **7,363** |
-| Directors | **2,333** |
-| Firms | **1,987** |
-| Waves | 1932 · 1938 · 1942 · 1947 · 1950 |
+| **Unit of analysis** | Directorship (person × firm × wave) |
+| **Units of observation** | Individual directors; joint-stock companies |
+| **Universe** | Egyptian joint-stock companies (*sociétés anonymes égyptiennes*) and their board members, as listed by the publisher |
+| **Geographic coverage** | Egypt (firms domiciled in Egypt; seats principally Cairo and Alexandria) |
+| **Temporal coverage** | 1932, 1938, 1942, 1947, 1950 |
+| **Time method** | Repeated cross-sections with linked units (unbalanced panel) |
+| **Language of source** | French |
+| **Mode of collection** | Machine extraction from digitised print, with rule-based parsing and record linkage |
 
-The dataset lives in `data/processed/` and is tracked in this repository. The
-source scans are not: `data/raw/manifest.json` records a SHA-256 for each
-volume so a build can be tied to the exact scan it came from without
-redistributing CEAlex's files. `python -m politi fetch` re-downloads them.
+**The universe is the publisher's, not a sampling frame.** Politi covered
+registered joint-stock companies. Partnerships, family firms and foreign
+companies operating in Egypt without local incorporation are absent, and those
+absences are not random with respect to nationality or sector. Coverage also
+widens over time: the directors' roster runs 19 printed pages in 1932 and 79 in
+1950, so counts track the source's own expansion as well as the economy.
 
-### Where the ties come from
+## 3. Source and provenance
 
-Each volume closes with *Les Administrateurs des Sociétés Égyptiennes par
-actions* — an alphabetical roster in which each entry is one person followed by
-their positions across firms. That roster is the dataset's source, because it
-is person-side: entries are already one per person, so the roster performs much
-of the entity resolution that the company-by-company section leaves to
-inference. `python -m politi build --roster` builds from it.
+All five volumes were digitised by the Centre d'Études Alexandrines and
+retrieved from its *Études rares et anciennes sur Alexandrie* collection.
 
-The company-by-company section is also parsed (`politi.parse`), and carries
-seat, capital and balance-sheet detail the roster lacks. It is not yet merged
-into the released tables — see **Known gaps** below.
+| Wave | Édition | Place | CEAlex id | Size | SHA-256 (first 16) |
+|---|---|---|---|---|---|
+| 1932 | 3e | Alexandria | `LVR_000323` | 64.8 MB | `3c95a0532015b519` |
+| 1938 | 9e | Alexandria | `LVR_000191` | 144.0 MB | `f6bd506951954d51` |
+| 1942 | 13e | Alexandria | `LVR_000078` | 95.7 MB | `ee9bd0c2b9a83788` |
+| 1947 | 18e | Alexandria | `LVR_000173` | 193.3 MB | `467ef51b503bfe15` |
+| 1950 | 21e | Alexandria | `LVR_000332` | 208.5 MB | `d816977c3196a711` |
 
-## Quick start
+Full digests are in `data/raw/manifest.json`. **The scans are not
+redistributed here** — `data/raw/` is version-control ignored — so that any
+build can be tied to the exact file it came from without republishing CEAlex's
+holdings. `python -m politi fetch` re-downloads them.
+
+Édition numbers for 1932, 1947 and 1950 are attested on the volumes; 1938 and
+1942 are inferred from the `year − édition = 1929` offset that the attested
+volumes share, and should be verified against their title pages before being
+cited. See `docs/SOURCES.md`.
+
+## 4. Collection and processing
+
+Ties are extracted from the section each volume devotes to directors — *Les
+Administrateurs des Sociétés Égyptiennes par actions* — an alphabetical roster
+in which each entry names one person followed by their positions across firms.
+The roster is used in preference to the company-by-company section because it
+is person-side: entries are already one per individual, which removes a large
+part of the person-disambiguation problem.
+
+Processing runs: PDF → text (embedded layer, or re-OCR where that layer is
+defective) → entry segmentation → role and organisation parsing → cross-wave
+record linkage → affiliation tables and network exports. `docs/EXTRACTION.md`
+documents each stage, including the OCR-tolerant matching used to decide when
+two printed firm names denote the same company.
+
+The pipeline is deterministic and fully re-runnable; see §8.
+
+## 5. Files
+
+### Analysis files (`data/processed/`)
+
+| File | Rows | Description |
+|---|---|---|
+| `affiliations.csv` | 7,363 | **Primary file.** One row per printed directorship, with resolved person and company identifiers, role, rank, and page-level provenance |
+| `persons.csv` | 2,333 | Director register: canonical label, highest rank held, waves present, every printed name variant merged into the record |
+| `companies.csv` | 1,987 | Firm register: canonical label, waves present, printed name variants |
+| `person_crosswalk.csv` | 7,363 | Every person mention and the identifier assigned to it — the audit trail for record linkage |
+| `company_crosswalk.csv` | 5,503 | The same for firms |
+| `network_summary.csv` | 15 | Wave-level structure: nodes, edges, density, components, mean degree |
+| `node_metrics.csv` | 6,336 | Per-node degree, weighted degree, betweenness, eigenvector, closeness |
+| `origin_panel.csv` | 3,373 | Person-wave panel with imputed community of origin and per-wave centrality |
+| `origin_coefficients_by_wave.csv` | 10 | Estimated origin coefficients by wave |
+| `origin_concentration.csv` | 15 | Brokerage shares and within-group Gini, by wave |
+| `origin_permutation.csv` | 5 | Within-wave permutation results |
+
+### Network files (`data/processed/graphs/`)
+
+Fifteen GEXF files (Gephi): per wave, the two-mode affiliation graph, the
+firm-by-firm interlock projection, and the director-by-director co-membership
+projection. CSV edge lists, GraphML, and pooled multi-wave graphs are produced
+by the pipeline but not tracked, to keep the repository to one canonical
+serialisation.
+
+### Documentation (`docs/`)
+
+| File | Contents |
+|---|---|
+| `CODEBOOK.md` | Variable definitions, value labels, controlled vocabularies |
+| `SOURCES.md` | Provenance, édition numbering, holdings, rights |
+| `EXTRACTION.md` | Processing pipeline, failure modes, the linkage audit procedure |
+| `ORIGIN_CODING.md` | Construction and limits of the origin variable |
+| `FIGURES_JOURNAL.md` | Figure specifications |
+| `HANDOFF.md` | Transferring source volumes between machines |
+
+## 6. Variables
+
+Full definitions are in **`docs/CODEBOOK.md`**. In outline, `affiliations.csv`
+carries the wave, resolved and printed person names, resolved and printed
+company names, the position held (controlled vocabulary of fourteen values), the
+Ottoman-Egyptian civil rank as printed (`pasha` / `bey` / `effendi` / `agha`),
+and the scan page each row was read from.
+
+Three columns — `city`, `capital_currency`, `capital_amount` — are **empty in
+the released build**. They belong to the company-by-company section, which is
+parsed but not yet merged. They are retained so the schema does not change when
+it is.
+
+## 7. Data quality and limitations
+
+Read this section before using the data in an argument.
+
+**Record linkage is probabilistic.** Persons and firms are matched across waves
+by rule, not observed identity. Both crosswalk files exist to be audited; the
+procedure is in `docs/EXTRACTION.md`. **Run that audit before reporting any
+centrality statistic** — a single false merge on a well-connected node
+propagates through the whole graph.
+
+**Residual transcription error**, measured on the released build:
+
+| | Count | Share |
+|---|---|---|
+| Firm names retaining a damaged prefix | 28 | 0.38% of directorships |
+| Person records that are company fragments | 5 | 0.21% of persons |
+| Non-person records (decorations, offices, places) | 41 | 1.76% of persons |
+| Exact duplicate directorships | 19 | 0.26% of directorships |
+
+Each fragments a small number of nodes. The duplicates do not distort the
+graphs, which deduplicate by node, but they inflate counts in direct
+tabulation. The non-person records are excluded at analysis time by
+`politi.origin.is_person`, but are present in the released `persons.csv`; a
+user filtering that file directly should apply the same test.
+
+**1932 is not comparable to the later waves.** Its roster is headed
+*"NOMENCLATURE de quelques Administrateurs"* — *some* administrators — while
+later volumes drop the qualifier and 1942 announces a *"Liste Complète"*. 1932
+is therefore a selection of prominent directors, who are densely connected by
+construction. Its network statistics run far above the rest (60% of directors
+hold multiple seats, against 29–35% later) and that difference is a property of
+the list, not of the economy.
+
+**1942 is re-OCR'd, not read from its text layer.** That volume ships a text
+layer corrupt enough to collapse its interlock network to a 3.2% largest
+component — an artefact that reads as wartime disintegration. Re-OCR from page
+images raises it to 35.5%, in line with the other waves.
+
+**Origin is imputed from names**, with 27% of person-wave observations
+unclassifiable and the unknowns not missing at random. See
+`docs/ORIGIN_CODING.md`.
+
+**Board membership is a formal position.** It proxies influence; it does not
+measure it. Nominee and honorific seats were common and are indistinguishable
+in this source. Women are near-absent from these boards — a fact about the
+source's world, but one worth verifying against the scans before it is
+described as a finding.
+
+### Missing data
+
+Missingness is structural rather than item-level: a field is absent when the
+volume did not print it. Empty strings denote "not printed"; there are no
+imputed values anywhere in the released files. The three capital and city
+columns are empty by construction in this build (§6).
+
+## 8. Replication
 
 ```bash
 pip install -e .
 
-python -m politi sources    # what each wave is, and whether it is on disk
-python -m politi fetch      # download the annuaire PDFs
-python -m politi split      # cut a volume into connector-sized parts
-python -m politi extract    # PDF -> text (OCR fallback for bad pages)
-python -m politi build --roster   # parse, resolve, export to data/processed/
+python -m politi sources    # provenance and what is on disk
+python -m politi fetch      # retrieve the five volumes from CEAlex
+python -m politi extract    # PDF to text (re-OCR where flagged)
+python -m politi build --roster   # parse, link, export to data/processed/
+python -m politi figures    # network figures
+python -m politi origin     # origin analysis and its figure set
 ```
 
-To see it work without the scans, build from the synthetic fixture:
+Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
+volume takes roughly 30 minutes; the remaining stages run in minutes. The test
+suite (`python -m pytest`, 108 tests) covers name normalisation, parsing
+against a synthetic volume in the source's layout, record linkage, network
+construction, and figure generation.
 
-```bash
-python -m politi build --text tests/fixtures/synthetic_volume.txt --year 1932 --out /tmp/demo
-```
+Building from the scans reproduces the released files exactly: no stage uses
+randomness except the permutation tests, which are seeded.
 
-## What it produces
+## 9. Terms of use
 
-In `data/processed/`:
+**No licence has been selected for this repository.** In the absence of one,
+default copyright applies and reuse rights are not granted; a licence should be
+added before distribution. Two distinct rights questions arise:
 
-| File | Contents |
-|---|---|
-| `affiliations.csv` | One row per printed directorship. **The artefact of record.** |
-| `persons.csv` | Resolved directors, with rank and waves present. |
-| `companies.csv` | Resolved firms, with city and capital. |
-| `person_crosswalk.csv`, `company_crosswalk.csv` | Every mention and the id it got — for auditing the linkage. |
-| `network_summary.csv` | Per-wave density, components, mean degree. |
-| `node_metrics.csv` | Per-node degree, betweenness, eigenvector, closeness. |
-| `graphs/*.gexf`, `*.graphml`, `*_edges.csv` | Per wave: the two-mode graph, the company interlock projection, the director co-membership projection, plus pooled multi-wave versions. |
+1. **The source scans** are held and distributed by CEAlex under its own terms.
+   They are not redistributed here and their terms govern any republication.
+2. **The extracted data** are factual records of board composition. Whether the
+   compilation attracts protection, and under what terms it should be released,
+   is the depositor's decision.
 
-GEXF opens directly in Gephi; GraphML in igraph, Cytoscape and NetworkX.
+## 10. Version
 
-## Design decisions worth knowing before you use it
+**0.1** — initial build; all five waves extracted, linked and exported.
 
-- **The two-mode graph is primary.** Both projections discard information;
-  analyse the affiliation graph where the method allows it.
-- **Ranks are data, not noise.** `Pacha`/`Bey`/`Effendi` are stripped from the
-  matching key — so a director promoted between waves still matches themselves
-  — but retained as a per-wave status variable.
-- **Auditors and executives are captured but excluded from the default tie.**
-  The `commissaire aux comptes` is a statutory outsider. Widen the definition
-  explicitly if your design wants it; see `docs/CODEBOOK.md`.
-- **Entity resolution is auditable by construction.** Every merge is written to
-  the crosswalks. `docs/EXTRACTION.md` gives the audit script — run it before
-  reporting any centrality number.
-- **Coverage is the publisher's, not a sampling frame.** Politi covers
-  registered joint-stock companies; what is missing is not missing at random.
+Changes to extraction or linkage alter the released tables. Any analysis should
+record the commit it was built from, and any published version should be
+deposited with a minted identifier.
 
-## Positional advantage by origin
+## 11. Contact
 
-`politi origin` reproduces the brokerage analysis by community of origin
-across the five waves — the design of the gender/brokerage paper, transposed
-to origin and extended longitudinally. Directors are coded Arab/Egyptian,
-European, or Egyptianised minority (`docs/ORIGIN_CODING.md`); outcomes are
-betweenness in the two-mode network and in the co-membership projection;
-standard errors cluster on the director.
-
-The headline: Europeans held **4.3× the brokerage their numbers implied in
-1932 and fell below parity by 1950**, but at no wave did they broker more than
-*equally connected* Egyptians. The advantage was compositional — more and
-better-connected seats — not positional.
-
-## Known gaps
-
-Read these before using the tables.
-
-- **`city`, `capital_currency` and `capital_amount` are empty.** They come from
-  the company section, which is parsed but not yet merged into the released
-  tables. The columns are kept so the schema does not change when it is.
-- **1942 is re-OCR'd, not read from its text layer.** That volume ships a
-  corrupt text layer which collapsed its interlock network to a 3.2% largest
-  component — an artefact that looked like wartime disintegration. Re-OCR
-  raises it to 35.5%, in line with the other waves. `politi extract` does this
-  automatically; it costs ~30 minutes. See `docs/EXTRACTION.md`.
-- **Residual OCR damage.** Firm names are matched through the scanner's own
-  confusions (`docs/EXTRACTION.md`), which merges "Collan"/"Cotton" while
-  keeping "Land" separate and takes the corpus from 3,052 firm nodes to 1,987.
-  What survives is names damaged past rule-based repair ("Tl1e Alexandria
-  Insurance Co"), left as singletons. The crosswalks are where you merge those
-  by hand.
-- **Ten directorships are exact duplicates** of another row. They do not
-  distort the graphs — both projections deduplicate by node — but they inflate
-  row counts if you tabulate `affiliations.csv` directly.
-- **Entity resolution is probabilistic.** Run the audit in
-  `docs/EXTRACTION.md` before reporting any centrality number.
-
-## Layout
-
-```
-src/politi/     config  fetch  pdftext  parse  names  resolve  build  network  export  cli
-docs/           SOURCES.md   CODEBOOK.md   EXTRACTION.md   HANDOFF.md
-tests/          74 tests, incl. a synthetic volume reproducing Politi's layout
-data/           raw/ (ignored)  incoming/ (git hand-off)  interim/  processed/
-```
-
-## Development
-
-```bash
-pip install -e ".[dev]"
-python -m pytest tests -q
-```
-
-`data/raw/` is git-ignored: the scans are CEAlex's to distribute, so the
-repository stores SHA-256 digests rather than content.
+Repository: <https://github.com/MedDhia/EgyptPolitiElites>. Maintainer contact
+to be supplied.
