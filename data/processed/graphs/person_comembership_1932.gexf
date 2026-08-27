@@ -167,7 +167,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00023" label="Baehler Charles Commandeur Medjidié">
+      <node id="P00023" label="Baehler Charles">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -286,7 +286,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00041" label="Cattaui Joseph A.">
+      <node id="P00041" label="Cattaui Pacha Joseph A">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -314,11 +314,11 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00045" label="Choucry Mahmoud Pacha Ancien :\Iinistrc">
+      <node id="P00045" label="Choucri Mahmoud">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
-          <attvalue for="2" value="" />
+          <attvalue for="2" value="pasha" />
         </attvalues>
       </node>
       <node id="P00046" label="Christomanos A. Max">
@@ -454,7 +454,7 @@
           <attvalue for="2" value="bey" />
         </attvalues>
       </node>
-      <node id="P00065" label="Gallini Fahmi">
+      <node id="P00065" label="Fahmi">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -755,7 +755,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00110" label="Nakhla Pacha El Motei Ancien Magistrat">
+      <node id="P00110" label="Nakhla Pacha El Motei">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />
@@ -1112,7 +1112,7 @@
           <attvalue for="2" value="" />
         </attvalues>
       </node>
-      <node id="P00162" label="Zorbini Dimitri">
+      <node id="P00162" label="Zerbini Dimitri J">
         <attvalues>
           <attvalue for="0" value="0" />
           <attvalue for="1" value="person" />

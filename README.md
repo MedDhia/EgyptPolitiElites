@@ -4,7 +4,7 @@ A person–firm affiliation dataset covering the boards of Egyptian joint-stock
 companies at five points between 1932 and 1950, machine-extracted from Élie I.
 Politi's *Annuaire des sociétés égyptiennes par actions*.
 
-**7,363 directorships · 2,333 directors · 1,987 firms · 5 waves**
+**7,365 directorships · 2,337 directors · 1,987 firms · 5 waves**
 
 ---
 
@@ -12,6 +12,8 @@ Politi's *Annuaire des sociétés égyptiennes par actions*.
 
 > Hammami, Mohamed Dhia. (2026). *Egyptian Corporate Elite Network, 1932–1950*
 > (Version 0.1) [Data set]. https://github.com/MedDhia/EgyptPolitiElites
+
+Author ORCID: [0000-0003-4498-8770](https://orcid.org/0000-0003-4498-8770)
 
 Two fields remain to be filled once the dataset is deposited: a **persistent
 identifier** (DOI), which no repository has yet minted for it, and the
@@ -110,17 +112,20 @@ The pipeline is deterministic and fully re-runnable; see §8.
 
 | File | Rows | Description |
 |---|---|---|
-| `affiliations.csv` | 7,363 | **Primary file.** One row per printed directorship, with resolved person and company identifiers, role, rank, and page-level provenance |
+| `affiliations.csv` | 7,365 | **Primary file.** One row per printed directorship, with resolved person and company identifiers, role, rank, and page-level provenance |
 | `persons.csv` | 2,333 | Director register: canonical label, highest rank held, waves present, every printed name variant merged into the record |
 | `companies.csv` | 1,987 | Firm register: canonical label, waves present, printed name variants |
-| `person_crosswalk.csv` | 7,363 | Every person mention and the identifier assigned to it — the audit trail for record linkage |
+| `person_crosswalk.csv` | 7,365 | Every person mention and the identifier assigned to it — the audit trail for record linkage |
 | `company_crosswalk.csv` | 5,503 | The same for firms |
 | `network_summary.csv` | 15 | Wave-level structure: nodes, edges, density, components, mean degree |
-| `node_metrics.csv` | 6,336 | Per-node degree, weighted degree, betweenness, eigenvector, closeness |
-| `origin_panel.csv` | 3,388 | Person-wave panel with imputed community of origin and per-wave centrality |
+| `node_metrics.csv` | 6,272 | Per-node degree, weighted degree, betweenness, eigenvector, closeness |
+| `origin_panel.csv` | 3,325 | Person-wave panel with imputed community of origin and per-wave centrality |
 | `origin_coefficients_by_wave.csv` | 10 | Estimated origin coefficients by wave |
 | `origin_concentration.csv` | 15 | Brokerage shares and within-group Gini, by wave |
 | `origin_permutation.csv` | 5 | Within-wave permutation results |
+| `political_offices.csv` | 270 | One row per public office a director is recorded in, with whether it is printed as past |
+| `person_political.csv` | 225 | Person-wave office flags: seven office types, count, any-office, national-office, all-past |
+| `firm_political.csv` | 3,270 | Firm-wave political connection: connected directors, their share, and whether the firm has any |
 
 ### Network files (`data/processed/graphs/`)
 
@@ -140,6 +145,7 @@ serialisation.
 | `ORIGIN_CODING.md` | Construction and limits of the origin variable |
 | `FIGURES_JOURNAL.md` | Figure specifications |
 | `FIGURES_EXPLORE.md` | Descriptive figure set: what each one measures and does not |
+| `POLITICAL_CONNECTIONS.md` | Office coding: the seven offices, their limits, and what they show |
 | `HANDOFF.md` | Transferring source volumes between machines |
 
 ## 6. Variables
@@ -222,11 +228,12 @@ python -m politi build --roster   # parse, link, export to data/processed/
 python -m politi figures    # network figures
 python -m politi origin     # origin analysis and its figure set
 python -m politi explore    # descriptive figures, one file each
+python -m politi politics   # political-connection figures
 ```
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 110 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 127 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 
@@ -256,7 +263,8 @@ deposited with a minted identifier.
 ## 11. Contact
 
 Mohamed Dhia Hammami — compiler and maintainer.
+ORCID: [0000-0003-4498-8770](https://orcid.org/0000-0003-4498-8770)
 Repository: <https://github.com/MedDhia/EgyptPolitiElites>
 
-An ORCID iD and a correspondence address should be added here before deposit;
-most archives require both.
+A correspondence address should be added here before deposit; most archives
+require one alongside the ORCID iD.

@@ -42,6 +42,9 @@ listed directors who named it, not the size of its board.
 | `board_homophily.png` | Did directors sit with their own community more than chance implies? | The null permutes origin labels across directors within the wave, holding board sizes fixed, so compositional shift is already in the null. Pairs are counted only among directors whose origin could be imputed. |
 | `firm_turnover.png` | How many waves does a firm appear in, and how much of each wave is new? | Not founding and failure rates: a firm absent from a wave may simply have had no director list it. |
 
+Political connection has its own figure set and its own document:
+`POLITICAL_CONNECTIONS.md`, rendered by `python -m politi politics`.
+
 ## Dependencies
 
 `top_brokers.png` and `board_homophily.png` need `data/processed/origin_panel.csv`,

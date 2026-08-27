@@ -155,6 +155,24 @@ def _cmd_explore(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_politics(args: argparse.Namespace) -> int:
+    """Render the political-connection figures, one file each."""
+    from .politics_viz import build_all
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    missing = [f for f in ("affiliations.csv", "person_political.csv",
+                           "firm_political.csv")
+               if not (processed / f).exists()]
+    if missing:
+        print(f"missing {', '.join(missing)} in {processed}. "
+              "Run `politi build --roster` first.", file=sys.stderr)
+        return 1
+    out = Path(args.out) if args.out else config.ROOT / "figures" / "politics"
+    for path in build_all(processed, out):
+        print(f"wrote {path}")
+    return 0
+
+
 def _cmd_build(args: argparse.Namespace) -> int:
     from .build import (build_from_rosters, build_tables, parse_available,
                         parse_rosters)
@@ -266,6 +284,12 @@ def main(argv: list[str] | None = None) -> int:
     x.add_argument("--processed", help="dataset directory (default data/processed)")
     x.add_argument("--out", help="output directory (default figures/explore/)")
     x.set_defaults(func=_cmd_explore)
+
+    pol = sub.add_parser("politics",
+                         help="render the political-connection figures")
+    pol.add_argument("--processed", help="dataset directory (default data/processed)")
+    pol.add_argument("--out", help="output directory (default figures/politics/)")
+    pol.set_defaults(func=_cmd_politics)
 
     o = sub.add_parser("origin",
                        help="positional advantage by community of origin")

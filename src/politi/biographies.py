@@ -269,6 +269,7 @@ class Biography:
     printed: str                 # the entry exactly as read
     name: str                    # the name proper
     honorific: str | None
+    body: str = ""               # everything after the name, as read
     positions: list[Position] = field(default_factory=list)
     page: int | None = None
 
@@ -332,7 +333,21 @@ def _looks_like_given_names(seg: str) -> bool:
     return True
 
 
-_INVERTED_RE = re.compile(r"([^,;]{2,40}),\s+(?=\S)")
+# Offices, decorations and qualifications that the roster prints hard against
+# a name — "Sade.k, Wahba (Pacha),Sénateur", "Abdel Haï Khalil Bey Député" —
+# and that the name/body split therefore swallows. None of them is part of a
+# name. They are stripped here and recovered as data in `politics.py`: a seat
+# in parliament or a portfolio is a variable, not a spelling.
+_NAME_TAIL = re.compile(
+    r"(?i)\s+(?:anc(?:ien|\.)\b|(?:anc(?:ien|\.)\s+)?(?:"
+    r"d[eé]put[eé]|s[eé]nateur|ministre|magistrat|gouverneur|ambassadeur|"
+    r"consul(?:\s+g[eé]n[eé]ral)?|chambellan|sous[\s-]secr[eé]taire|"
+    r"conseiller|commandeur|officier|chevalier|grand[\s-]croix|croix\s+de\s+guerre"
+    r")\b).*$")
+
+# The space after the comma is optional: the scanner drops it often enough
+# — "Wahba (Pacha),Sénateur" — that requiring it costs the given name.
+_INVERTED_RE = re.compile(r"([^,;]{2,40}),\s*(?=[A-ZÀ-Þ])")
 
 
 def _split_name_and_body(entry: str) -> tuple[str | None, str, str] | None:
@@ -349,6 +364,11 @@ def _split_name_and_body(entry: str) -> tuple[str | None, str, str] | None:
         name = f"{name} {given}"
         rest = rest[m2.end():]
     name = re.sub(r"[()]", " ", name)   # "(Bey)" -> " Bey ", so rank is read
+    # An office or decision printed against the name belongs to the body, not
+    # to the name. Never strip the first token: a surname may be Chevalier.
+    trimmed = _NAME_TAIL.sub("", name.strip())
+    if trimmed.strip(" .,;"):
+        name = trimmed
     return hon, re.sub(r"\s+", " ", name).strip(" .,;"), rest
 
 
@@ -365,7 +385,8 @@ def parse_entry(entry: str, page: int | None = None) -> Biography:
     # "Comité". `printed` keeps the whole entry as scanned regardless.
     body = repair_structural_words(body)
 
-    bio = Biography(printed=printed, name=name, honorific=hon, page=page)
+    bio = Biography(printed=printed, name=name, honorific=hon, body=body,
+                    page=page)
     last_roles: list[str] = []
     for clause in re.split(r"\s*[;:]\s*", body):
         if not clause.strip():

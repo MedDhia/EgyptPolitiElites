@@ -118,6 +118,53 @@ group: a cluster mixing given names is a false merge; two clusters with the
 same name are a false split. Hand corrections belong here, upstream of the
 network.
 
+## Political office
+
+Three files, all built from the same roster entries as `affiliations.csv`.
+Full construction and limits: `POLITICAL_CONNECTIONS.md`.
+
+### `political_offices.csv` — one row per office recorded
+
+| Variable | Type | Definition |
+|---|---|---|
+| `year` | int | Wave |
+| `person_id` | str | Resolved director |
+| `office` | str | `cabinet`, `parliament`, `diplomatic`, `provincial`, `judicial`, `court`, `municipal` |
+| `former` | bool | Every mention of this office in the entry is printed as past (*ancien*, *ex-*) |
+| `source_page` | int | Scan page the entry was read from |
+
+`court` is never populated: the vocabulary appears in the volumes' front matter
+but not inside a roster entry.
+
+### `person_political.csv` — one row per person-wave with any office
+
+| Variable | Type | Definition |
+|---|---|---|
+| `cabinet` … `municipal` | bool | One column per office |
+| `n_offices` | int | How many of the seven |
+| `political` | bool | Any office |
+| `national` | bool | Any of `cabinet`, `parliament`, `diplomatic`, `provincial`, `court` |
+| `all_former` | bool | Every office in the entry is printed as past |
+
+**A director absent from this file held no office Politi printed**, which is
+not the same as holding none. Treat the absence as `False`, and every rate
+built from it as a lower bound.
+
+### `firm_political.csv` — one row per firm-wave
+
+| Variable | Type | Definition |
+|---|---|---|
+| `n_directors` | int | Directors recorded for the firm in this wave |
+| `n_political` | int | How many of them hold any office |
+| `n_national` | int | How many hold a national office |
+| `share_political` | float | `n_political / n_directors` |
+| `connected` | bool | `n_political > 0` |
+
+`n_directors` is the number of directors the roster records for the firm, not
+its board size (see **Known limitations**). `share_political` therefore has a
+denominator set by the register's coverage, and a firm recorded through one
+director is either 0 or 1.
+
 ## Network files (`graphs/`)
 
 Per wave, in GEXF, GraphML and CSV:

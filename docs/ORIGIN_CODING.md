@@ -45,8 +45,8 @@ requires a token outside `EUROPEAN_GIVEN`.
 
 ## Coverage
 
-Of 3,388 person-wave observations: 23% Arab/Egyptian, 14% European, 25% local
-minority, **37% unknown**. Models are fitted on the 63% classified.
+Of 3,325 person-wave observations: 23% Arab/Egyptian, 14% European, 25% local
+minority, **38% unknown**. Models are fitted on the 62% classified.
 
 Two things follow. The unknowns are not missing at random — they are the
 rarer, more OCR-damaged names, which skew toward the periphery of the network.
@@ -56,10 +56,15 @@ Arab/Egyptians.
 
 ## Non-persons
 
-28 records were dropped as not people at all: offices (`Ancien Ministre`),
+27 records were dropped as not people at all: offices (`Ancien Ministre`),
 places (`Le Caire`), firm fragments (`Maison Choremi`) and industries
 (`Egyptienne de Tuyaux`) that the roster prints beside names and the parser
 occasionally captured as entries.
+
+Public offices printed against a name — `Sadek Wahba Pacha Sénateur` — used to
+survive into the label and defeat the classifier, so office holders were
+disproportionately coded `unknown`. They are now stripped at parse time and
+recovered as data (`docs/POLITICAL_CONNECTIONS.md`).
 
 The test is **where** the honour or office sits, not whether it is present.
 An earlier version matched this vocabulary anywhere in the string and so

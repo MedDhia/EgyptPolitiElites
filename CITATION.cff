@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "Egyptian Corporate Elite Network, 1932-1950"
+abstract: >-
+  A person-firm affiliation dataset covering the boards of Egyptian joint-stock
+  companies at five points between 1932 and 1950 (1932, 1938, 1942, 1947, 1950),
+  machine-extracted from the directors' rosters of Elie I. Politi's Annuaire des
+  societes egyptiennes par actions. Records directorships, imputed community of
+  origin, Ottoman-Egyptian civil rank, and public office held, with per-wave
+  two-mode networks and their projections.
+authors:
+  - family-names: Hammami
+    given-names: Mohamed Dhia
+    orcid: "https://orcid.org/0000-0003-4498-8770"
+version: "0.1"
+date-released: "2026-08-27"
+# No licence has been selected for this repository yet, so none is asserted
+# here. See README section 9 before adding a `license:` field.
+repository-code: "https://github.com/MedDhia/EgyptPolitiElites"
+url: "https://github.com/MedDhia/EgyptPolitiElites"
+keywords:
+  - Egypt
+  - economic elites
+  - interlocking directorates
+  - two-mode networks
+  - business history
+  - Middle East
+references:
+  - type: book
+    title: "Annuaire des societes egyptiennes par actions"
+    authors:
+      - family-names: Politi
+        given-names: Elie I.
+    publisher:
+      name: "L'Informateur financier et commercial"
+    year: 1932
+    notes: >-
+      The source series. Editions used: 3e (1932), 1938, 1942, 13e (1947),
+      and 1950. Provenance and holdings are documented in docs/SOURCES.md.
