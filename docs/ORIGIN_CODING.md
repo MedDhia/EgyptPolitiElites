@@ -45,21 +45,31 @@ requires a token outside `EUROPEAN_GIVEN`.
 
 ## Coverage
 
-Of 3,373 person-wave observations: 25% Arab/Egyptian, 17% European, 31% local
-minority, **27% unknown**. Models are fitted on the 73% classified.
+Of 3,388 person-wave observations: 23% Arab/Egyptian, 14% European, 25% local
+minority, **37% unknown**. Models are fitted on the 63% classified.
 
 Two things follow. The unknowns are not missing at random — they are the
 rarer, more OCR-damaged names, which skew toward the periphery of the network.
 And the European category is the smallest, so wave-level European estimates
-are the least precise in the study: 1932 rests on 41 Europeans against 22
+are the least precise in the study: 1932 rests on 42 Europeans against 23
 Arab/Egyptians.
 
 ## Non-persons
 
-39 records were dropped as not people at all: decorations (`Grand Officier
-Couronne Belge`), offices (`Ancien Ministre`), places (`Le Caire`) and
-industries (`Linen Industry`) that the roster prints beside names and the
-parser occasionally captured as entries. See `origin.is_person`.
+28 records were dropped as not people at all: offices (`Ancien Ministre`),
+places (`Le Caire`), firm fragments (`Maison Choremi`) and industries
+(`Egyptienne de Tuyaux`) that the roster prints beside names and the parser
+occasionally captured as entries.
+
+The test is **where** the honour or office sits, not whether it is present.
+An earlier version matched this vocabulary anywhere in the string and so
+discarded 66 real directorships — among them `Baehler Charles Commandeur
+Medjidié`, one of the best-connected men in the dataset, whose entry simply
+carries his decoration after his name. `origin.is_person` now strips leading
+articles and rank modifiers and tests only the opening of what remains, with
+three position-free rules for markers no printed name in this source carries:
+an academic institution (`St. John's College Oxford`), a company suffix
+(`Upper Egypt Oinning-Co`), and a degree read beside a university.
 
 ## How to check it
 

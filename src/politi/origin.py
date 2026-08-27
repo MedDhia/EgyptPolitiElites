@@ -275,22 +275,58 @@ _NOT_A_PERSON = re.compile(
     r"industr|soierie|tuyaux|ciment|portland|linen|cotton\s+co|"
     r"le\s+caire|alexandrie|egypte?\b|egyptiennes?\b|belgique|paris|"
     r"londres|artistes|banque|soci[eé]t[eé]|compagnie|etablissements|"
+    r"caire\b|alexandrie\b|"
     r"[eé]tablissements|distiller|fabrique|usines?|maison\s|agence)\b")
 
 
 def is_person(name: str) -> bool:
     """Is this record a human being at all?
 
-    The roster interleaves names with honours and qualifications, and the
-    parser sometimes takes one of those for an entry. Records naming an
-    honour, an office, a place or an industry rather than a person are not
-    directors and must not enter the analysis.
+    The roster interleaves names with honours, offices and qualifications, and
+    the parser sometimes takes one of those for an entry. The test is where the
+    honour sits, not whether it is present: a record that *opens* with one is
+    not a director, while one that opens with a name and carries an honour
+    after it — "Baehler Charles Commandeur Medjidié", "Abdel Haï Khalil Bey
+    Député" — is a director described in full.
+
+    Matching the vocabulary anywhere in the string, as an earlier version did,
+    discarded 76 real directorships including several of the best-connected
+    men in the dataset.
+
+    Three classes of record are rejected wherever their marker sits, because
+    no printed name in this source contains them: an academic institution, a
+    company suffix, and a degree read alongside a university.
     """
-    text = unidecode(str(name))
-    if _NOT_A_PERSON.search(text):
-        return False
+    text = unidecode(str(name)).strip()
     letters = re.sub(r"[^A-Za-z]", "", text)
-    return len(letters) >= 4
+    if len(letters) < 4:
+        return False
+    # Qualifications and institutions are never part of a name here, wherever
+    # they sit: "St. John's College Oxford" is a line from a biography.
+    if re.search(r"(?i)\b(?:college|universit|oxford|cambridge)\b", text):
+        return False
+    # Nor is a company suffix: "Upper Egypt Oinning-Co" is a firm.
+    if re.search(r"(?i)[\s-](?:co|ltd|cie|s\.?\s?a\.?\s?e)\.?$", text):
+        return False
+    head = text
+    for _ in range(3):
+        stripped = re.sub(r"(?i)^(?:the|le|la|les|l'|el|grande?|premier|haut|"
+                          r"sous|vice|son|s\.\s?e\.|s\.\s?a\.)\s+", "", head)
+        if stripped == head:
+            break
+        head = stripped
+    return not _NOT_A_PERSON.match(head)
+
+
+# Coptic and Levantine surnames that carry French given names and would
+# otherwise fall through to the European lexicons. Names both communities use
+# — Khalil, Soliman, Zaki, Riad — are deliberately excluded: Mohamed Mahmoud
+# Khalil was a Muslim Egyptian, and a shared name is evidence either way.
+LEVANTINE |= {
+    "bassili", "basili", "bicharat", "boutros", "hanna", "iskandar",
+    "makarios", "nakhla", "sarkis", "shenouda", "takla",
+}
+LEVANTINE -= {"khalil", "soliman", "zaki", "riad", "gabriel"}
 
 
 # European given names. These must never, on their own, make someone European:
@@ -320,16 +356,6 @@ EUROPEAN_GIVEN = {
 for _s in (BRITISH, FRENCH_BELGIAN_SWISS, ITALIAN, OTHER_EUROPEAN):
     _s -= EUROPEAN_GIVEN
 
-# Coptic and Levantine surnames that carry French given names and would
-# otherwise fall through to the European lexicons.
-# Christian Egyptian and Levantine surnames. Names both communities use —
-# Khalil, Soliman, Zaki, Riad — are deliberately excluded: Mohamed Mahmoud
-# Khalil was a Muslim Egyptian, and a shared name is not evidence either way.
-LEVANTINE |= {
-    "bassili", "basili", "bicharat", "boutros", "hanna", "iskandar",
-    "makarios", "nakhla", "sarkis", "shenouda",
-}
-LEVANTINE -= {"khalil", "soliman", "zaki", "riad", "gabriel"}
 
 @dataclass(frozen=True)
 class Origin:

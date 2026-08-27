@@ -117,7 +117,7 @@ The pipeline is deterministic and fully re-runnable; see §8.
 | `company_crosswalk.csv` | 5,503 | The same for firms |
 | `network_summary.csv` | 15 | Wave-level structure: nodes, edges, density, components, mean degree |
 | `node_metrics.csv` | 6,336 | Per-node degree, weighted degree, betweenness, eigenvector, closeness |
-| `origin_panel.csv` | 3,373 | Person-wave panel with imputed community of origin and per-wave centrality |
+| `origin_panel.csv` | 3,388 | Person-wave panel with imputed community of origin and per-wave centrality |
 | `origin_coefficients_by_wave.csv` | 10 | Estimated origin coefficients by wave |
 | `origin_concentration.csv` | 15 | Brokerage shares and within-group Gini, by wave |
 | `origin_permutation.csv` | 5 | Within-wave permutation results |
@@ -139,6 +139,7 @@ serialisation.
 | `EXTRACTION.md` | Processing pipeline, failure modes, the linkage audit procedure |
 | `ORIGIN_CODING.md` | Construction and limits of the origin variable |
 | `FIGURES_JOURNAL.md` | Figure specifications |
+| `FIGURES_EXPLORE.md` | Descriptive figure set: what each one measures and does not |
 | `HANDOFF.md` | Transferring source volumes between machines |
 
 ## 6. Variables
@@ -220,11 +221,12 @@ python -m politi extract    # PDF to text (re-OCR where flagged)
 python -m politi build --roster   # parse, link, export to data/processed/
 python -m politi figures    # network figures
 python -m politi origin     # origin analysis and its figure set
+python -m politi explore    # descriptive figures, one file each
 ```
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 108 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 110 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 

@@ -137,6 +137,24 @@ def _cmd_figures(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_explore(args: argparse.Namespace) -> int:
+    """Render the descriptive figures, one file each."""
+    from .explore import build_all
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    if not (processed / "affiliations.csv").exists():
+        print(f"no dataset at {processed}. Run `politi build --roster` first.",
+              file=sys.stderr)
+        return 1
+    out = Path(args.out) if args.out else config.ROOT / "figures" / "explore"
+    if not (processed / "origin_panel.csv").exists():
+        print("no origin_panel.csv: skipping the two figures that need imputed "
+              "origin. Run `politi origin` to produce it.", file=sys.stderr)
+    for path in build_all(processed, out):
+        print(f"wrote {path}")
+    return 0
+
+
 def _cmd_build(args: argparse.Namespace) -> int:
     from .build import (build_from_rosters, build_tables, parse_available,
                         parse_rosters)
@@ -242,6 +260,12 @@ def main(argv: list[str] | None = None) -> int:
     f.add_argument("--processed", help="dataset directory (default data/processed)")
     f.add_argument("--out", help="output directory (default figures/)")
     f.set_defaults(func=_cmd_figures)
+
+    x = sub.add_parser("explore",
+                       help="render the descriptive figures, one file each")
+    x.add_argument("--processed", help="dataset directory (default data/processed)")
+    x.add_argument("--out", help="output directory (default figures/explore/)")
+    x.set_defaults(func=_cmd_explore)
 
     o = sub.add_parser("origin",
                        help="positional advantage by community of origin")
