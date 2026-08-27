@@ -285,3 +285,142 @@ def build_figures(processed: Path | None = None,
         figure_snapshots(aff, outdir / "network_snapshots.png"),
         figure_structure(aff, outdir / "network_structure.png"),
     ]
+
+
+# --- positional advantage by origin -------------------------------------------
+
+ORIGIN_COLORS = {
+    "arab_egyptian": "#2a78d6",
+    "european": "#eb6834",
+    "local_minority": "#1baf7a",   # below 3:1 on this surface: direct-labelled
+}
+ORIGIN_LABELS = {
+    "arab_egyptian": "Arab / Egyptian",
+    "european": "European",
+    "local_minority": "Egyptianised minority",
+}
+
+
+def _dodge_labels(ax, points, min_gap_frac: float = 0.055) -> dict:
+    """Nudge end-of-line labels apart when two series finish at the same value.
+
+    *points* maps a key to its y value; the return maps the same keys to
+    drawing positions, separated by at least *min_gap_frac* of the axis range.
+    """
+    lo, hi = ax.get_ylim()
+    gap = (hi - lo) * min_gap_frac
+    order = sorted(points, key=lambda k: points[k])
+    placed: dict = {}
+    prev = None
+    for key in order:
+        y = points[key]
+        if prev is not None and y - prev < gap:
+            y = prev + gap
+        placed[key] = y
+        prev = y
+    return placed
+
+
+def figure_positional(panel: pd.DataFrame, out: Path) -> Path:
+    """Whether Europeans held a brokerage advantage, and how it changed.
+
+    Three panels answering three different questions, because the headline
+    answer depends on which is asked:
+
+    A. Did Europeans hold more brokerage than their numbers? (share held ÷
+       share of directors; 1.0 is parity.)
+    B. Did they broker more than equally connected Egyptians? (the regression
+       coefficient, net of co-directorship degree.)
+    C. How concentrated was each group's brokerage? (Gini within group.)
+    """
+    from .positional import by_wave, concentration
+
+    _style()
+    conc = concentration(panel)
+    conc["ratio"] = conc.share_of_brokerage / conc.share_of_directors
+    coefs = by_wave(panel)
+    years = sorted(conc.year.unique())
+
+    fig, axes = plt.subplots(1, 3, figsize=(17.5, 5.9))
+
+    # A — representation ratio
+    ax = axes[0]
+    ax.axhline(1.0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    ax.text(years[0], 1.03, "parity", fontsize=8.5, color=INK_SOFT, va="bottom")
+    ends = {}
+    for grp, sub in conc.groupby("group"):
+        sub = sub.sort_values("year")
+        c = ORIGIN_COLORS[grp]
+        ax.plot(sub.year, sub.ratio, color=c, linewidth=2.2, zorder=3)
+        ax.plot(sub.year, sub.ratio, linestyle="none", marker="o", markersize=7,
+                markerfacecolor=c, markeredgecolor=SURFACE, markeredgewidth=1.5,
+                zorder=4)
+        ends[grp] = sub.ratio.iloc[-1]
+    for grp, y in _dodge_labels(ax, ends).items():
+        ax.annotate(ORIGIN_LABELS[grp], (years[-1] + 0.6, y), va="center",
+                    fontsize=9.6, color=ORIGIN_COLORS[grp], fontweight="bold")
+    ax.set_title("A. Brokerage held, relative to numbers", fontsize=12,
+                 color=INK, loc="left", pad=12)
+    ax.set_ylabel("share of brokerage ÷ share of directors", fontsize=9)
+    ax.set_xlim(years[0] - 1, years[-1] + 7)
+
+    # B — coefficient, net of connectedness
+    ax = axes[1]
+    ax.axhline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    for grp, sub in coefs.groupby("group"):
+        sub = sub.sort_values("year")
+        c = ORIGIN_COLORS[grp]
+        off = -0.6 if grp == "european" else 0.6
+        ax.errorbar(sub.year + off, sub.coef, yerr=[sub.coef - sub.lo, sub.hi - sub.coef],
+                    fmt="o", color=c, markersize=7, capsize=3.5, linewidth=1.6,
+                    markeredgecolor=SURFACE, markeredgewidth=1.4, zorder=3,
+                    label=ORIGIN_LABELS[grp])
+    ax.legend(frameon=False, fontsize=9.5, loc="upper right", labelcolor=INK_SOFT)
+    ax.set_title("B. Brokerage net of connectedness", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    ax.set_ylabel("coefficient vs Arab/Egyptian (log brokerage)", fontsize=9)
+
+    # C — within-group concentration
+    ax = axes[2]
+    ends = {}
+    for grp, sub in conc.groupby("group"):
+        sub = sub.sort_values("year")
+        c = ORIGIN_COLORS[grp]
+        ax.plot(sub.year, sub.gini, color=c, linewidth=2.2, zorder=3)
+        ax.plot(sub.year, sub.gini, linestyle="none", marker="o", markersize=7,
+                markerfacecolor=c, markeredgecolor=SURFACE, markeredgewidth=1.5,
+                zorder=4)
+        ends[grp] = sub.gini.iloc[-1]
+    ax.set_ylim(0.6, 1.0)
+    for grp, y in _dodge_labels(ax, ends).items():
+        ax.annotate(ORIGIN_LABELS[grp], (years[-1] + 0.6, y), va="center",
+                    fontsize=9.6, color=ORIGIN_COLORS[grp], fontweight="bold")
+    ax.set_title("C. Concentration of brokerage within each group", fontsize=12,
+                 color=INK, loc="left", pad=12)
+    ax.set_ylabel("Gini of betweenness", fontsize=9)
+    ax.set_ylim(0.6, 1.0)
+    ax.set_xlim(years[0] - 1, years[-1] + 7)
+
+    for ax in axes:
+        ax.set_xticks(years)
+        ax.set_xticklabels([str(y) for y in years], fontsize=9)
+        ax.grid(axis="y", color="#eceae4", linewidth=0.9)
+        ax.set_axisbelow(True)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+        ax.axvspan(years[0] - 1, 1935, color="#f1efe9", zorder=0)
+
+    fig.suptitle("Positional advantage by community of origin, 1932–1950",
+                 fontsize=17, fontweight="bold", color=INK, x=0.008, ha="left",
+                 y=0.985)
+    fig.text(0.008, 0.928,
+             "Europeans held 4.3× the brokerage their numbers implied in 1932 and fell below parity by 1950 (A) — but at no point did they broker more than "
+             "equally connected\nEgyptians (B). The advantage was compositional, not positional: it lay in holding more and better-connected seats, not in "
+             "brokering better per seat.\nShaded: 1932's roster lists “quelques Administrateurs” — a selection of prominent directors — so its estimates are not "
+             "comparable with the later waves.",
+             fontsize=9.4, color=INK_SOFT, ha="left", va="top", linespacing=1.6)
+    fig.tight_layout(rect=(0, 0, 1, 0.845))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=170)
+    plt.close(fig)
+    return out

@@ -90,6 +90,20 @@ GEXF opens directly in Gephi; GraphML in igraph, Cytoscape and NetworkX.
 - **Coverage is the publisher's, not a sampling frame.** Politi covers
   registered joint-stock companies; what is missing is not missing at random.
 
+## Positional advantage by origin
+
+`politi origin` reproduces the brokerage analysis by community of origin
+across the five waves — the design of the gender/brokerage paper, transposed
+to origin and extended longitudinally. Directors are coded Arab/Egyptian,
+European, or Egyptianised minority (`docs/ORIGIN_CODING.md`); outcomes are
+betweenness in the two-mode network and in the co-membership projection;
+standard errors cluster on the director.
+
+The headline: Europeans held **4.3× the brokerage their numbers implied in
+1932 and fell below parity by 1950**, but at no wave did they broker more than
+*equally connected* Egyptians. The advantage was compositional — more and
+better-connected seats — not positional.
+
 ## Known gaps
 
 Read these before using the tables.

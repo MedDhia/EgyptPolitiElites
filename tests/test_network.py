@@ -116,3 +116,21 @@ def test_figures_render(tmp_path):
     b = figure_structure(aff, tmp_path / "struct.png")
     assert a.exists() and a.stat().st_size > 5000
     assert b.exists() and b.stat().st_size > 5000
+
+
+def test_two_mode_brokerage_is_determined_by_seat_count():
+    """In a two-mode network a director holding one seat is a leaf and must
+    score zero betweenness. 'Has any brokerage' is therefore geometrically
+    identical to 'holds two or more seats', which is why the origin analysis
+    also reports the person-projection measure."""
+    import networkx as nx
+
+    from politi.network import build_bipartite
+
+    rows = [{"year": 1932, "person_id": p, "person_label": p,
+             "company_id": c, "company_label": c, "role": "director"}
+            for p, c in (("P1", "C1"), ("P1", "C2"), ("P2", "C1"), ("P3", "C2"))]
+    g = build_bipartite(rows)
+    btw = nx.betweenness_centrality(g)
+    assert btw["P2"] == 0 and btw["P3"] == 0   # one seat each
+    assert btw["P1"] > 0                        # two seats: a bridge

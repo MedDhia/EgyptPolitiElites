@@ -88,6 +88,35 @@ def _cmd_drive_import(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_origin(args: argparse.Namespace) -> int:
+    """Positional advantage by community of origin, across the waves."""
+    import warnings
+
+    from .positional import build_panel, by_wave, concentration, permutation_test
+    from .viz import figure_positional
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    if not (processed / "affiliations.csv").exists():
+        print(f"no dataset at {processed}. Run `politi build --roster` first.",
+              file=sys.stderr)
+        return 1
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        panel = build_panel(processed)
+        panel.to_csv(processed / "origin_panel.csv", index=False)
+        by_wave(panel).to_csv(processed / "origin_coefficients_by_wave.csv", index=False)
+        permutation_test(panel, n_perm=args.permutations).to_csv(
+            processed / "origin_permutation.csv", index=False)
+        concentration(panel).to_csv(processed / "origin_concentration.csv", index=False)
+        fig = figure_positional(panel, (config.ROOT / "figures" /
+                                        "positional_advantage.png"))
+    counts = panel.groupby("origin", observed=True).size()
+    for grp, n in counts.items():
+        print(f"  {grp:<16} {n:,} person-wave observations")
+    print(f"\nwrote 4 tables to {processed} and {fig}")
+    return 0
+
+
 def _cmd_figures(args: argparse.Namespace) -> int:
     """Render the network figures from the built dataset."""
     from .viz import build_figures
@@ -207,6 +236,12 @@ def main(argv: list[str] | None = None) -> int:
     f.add_argument("--processed", help="dataset directory (default data/processed)")
     f.add_argument("--out", help="output directory (default figures/)")
     f.set_defaults(func=_cmd_figures)
+
+    o = sub.add_parser("origin",
+                       help="positional advantage by community of origin")
+    o.add_argument("--processed", help="dataset directory (default data/processed)")
+    o.add_argument("--permutations", type=int, default=20000)
+    o.set_defaults(func=_cmd_origin)
 
     args = ap.parse_args(argv)
     return args.func(args)
