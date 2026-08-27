@@ -25,10 +25,11 @@ import pandas as pd
 from .explore import (AQUA, BLUE, GRID, ORANGE, ORIGIN_COLOR, ORIGIN_LABEL,
                       _caption, _frame, _save, real_directors)
 from .origin import is_person
-from .politics import (OFFICE_LABEL, OFFICES, office_by_wave,
-                       origin_with_political, persistence_models,
-                       persistence_panel, persistence_stratified,
-                       political_panel)
+from .politics import (OFFICE_LABEL, OFFICES, baseline_connection, life_table,
+                       office_by_wave, origin_with_political,
+                       persistence_models, persistence_panel,
+                       persistence_stratified, political_panel,
+                       survival_models, survival_panel, survival_ph_test)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
 #: Ordered for reading, densest office first.
@@ -431,6 +432,107 @@ def _wrap_label(text: str) -> str:
     return ", ".join(parts[:2]) + ",\n" + ", ".join(parts[2:])
 
 
+# --- 8. survival --------------------------------------------------------------
+
+def fig_survival(panel: pd.DataFrame, out: Path) -> Path:
+    """Discrete-time survival in the register, by political connection.
+
+    The survivor curve is stratified on connection *at entry*, because a
+    survivor function cannot be stratified on a covariate that moves; the
+    model beside it uses the time-varying flag.
+    """
+    _style()
+    d = panel.assign(entry_connected=baseline_connection(panel))
+    table = life_table(d, by="entry_connected")
+    models = survival_models(panel)
+    ph = survival_ph_test(panel)
+
+    fig = plt.figure(figsize=(13.5, 6.6))
+    grid = fig.add_gridspec(2, 2, width_ratios=[1, 1.05],
+                            height_ratios=[5, 1], hspace=0.06, wspace=0.28)
+    ax = fig.add_subplot(grid[0, 0])
+    risk_ax = fig.add_subplot(grid[1, 0], sharex=ax)
+
+    # Left: the survivor function, drawn as the step function it is, with the
+    # numbers at risk on their own axes so they cannot collide with the plot.
+    series = ((False, "#8fa8bf", "Not connected at entry"),
+              (True, AQUA, "Connected at entry"))
+    ends = {}
+    for flag, colour, _ in series:
+        s = table[table.entry_connected == flag].sort_values("tenure_cat")
+        x = np.concatenate([[0], s.tenure_cat.to_numpy()])
+        y = np.concatenate([[1.0], s.survival.to_numpy()]) * 100
+        ax.step(x, y, where="post", color=colour, linewidth=2.6, zorder=3)
+        ax.plot(x[1:], y[1:], "o", color=colour, markersize=7,
+                markeredgecolor=SURFACE, markeredgewidth=1.5, zorder=4)
+        ends[flag] = float(y[-1])
+    ax.set_ylim(0, 100)
+    for (flag, colour, label), y in zip(series, _dodge_labels(ax, ends).values()):
+        ax.annotate(label, (4.15, y), va="center", fontsize=10, color=colour,
+                    fontweight="bold")
+    ax.set_xlim(-0.35, 7.6)
+    ax.set_ylabel("still recorded (%)")
+    ax.set_title("Survivor function in the register", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    ax.tick_params(labelbottom=False)
+    _frame(ax)
+
+    # Rows in the same vertical order as the curves: connected sits higher.
+    for i, (flag, colour, _) in enumerate(reversed(series)):
+        s = table[table.entry_connected == flag].sort_values("tenure_cat")
+        for xi, n in zip(s.tenure_cat, s.at_risk):
+            risk_ax.text(xi, 0.62 - i * 0.5, f"{n:,}", ha="center", va="center",
+                         fontsize=9, color=colour)
+    risk_ax.text(-0.3, 1.12, "firms at risk", ha="left", va="center",
+                 fontsize=9, color=INK_SOFT)
+    risk_ax.set_ylim(-0.1, 1.25)
+    risk_ax.set_yticks([])
+    risk_ax.set_xticks(range(5))
+    risk_ax.set_xlabel("volumes since the firm was first recorded")
+    for side in ("top", "right", "left"):
+        risk_ax.spines[side].set_visible(False)
+    risk_ax.spines["bottom"].set_color("#d9d7d0")
+
+    # Right: hazard ratios as each artefact control goes in.
+    ax = fig.add_subplot(grid[:, 1])
+    y = np.arange(len(models))[::-1]
+    ax.axvline(1, color="#b8b5ac", linewidth=1.2, zorder=1)
+    for i, (_, r) in enumerate(models.iterrows()):
+        colour = AQUA if r.p < 0.05 else "#b8c8d8"
+        ax.plot([r.lo, r.hi], [y[i], y[i]], color=colour, linewidth=2.4, zorder=2)
+        ax.plot([r.hr], [y[i]], "D", color=colour, markersize=9,
+                markeredgecolor=SURFACE, markeredgewidth=1.4, zorder=3)
+        ax.annotate(f"{r.hr:.2f}" + ("*" if r.p < 0.05 else ""), (r.hi, y[i]),
+                    xytext=(8, 0), textcoords="offset points", va="center",
+                    fontsize=9.5, color=INK_SOFT)
+    ax.set_yticks(y, [_wrap_label(c) for c in models.controls])
+    ax.set_ylim(-0.7, len(models) - 0.3)
+    ax.set_xlim(0.45, max(models.hi) * 1.2)
+    ax.set_xlabel("hazard ratio for leaving the register")
+    ax.set_title("Hazard of dropping out", fontsize=12, color=INK, loc="left",
+                 pad=12)
+    _frame(ax, xgrid=True)
+
+    tenure_p = float(ph.loc[ph.interaction == "tenure", "p"].iloc[0])
+    wave_p = float(ph.loc[ph.interaction == "wave", "p"].iloc[0])
+    fig.subplots_adjust(left=0.07, right=0.985, top=0.80, bottom=0.235)
+    _caption(fig, "Firms leave the register on a falling hazard, connected or not",
+             "Discrete-time hazard model on the firm-wave risk set: complementary log-log with log(interval) as an offset, so\n"
+             "the 6-, 4-, 5- and 3-year gaps are comparable and the coefficients read as hazard ratios. Errors clustered on the firm.",
+             f"The hazard falls steeply with tenure — {table[table.tenure_cat == 1].events.sum() / table[table.tenure_cat == 1].at_risk.sum() * 100:.0f}% "
+             f"of firms recorded once are not recorded in the next volume, against "
+             f"{table[table.tenure_cat == 4].events.sum() / table[table.tenure_cat == 4].at_risk.sum() * 100:.0f}% of those recorded four times. "
+             "Connection looks protective until the number of directors the register records is held constant, after which it "
+             "is not distinguishable from none. The association does not vary with tenure "
+             f"(p = {tenure_p:.2f}) or wave (p = {wave_p:.2f}), so one ratio is a fair summary of it.\n"
+             "Leaving the register is not failing: the volumes record a firm only through its listed directors, and give no "
+             "founding date, so the clock runs from first appearance and not from incorporation.")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=170)
+    plt.close(fig)
+    return out
+
+
 def build_all(processed: Path, outdir: Path) -> list[Path]:
     aff = real_directors(pd.read_csv(processed / "affiliations.csv"))
     flags = pd.read_csv(processed / "person_political.csv")
@@ -447,5 +549,6 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
         fig_origin_adjusted(panel, outdir / "origin_adjusted.png"),
         fig_firm_persistence(persistence_panel(processed),
                              outdir / "firm_persistence.png"),
+        fig_survival(survival_panel(processed), outdir / "firm_survival.png"),
     ]
     return made

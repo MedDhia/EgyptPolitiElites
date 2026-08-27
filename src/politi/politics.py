@@ -492,3 +492,231 @@ def persistence_stratified(panel: pd.DataFrame, term: str = "connected",
             "null_lo_pts": float(np.percentile(draws, 2.5)) * 100,
             "null_hi_pts": float(np.percentile(draws, 97.5)) * 100,
             "n_cells": len(usable)}
+
+
+# --- survival -----------------------------------------------------------------
+
+#: Reasons the survival analysis is discrete-time rather than Cox.
+SURVIVAL_DESIGN = """\
+Firms are observed at five unequally spaced points, not continuously, so the
+data are interval-censored and a Cox model would misstate what is known. This
+is a discrete-time hazard model on the firm-wave risk set, with a
+complementary log-log link and log(interval) as an offset — the specification
+whose coefficients are proportional hazards on the underlying continuous time,
+and whose offset makes the 6-, 4-, 5- and 3-year intervals comparable.
+
+Four features of the data bound what it can say:
+
+* **The event is leaving the register, not failing.** A firm drops out of the
+  risk set when the next volume does not record it. It may have been wound up,
+  or merely gone unlisted. Nothing here distinguishes the two.
+* **Entry is left-truncated.** Firms were trading before 1932 and the volumes
+  do not give a founding date, so the clock runs from first appearance in the
+  register, not from incorporation. `tenure` is volumes observed, never age.
+* **Disappearance is not absorbing.** 5.4% of firms reappear after a missing
+  wave, which the primary specification treats as an exit. `permanent_exit`
+  builds the alternative, where the spell ends at the last wave the firm is
+  recorded in.
+* **Wave, tenure and entry cohort are collinear.** Given the wave and the
+  tenure, the entry cohort is determined. Wave and tenure are in the model and
+  the cohort is therefore absorbed, not estimated.
+"""
+
+
+def survival_panel(processed=None, permanent_exit: bool = False) -> pd.DataFrame:
+    """The firm-wave risk set for the discrete-time hazard model.
+
+    One row per wave a firm is recorded in and at risk of not being recorded
+    in the next. `exit` is the event; `gap` is the interval to the next wave,
+    which belongs in the model as an offset. Firms recorded in the last wave
+    are right-censored and contribute no row for it.
+
+    Set *permanent_exit* to end the spell at the firm's last recorded wave
+    rather than at its first missing one. See :data:`SURVIVAL_DESIGN`.
+    """
+    from pathlib import Path
+
+    from . import config
+    from .origin import is_person
+
+    processed = Path(processed) if processed else config.PROCESSED
+    aff = pd.read_csv(processed / "affiliations.csv")
+    aff = aff[aff.person_label.map(is_person)]
+    firm = pd.read_csv(processed / "firm_political.csv")
+
+    waves = sorted(aff.year.unique())
+    presence = {c: set(g) for c, g in aff.groupby("company_id").year}
+
+    seats = (aff.groupby(["year", "person_id"]).company_id.nunique()
+             .rename("seats").reset_index())
+    anchor = (aff.merge(seats, on=["year", "person_id"])
+              .groupby(["year", "company_id"]).seats.max()
+              .rename("max_seats").reset_index())
+
+    rows = []
+    for company, years in presence.items():
+        first, last = min(years), max(years)
+        tenure = 0
+        for i, wave in enumerate(waves):
+            if wave < first:
+                continue
+            if permanent_exit:
+                if wave > last:
+                    break
+                if wave not in years:
+                    continue            # an internal gap is not an exit here
+            elif wave not in years:
+                break                   # the first missing wave ends the spell
+            tenure += 1
+            if i == len(waves) - 1:
+                break                   # censored: no following volume
+            event = int(wave == last) if permanent_exit \
+                else int(waves[i + 1] not in years)
+            rows.append({"company_id": company, "year": wave, "tenure": tenure,
+                         "entry": first, "exit": event,
+                         "gap": waves[i + 1] - wave})
+
+    d = (pd.DataFrame(rows)
+         .merge(firm, on=["year", "company_id"], how="left")
+         .merge(anchor, on=["year", "company_id"], how="left"))
+    d["max_seats"] = d.max_seats.fillna(1)
+    d["log_gap"] = np.log(d.gap)
+    d["log_max_seats"] = np.log(d.max_seats)
+    d["tenure_cat"] = d.tenure.clip(upper=4)
+    d["directors_cat"] = d.n_directors.clip(upper=5)
+    return d
+
+
+#: Specifications reported by :func:`survival_models`, in order.
+SURVIVAL_SPECS = [
+    ("baseline", "exit ~ conn + C(year) + C(tenure_cat)",
+     "Wave, tenure"),
+    ("directors",
+     "exit ~ conn + C(year) + C(tenure_cat) + C(directors_cat)",
+     "Wave, tenure, directors recorded"),
+    ("anchor",
+     "exit ~ conn + C(year) + C(tenure_cat) + C(directors_cat) + log_max_seats",
+     "Wave, tenure, directors recorded, their seat counts"),
+]
+
+
+def survival_models(panel: pd.DataFrame, term: str = "connected") -> pd.DataFrame:
+    """Discrete-time hazard ratios for leaving the register.
+
+    Complementary log-log with a log-interval offset and firm-clustered
+    errors, so `hr` is a hazard ratio. Below 1 is a lower hazard of dropping
+    out of the annuaire, which is not the same as a lower risk of failing.
+
+    Association only, and in no direction: connection and presence are read
+    from the same volume.
+    """
+    import warnings
+
+    import statsmodels.api as sm
+    import statsmodels.formula.api as smf
+
+    d = panel.assign(conn=panel[term].astype(bool).astype(int))
+    binomial = sm.families.Binomial(sm.families.links.CLogLog())
+    rows = []
+    for key, formula, label in SURVIVAL_SPECS:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            m = smf.glm(formula, data=d, family=binomial, offset=d.log_gap).fit(
+                cov_type="cluster", cov_kwds={"groups": d.company_id})
+        ci = m.conf_int().loc["conn"]
+        rows.append({"spec": key, "controls": label,
+                     "coef": m.params["conn"], "hr": np.exp(m.params["conn"]),
+                     "lo": np.exp(ci[0]), "hi": np.exp(ci[1]),
+                     "p": m.pvalues["conn"], "n": int(m.nobs),
+                     "events": int(d.exit.sum())})
+    return pd.DataFrame(rows)
+
+
+def survival_ph_test(panel: pd.DataFrame, term: str = "connected") -> pd.DataFrame:
+    """Does the association vary with tenure or with the wave?
+
+    A joint Wald test on the interaction block. A small p would mean the
+    single hazard ratio above is an average over something that moves.
+    """
+    import warnings
+
+    import statsmodels.api as sm
+    import statsmodels.formula.api as smf
+
+    d = panel.assign(conn=panel[term].astype(bool).astype(int))
+    binomial = sm.families.Binomial(sm.families.links.CLogLog())
+    rows = []
+    for label, formula in (
+            ("tenure",
+             "exit ~ conn*C(tenure_cat) + C(year) + C(directors_cat)"),
+            ("wave",
+             "exit ~ conn*C(year) + C(tenure_cat) + C(directors_cat)")):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            m = smf.glm(formula, data=d, family=binomial, offset=d.log_gap).fit(
+                cov_type="cluster", cov_kwds={"groups": d.company_id})
+            table = m.wald_test_terms().table
+        key = next(i for i in table.index if i.startswith("conn:"))
+        rows.append({"interaction": label,
+                     "chi2": float(np.ravel(table.loc[key, "statistic"])[0]),
+                     "df": int(table.loc[key, "df_constraint"]),
+                     "p": float(np.ravel(table.loc[key, "pvalue"])[0])})
+    return pd.DataFrame(rows)
+
+
+def life_table(panel: pd.DataFrame, by: str | None = None) -> pd.DataFrame:
+    """Discrete hazard and survivor function over tenure in the register.
+
+    The survivor function is the running product of one minus the interval
+    hazard, so it reads as "still recorded after this many volumes". *by*
+    splits it on a column — pass a baseline covariate, never a time-varying
+    one, since a survivor curve cannot be stratified on something that moves.
+    """
+    keys = ["tenure_cat"] if by is None else [by, "tenure_cat"]
+    g = (panel.groupby(keys)
+         .agg(at_risk=("exit", "size"), events=("exit", "sum"))
+         .reset_index())
+    g["hazard"] = g.events / g.at_risk
+    group = [by] if by else []
+    g["survival"] = (g.groupby(group)["hazard"].transform(
+        lambda h: (1 - h).cumprod()) if group else (1 - g.hazard).cumprod())
+    return g
+
+
+def baseline_connection(panel: pd.DataFrame) -> pd.Series:
+    """Whether each firm was connected in the wave it first appears in.
+
+    Survivor curves need a covariate fixed at entry; `connected` is measured
+    every wave and moves.
+    """
+    entry = panel[panel.tenure == 1].set_index("company_id").connected
+    return panel.company_id.map(entry).fillna(False)
+
+
+def survival_sensitivity(processed=None, term: str = "connected") -> pd.DataFrame:
+    """The fully controlled hazard ratio under each alternative definition.
+
+    A null that holds only under one coding of the event is not a null. Each
+    row re-runs the last specification in :data:`SURVIVAL_SPECS` after
+    changing one thing: how the spell ends, which offices count, and whether
+    the 1932 entry cohort — drawn from a roster of *quelques* administrators —
+    is in the risk set at all.
+    """
+    variants = {
+        "first disappearance (primary)": (False, term, False),
+        "permanent exit": (True, term, False),
+        "national office only": (False, "national", False),
+        "excluding the 1932 entry cohort": (False, term, True),
+    }
+    rows = []
+    for label, (permanent, column, drop_1932) in variants.items():
+        panel = survival_panel(processed, permanent_exit=permanent)
+        if column == "national":
+            panel = panel.assign(connected=panel.n_national > 0)
+            column = "connected"
+        if drop_1932:
+            panel = panel[panel.entry != 1932]
+        m = survival_models(panel, column).iloc[-1]
+        rows.append({"variant": label, "hr": m.hr, "lo": m.lo, "hi": m.hi,
+                     "p": m.p, "n": m.n, "events": m.events})
+    return pd.DataFrame(rows)

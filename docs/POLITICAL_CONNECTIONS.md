@@ -85,6 +85,7 @@ Rendered by `python -m politi politics` into `figures/politics/`.
 | `office_position.png` | The raw brokerage gap largely closes once seat count is held constant: office is associated with more seats, not with a more central position per seat |
 | `origin_adjusted.png` | The origin coefficients are essentially unchanged by holding office constant |
 | `firm_persistence.png` | Connected firms reappear more often in the raw data, and the gap is accounted for by how many directors the register records for them |
+| `firm_survival.png` | Discrete-time survivor function and hazard of leaving the register: the hazard falls steeply with tenure, and connection is not distinguishable from none once coverage is held constant |
 
 ## Are politically connected firms more likely to persist?
 
@@ -117,6 +118,64 @@ fixed. The pooled difference is **+0.4 percentage points, permutation
 p = 0.88**, against a null interval of −4.1 to +4.3 points. Substituting
 national office only (−0.2 pts, p = 0.91) or two or more connected directors
 (+1.2 pts, p = 0.65) does not change the picture.
+
+### Survival analysis
+
+The comparison above is one step ahead. A survival analysis uses the whole
+spell, and gives the baseline the one-step model hides.
+
+Firms are observed at five unequally spaced points, not continuously, so the
+data are interval-censored: a Cox model would misstate what is known. The
+model is **discrete-time on the firm-wave risk set, complementary log-log with
+log(interval) as an offset** — the specification whose coefficients are
+proportional hazards on the underlying continuous time, and whose offset makes
+the 6-, 4-, 5- and 3-year gaps comparable. Errors clustered on the firm.
+`politics.survival_panel()` builds the risk set; `survival_models()` fits it.
+
+2,228 firm-waves at risk, 1,111 exits, 1,545 firms.
+
+| Controls | HR | 95% CI | p |
+|---|---|---|---|
+| Wave, tenure | 0.69 | 0.58–0.81 | <0.001 |
+| + directors recorded | 0.93 | 0.78–1.11 | 0.41 |
+| + their seat counts | 0.93 | 0.77–1.11 | 0.40 |
+
+Same answer as the one-step model, and now with a baseline worth reading in
+its own right. **The hazard of leaving the register falls steeply with
+tenure**: 63% of firms recorded once are not recorded in the next volume,
+27% of those recorded twice, 14% of those recorded three times, 10% of those
+recorded four. Adjusted for the interval, the wave hazards are 8.4% a year
+across 1932–38, then 18.7%, 16.0% and 14.9%; 1932's is low because its roster
+is a selection of prominent firms.
+
+Proportional hazards holds for the term of interest: the association does not
+vary with tenure (joint Wald p = 0.29) or with the wave (p = 0.80), so a
+single ratio summarises it fairly.
+
+`survival_sensitivity()` re-runs the fullest specification under each
+alternative coding:
+
+| Variant | HR | 95% CI | p |
+|---|---|---|---|
+| First disappearance (primary) | 0.93 | 0.77–1.11 | 0.40 |
+| Permanent exit (spell ends at last presence) | 1.00 | 0.83–1.21 | 0.98 |
+| National office only | 0.95 | 0.78–1.16 | 0.62 |
+| Excluding the 1932 entry cohort | 0.88 | 0.72–1.07 | 0.21 |
+
+Four design facts bound all of it, and none of them is fixable from these
+volumes:
+
+* **The event is leaving the register, not failing.** A firm drops out when
+  the next volume does not record it — wound up, or merely unlisted.
+* **Entry is left-truncated.** The volumes give no founding date, so the clock
+  runs from first appearance. `tenure` is volumes observed, never firm age,
+  and the steep early hazard is partly the register finding its feet around a
+  firm rather than the firm being young.
+* **Disappearance is not absorbing.** 5.4% of firms reappear after a missing
+  wave. The primary coding treats that as an exit; the permanent-exit variant
+  above does not, and moves the estimate to exactly 1.00.
+* **Wave, tenure and entry cohort are collinear.** Given wave and tenure the
+  cohort is determined, so it is absorbed rather than estimated.
 
 ### How to read that
 

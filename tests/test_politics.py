@@ -143,3 +143,58 @@ def test_persistence_stratified_recovers_a_planted_difference():
     out = persistence_stratified(panel, n_perm=300, seed=2)
     assert out["pooled_pts"] > 30
     assert out["p_perm"] < 0.01
+
+
+def test_survival_panel_shape():
+    """The risk set: one row per wave at risk, none for the last wave."""
+    from politi.politics import survival_panel
+
+    panel = survival_panel()
+    # Every row has an interval to the next wave, and none starts at 1950.
+    assert panel.gap.between(3, 6).all()
+    assert 1950 not in set(panel.year)
+    # Tenure starts at 1 and never skips within a firm.
+    for _, g in panel.groupby("company_id"):
+        t = sorted(g.tenure)
+        assert t == list(range(t[0], t[0] + len(t)))
+        assert t[0] == 1
+    # A firm with an exit contributes no later row: the spell is over.
+    ended = panel[panel.exit == 1]
+    for cid, year in zip(ended.company_id, ended.year):
+        assert panel[(panel.company_id == cid) & (panel.year > year)].empty
+
+
+def test_permanent_exit_keeps_firms_that_come_back():
+    """Under the alternative coding an internal gap is not an exit."""
+    from politi.politics import survival_panel
+
+    first = survival_panel()
+    permanent = survival_panel(permanent_exit=True)
+    assert len(permanent) > len(first)
+    assert permanent.exit.sum() < first.exit.sum()
+
+
+def test_life_table_survival_is_the_product_of_one_minus_hazard():
+    from politi.politics import life_table
+
+    panel = pd.DataFrame({
+        "company_id": [f"c{i}" for i in range(30)],
+        "tenure_cat": [1] * 20 + [2] * 10,
+        "exit": [1] * 10 + [0] * 10 + [1] * 2 + [0] * 8,
+    })
+    t = life_table(panel).set_index("tenure_cat")
+    assert t.loc[1, "hazard"] == pytest.approx(0.5)
+    assert t.loc[2, "hazard"] == pytest.approx(0.2)
+    assert t.loc[2, "survival"] == pytest.approx(0.5 * 0.8)
+
+
+def test_baseline_connection_is_fixed_at_entry():
+    """A survivor curve cannot be stratified on a covariate that moves."""
+    from politi.politics import baseline_connection
+
+    panel = pd.DataFrame({
+        "company_id": ["c1", "c1", "c2"],
+        "tenure": [1, 2, 1],
+        "connected": [True, False, False],
+    })
+    assert list(baseline_connection(panel)) == [True, True, False]
