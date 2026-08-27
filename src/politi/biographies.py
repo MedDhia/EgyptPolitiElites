@@ -29,6 +29,8 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 
+from .names import repair_structural_words
+
 # --- page furniture ----------------------------------------------------------
 
 def _fold(s: str) -> str:
@@ -245,7 +247,8 @@ _FIRM_HINT = re.compile(
 # Sits between a role and the organisation it governs: "Président *du Conseil
 # d'Administration* de X", "Président *Fondateur* de X".
 _CONNECTOR = re.compile(
-    r"(?i)^\s*(?:et\s+)?(?:d\W*administration|['’]\s*admini\w*|"
+    r"(?i)^\s*(?:et\s+)?(?:[cdl]{1,2}\W*administration|['’]\s*admini\w*|"
+    r"suppl[eé]ants?|adjoints?|"
     r"(?:du|des|[ec]lu|cle)\s+conseils?\w*"
     r"(?:\s+d\W*admi\w*)?|de\s+la\s+direction|"
     r"fondateur|honoraire|sortant|actuel|g[eé]n[eé]ral|local)\b[\s,]*")
@@ -356,6 +359,11 @@ def parse_entry(entry: str, page: int | None = None) -> Biography:
     if split is None:
         return Biography(printed=printed, name="", honorific=None, page=page)
     hon, name, body = split
+    # Restore the structural vocabulary the scanner mangled — but only in the
+    # body. Personal names are left exactly as printed: they are the one place
+    # a French word is not expected, so repairing there turns "Achille" into
+    # "Comité". `printed` keeps the whole entry as scanned regardless.
+    body = repair_structural_words(body)
 
     bio = Biography(printed=printed, name=name, honorific=hon, page=page)
     last_roles: list[str] = []

@@ -17,9 +17,9 @@ Egyptianisation of the late 1940s.
 
 | | |
 |---|---|
-| Directorships | **6,880** |
-| Directors | **2,273** |
-| Firms | **3,052** |
+| Directorships | **7,363** |
+| Directors | **2,333** |
+| Firms | **1,987** |
 | Waves | 1932 · 1938 · 1942 · 1947 · 1950 |
 
 The dataset lives in `data/processed/` and is tracked in this repository. The
@@ -102,11 +102,12 @@ Read these before using the tables.
   component — an artefact that looked like wartime disintegration. Re-OCR
   raises it to 35.5%, in line with the other waves. `politi extract` does this
   automatically; it costs ~30 minutes. See `docs/EXTRACTION.md`.
-- **Residual OCR damage.** About 0.4% of firm names still carry a mangled
-  prefix ("Conseil d'Administrat.ion Lie the …"), and about 0.2% of person
-  records are company fragments the entry-start guard could not catch
-  ("Salama Mat•co"). Both fragment a handful of nodes; the crosswalks let you
-  find and merge them.
+- **Residual OCR damage.** Firm names are matched through the scanner's own
+  confusions (`docs/EXTRACTION.md`), which merges "Collan"/"Cotton" while
+  keeping "Land" separate and takes the corpus from 3,052 firm nodes to 1,987.
+  What survives is names damaged past rule-based repair ("Tl1e Alexandria
+  Insurance Co"), left as singletons. The crosswalks are where you merge those
+  by hand.
 - **Ten directorships are exact duplicates** of another row. They do not
   distort the graphs — both projections deduplicate by node — but they inflate
   row counts if you tabulate `affiliations.csv` directly.

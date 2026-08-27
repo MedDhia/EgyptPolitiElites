@@ -30,7 +30,8 @@ from dataclasses import dataclass
 
 from rapidfuzz import fuzz
 
-from .names import PersonName, normalize_company
+from .names import (PersonName, company_letters, normalize_company,
+                    ocr_distance, ocr_skeleton, unmatched_content_token)
 
 
 @dataclass
@@ -156,30 +157,106 @@ def _highest_rank(ranks: list[str]) -> str | None:
 
 
 def cluster_companies(
-    pairs: list[tuple[int, str]], threshold: int = 92
+    pairs: list[tuple[int, str]], max_distance: float = 0.20,
+    max_diameter: float = 0.30, near_identical: float = 0.10,
+    candidate_cutoff: int = 80, min_letters: int = 8
 ) -> tuple[dict[tuple[int, str], str], dict[str, dict]]:
-    """Link company names across waves. Keyed by (year, printed name)."""
+    """Link company names across waves, through the scanner's confusions.
+
+    Two stages, because no single similarity threshold can do this job. On this
+    corpus the *same* firm ("Compagnie Générale Égyptienne de Pétroles" and its
+    mangled twin) scores 88.5 by plain ratio, while two *different* firms
+    ("Kafr El Zayat Cotton Co" and "Kafr El Zayat Land Co") score 87.5. The
+    distributions overlap, so a threshold on ratio must either merge different
+    firms or split the same one.
+
+    1. **Exact skeleton match** (``names.ocr_skeleton``) merges outright.
+       Folding characters into the classes the scanner confuses makes "Collan",
+       "CoLLan" and "Cotton" one string, while "Land" stays another.
+    2. **Weighted edit distance** (``names.ocr_distance``) decides the rest.
+       Substituting a character for one it is commonly misread as costs a
+       fraction of an arbitrary substitution, so the same firm scanned twice —
+       differing by many *cheap* edits — separates from two firms differing by
+       few *expensive* ones. Cheap candidates are generated with a fast ratio
+       over skeletons, then confirmed with the weighted distance.
+
+    The threshold is set to split rather than merge when uncertain: a false
+    split fragments one firm, while a false merge invents ties between two.
+    """
+    import numpy as np
+    from rapidfuzz import fuzz, process
+
     uniq = sorted({(y, n) for y, n in pairs})
-    keys = {p: normalize_company(p[1]) for p in uniq}
     idx = {p: i for i, p in enumerate(uniq)}
+    skeletons = {p: ocr_skeleton(p[1]) for p in uniq}
+    letters = {p: company_letters(p[1]) for p in uniq}
 
     uf = _UnionFind()
     for i in range(len(uniq)):
         uf.find(i)
-    # Block on the first token of the normalised key.
-    blocks: dict[str, list[int]] = defaultdict(list)
-    for p, i in idx.items():
-        k = keys[p]
-        blocks[k.split()[0] if k else ""].append(i)
 
-    for _, group in blocks.items():
-        for a in range(len(group)):
-            for b in range(a + 1, len(group)):
-                ka, kb = keys[uniq[group[a]]], keys[uniq[group[b]]]
-                if ka and ka == kb:
-                    uf.union(group[a], group[b])
-                elif fuzz.token_sort_ratio(ka, kb) >= threshold:
-                    uf.union(group[a], group[b])
+    # Stage 1: the same firm, read differently.
+    by_skeleton: dict[str, list[int]] = defaultdict(list)
+    for p, i in idx.items():
+        if skeletons[p]:
+            by_skeleton[skeletons[p]].append(i)
+    for members in by_skeleton.values():
+        for other in members[1:]:
+            uf.union(members[0], other)
+
+    # Stage 2: near matches, compared once per distinct skeleton.
+    #
+    # Complete linkage, not single linkage. Chaining A~B and B~C into one
+    # cluster is how "Alexandria Life Insurance" ends up merged with
+    # "Alexandria Insurance", and "Industrie des Fibres Textiles" with
+    # "Société Egyptienne des Industries Textiles": each step is under the
+    # threshold while the ends are nowhere near each other. Requiring every
+    # cross-pair to stay within *max_diameter* stops a cluster from drifting.
+    reps = sorted(by_skeleton)
+    rep_pair = {sk: uniq[members[0]] for sk, members in by_skeleton.items()}
+    if len(reps) > 1:
+        scores = process.cdist(reps, reps, scorer=fuzz.ratio,
+                               score_cutoff=candidate_cutoff,
+                               dtype=np.uint8, workers=-1)
+        a_idx, b_idx = np.nonzero(np.triu(scores, k=1))
+
+        candidates: list[tuple[float, int, int]] = []
+        for a, b in zip(a_idx.tolist(), b_idx.tolist()):
+            la = letters[rep_pair[reps[a]]]
+            lb = letters[rep_pair[reps[b]]]
+            if min(len(la), len(lb)) < min_letters:
+                continue
+            dist = ocr_distance(la, lb)
+            if dist > max_distance:
+                continue
+            # A whole extra word means a different firm: "Alexandria Life
+            # Insurance" is not "Alexandria Insurance", though only four
+            # letters separate them. But the veto is suspended when the names
+            # are already all but identical, because there the odd token is
+            # scanner debris — "A lexandria Insurance" loses its stray "A" and
+            # would otherwise look like a word the other name lacks.
+            if dist > near_identical and unmatched_content_token(
+                    rep_pair[reps[a]][1], rep_pair[reps[b]][1]):
+                continue
+            candidates.append((dist, a, b))
+        candidates.sort()  # closest first, so the surest merges happen early
+
+        # Members of each live cluster, as indices into `reps`.
+        group_of = {a: [a] for a in range(len(reps))}
+        for dist, a, b in candidates:
+            ra, rb = uf.find(by_skeleton[reps[a]][0]), uf.find(by_skeleton[reps[b]][0])
+            if ra == rb:
+                continue
+            ma = group_of.setdefault(a, [a])
+            mb = group_of.setdefault(b, [b])
+            if any(ocr_distance(letters[rep_pair[reps[x]]],
+                                letters[rep_pair[reps[y]]]) > max_diameter
+                   for x in ma for y in mb):
+                continue
+            uf.union(by_skeleton[reps[a]][0], by_skeleton[reps[b]][0])
+            merged = ma + mb
+            for member in merged:
+                group_of[member] = merged
 
     clusters: dict[int, list[tuple[int, str]]] = defaultdict(list)
     for p, i in idx.items():
@@ -189,12 +266,15 @@ def cluster_companies(
     companies: dict[str, dict] = {}
     for n, (_, group) in enumerate(sorted(clusters.items()), start=1):
         cid = f"C{n:05d}"
+        # Canonical label: the most frequent printed form, longest breaking
+        # ties — the modal spelling is usually the least damaged one.
         counts = Counter(name for _, name in group)
         label = max(counts, key=lambda d: (counts[d], len(d)))
         companies[cid] = {
             "company_id": cid,
             "label": label,
-            "name_key": keys[group[0]],
+            "name_key": normalize_company(label),
+            "skeleton": skeletons[group[0]],
             "variants": sorted({name for _, name in group}),
             "years_present": sorted({y for y, _ in group}),
         }

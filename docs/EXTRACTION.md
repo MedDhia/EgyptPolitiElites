@@ -155,14 +155,72 @@ are where false merges concentrate. **Do this before reporting any centrality
 number** — a single false merge on a hub inflates betweenness across the whole
 graph.
 
+## 4b. Matching company names through the scanner
+
+The hardest part of this dataset is deciding when two printed names are the
+same firm. Politi prints "The Kafr El Zayat Cotton Co", "Kafr el Zayat Collan
+Co" and "Kafr El Zay at CoLLan Co" for one company — and "Kafr El Zayat Land
+Co" for a different one.
+
+**A similarity threshold cannot do this.** Measured on this corpus, the same
+firm ("Compagnie Générale Égyptienne de Pétroles" against its mangled twin)
+scores **88.5** by plain ratio, while those two *different* firms score
+**87.5**. The distributions overlap, so any cutoff either merges Cotton with
+Land or splits Cotton from Collan. Four mechanisms are used instead.
+
+**1. The OCR skeleton, for exact matching.** Each character is folded into the
+class the scanner confuses it with — l/t/i/1, c/e/o/a, n/u/m/h — and spaces are
+dropped, since the scanner inserts them inside words. Collan, CoLLan and Cotton
+become one string; Land stays another, because l/t and a/o are confusable while
+l/c and n/t are not. This is precise, and it does most of the work.
+
+**2. A weighted edit distance, for the rest.** Substituting a character for one
+it is commonly misread as costs 0.3; any other substitution costs 1.0. The same
+firm scanned twice differs by many *cheap* edits, two firms by few *expensive*
+ones — which is exactly the signal a plain ratio throws away. Collan/Cotton
+scores 0.053, Cotton/Land 0.271; the merge threshold is 0.20.
+
+The skeleton is used only for exact matching, never fuzzy. Folding is lossy
+enough that unrelated short words collide: an earlier attempt to snap rare
+tokens onto frequent ones by skeleton similarity proposed "louis" → "toutes"
+and "benoist" → "bomonti".
+
+**3. Complete linkage.** Single-linkage union-find chains A~B~C into one
+cluster even when A and C are unrelated; that is how "Alexandria Life
+Insurance" was absorbed into "Alexandria Insurance". Every cross-pair must now
+stay within a 0.30 diameter.
+
+**4. An unmatched-word veto.** A scanner mangles words, it does not invent
+them, so a whole extra content word means a different firm however small the
+edit distance — "Life" is four letters but decisive. The veto is suspended
+when two names are already near-identical (≤0.10), because there an odd token
+is debris: OCR splits "Alexandria" into "A lexandria", and the stray "A" would
+otherwise read as a missing word.
+
+Together these take the 1932-1950 corpus from 3,052 company nodes to 1,987
+without merging any of the firms above. Residual singletons are names damaged
+past rule-based repair ("Tl1e Alexandria Insurance Co"); the crosswalk is where
+you merge those by hand.
+
+### Repairing the structural vocabulary
+
+Separately, the words that carry an entry's *grammar* — Administration,
+Conseil, Membre, Président — are repaired by fuzzy skeleton match before
+parsing, so "Aaministration", "Adrmnistration" and "ACministrateur" are read as
+what they plainly are. This is confined to that vocabulary and applied only to
+the entry body: personal names are left exactly as printed, since a name is the
+one place a French word is not expected and repairing there turns "Achille"
+into "Comité". `printed` always keeps the entry as scanned.
+
 ## 5. Tuning
 
 ```python
-build_tables(volumes, person_threshold=88, company_threshold=92)
+build_from_rosters(rosters, person_threshold=88, company_distance=0.20)
 ```
 
-Lower to merge more aggressively (fewer false splits, more false merges);
-raise for the opposite. Report whatever you use.
+`company_distance` is a *distance*: raise it to merge more aggressively,
+lower it to split. `cluster_companies` also takes `max_diameter` (0.30) and
+`near_identical` (0.10). Report whatever you use.
 
 ## Adding a wave
 

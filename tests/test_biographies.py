@@ -155,3 +155,62 @@ def test_a_split_entry_rejoins_rather_than_forking():
             "Copper Works, Administrateur de la Société Misr d'Egrenage.\n")
     lines = join_lines(text).split("\n")
     assert len(lines) == 1, "the company fragment must not open a second entry"
+
+
+# --- matching through the scanner's confusions --------------------------------
+
+def test_ocr_variants_of_one_firm_merge_but_a_different_firm_does_not():
+    """The case that motivated OCR-aware matching.
+
+    "Kafr El Zayat Cotton Co" is printed as Cotton, Collan and CoLLan; "Kafr El
+    Zayat Land Co" is a different company. A single fuzzy threshold cannot have
+    both, because the same firm scores *lower* than these two different ones.
+    """
+    from politi.resolve import cluster_companies
+
+    cotton = ["The Kafr El Zayat Cotton Co", "Kafr el Zayat Collan Co",
+              "Kafr El Zay at CoLLan Co", "Kafr El Zayat Colton Co",
+              "The Kafr El Zayal Cotton Co", "Ka fr El Zayat Cotton Company"]
+    land = ["Kafr El Zayat Land Co", "Kafr el Zayat Land Cy",
+            "Kal'r El Zayat Land Co"]
+    other = ["Abou Zaabal & Kafr Zayat Fertiliser & Chemical Co. (AKFAC)"]
+    mapping, _ = cluster_companies([(1932, n) for n in cotton + land + other])
+
+    cotton_ids = {mapping[(1932, n)] for n in cotton}
+    land_ids = {mapping[(1932, n)] for n in land}
+    assert len(cotton_ids) == 1, "the Cotton variants must be one firm"
+    assert len(land_ids) == 1, "the Land variants must be one firm"
+    assert cotton_ids != land_ids, "Cotton and Land are different firms"
+    assert mapping[(1932, other[0])] not in cotton_ids | land_ids
+
+
+def test_a_heavily_damaged_name_still_matches_its_clean_twin():
+    from politi.resolve import cluster_companies
+
+    clean = "Compagnie Générale Égyptienne de Pétroles Co-op. S.A.E"
+    damaged = "Compagnie Généi'Ulc Jtgypliennc de~· Pé·Lrolcs Co~ cp. S.A.E"
+    mapping, _ = cluster_companies([(1932, clean), (1938, damaged)])
+    assert mapping[(1932, clean)] == mapping[(1938, damaged)]
+
+
+def test_clusters_do_not_chain_into_unrelated_firms():
+    """Single linkage merged 'Alexandria Life Insurance' into 'Alexandria
+    Insurance' by chaining through intermediates. Complete linkage must not."""
+    from politi.resolve import cluster_companies
+
+    names = ["The Alexandria Insurance Co", "Alexandria Insurance Co",
+             "Alexandria Insurance", "Alexandria Life Insurance Co. S.A.E",
+             "Alexandria Life Insurance Co"]
+    mapping, _ = cluster_companies([(1932, n) for n in names])
+    plain = mapping[(1932, "Alexandria Insurance Co")]
+    life = mapping[(1932, "Alexandria Life Insurance Co")]
+    assert plain != life
+
+
+def test_ocr_distance_separates_cheap_from_expensive_edits():
+    from politi.names import company_letters as cl
+    from politi.names import ocr_distance
+
+    same = ocr_distance(cl("Kafr el Zayat Collan Co"), cl("The Kafr El Zayat Cotton Co"))
+    diff = ocr_distance(cl("The Kafr El Zayat Cotton Co"), cl("Kafr El Zayat Land Co"))
+    assert same < 0.10 < diff

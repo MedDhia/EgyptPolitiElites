@@ -14,6 +14,11 @@ from .parse import Company, parse_volume
 from .resolve import Mention, cluster_companies, cluster_persons
 
 
+# The scanner renders 'l' and 'I' as '|', so a pipe cannot double as the
+# delimiter for the name_variants column.
+VARIANT_SEP = " ;; "
+
+
 def load_volume_text(year: int) -> str:
     """Read a wave's extracted text, falling back to the PDF if needed."""
     ed = config.edition(year)
@@ -37,7 +42,7 @@ def load_volume_text(year: int) -> str:
 def build_tables(
     volumes: dict[int, list[Company]],
     person_threshold: int = 88,
-    company_threshold: int = 92,
+    company_distance: float = 0.20,
 ) -> dict[str, pd.DataFrame]:
     """Turn parsed volumes into the five output tables.
 
@@ -59,7 +64,7 @@ def build_tables(
 
     m2p, people = cluster_persons(mentions, threshold=person_threshold)
     c_pairs = [(y, n) for (y, n) in company_meta]
-    m2c, firms = cluster_companies(c_pairs, threshold=company_threshold)
+    m2c, firms = cluster_companies(c_pairs, max_distance=company_distance)
 
     aff_rows = []
     for m in mentions:
@@ -96,7 +101,7 @@ def build_tables(
             "n_mentions": p["n_mentions"],
             "years_present": ";".join(str(y) for y in p["years_present"]),
             "n_waves": len(p["years_present"]),
-            "name_variants": " | ".join(p["variants"]),
+            "name_variants": VARIANT_SEP.join(p["variants"]),
         }
         for p in people.values()
     ])
@@ -108,7 +113,7 @@ def build_tables(
             "name_key": c["name_key"],
             "years_present": ";".join(str(y) for y in c["years_present"]),
             "n_waves": len(c["years_present"]),
-            "name_variants": " | ".join(c["variants"]),
+            "name_variants": VARIANT_SEP.join(c["variants"]),
         }
         for c in firms.values()
     ])
@@ -199,7 +204,7 @@ def parse_rosters(years: list[int] | None = None) -> dict[int, list[Biography]]:
 
 def build_from_rosters(rosters: dict[int, list[Biography]],
                        person_threshold: int = 88,
-                       company_threshold: int = 92,
+                       company_distance: float = 0.20,
                        firms_only: bool = True) -> dict[str, pd.DataFrame]:
     """Build the affiliation tables from the biographical rosters."""
     mentions: list[Mention] = []
@@ -213,7 +218,7 @@ def build_from_rosters(rosters: dict[int, list[Biography]],
 
     m2p, people = cluster_persons(mentions, threshold=person_threshold)
     pairs = [(m.year, m.company) for m in mentions]
-    m2c, firms = cluster_companies(pairs, threshold=company_threshold)
+    m2c, firms = cluster_companies(pairs, max_distance=company_distance)
 
     aff = pd.DataFrame([{
         "mention_id": m.mention_id,
@@ -240,14 +245,14 @@ def build_from_rosters(rosters: dict[int, list[Biography]],
         "highest_rank": p["highest_rank"] or "", "n_mentions": p["n_mentions"],
         "years_present": ";".join(str(y) for y in p["years_present"]),
         "n_waves": len(p["years_present"]),
-        "name_variants": " | ".join(p["variants"]),
+        "name_variants": VARIANT_SEP.join(p["variants"]),
     } for p in people.values()])
 
     companies = pd.DataFrame([{
         "company_id": c["company_id"], "label": c["label"], "name_key": c["name_key"],
         "years_present": ";".join(str(y) for y in c["years_present"]),
         "n_waves": len(c["years_present"]),
-        "name_variants": " | ".join(c["variants"]),
+        "name_variants": VARIANT_SEP.join(c["variants"]),
     } for c in firms.values()])
 
     person_crosswalk = pd.DataFrame([{
