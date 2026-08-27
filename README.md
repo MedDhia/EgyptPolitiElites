@@ -10,17 +10,16 @@ Politi's *Annuaire des sociétés égyptiennes par actions*.
 
 ## Citation
 
-> [AUTHOR]. (2026). *Egyptian Corporate Elite Network, 1932–1950* (Version 0.1)
-> [Data set]. [REPOSITORY]. [DOI]
+> Hammami, Mohamed Dhia. (2026). *Egyptian Corporate Elite Network, 1932–1950*
+> (Version 0.1) [Data set]. https://github.com/MedDhia/EgyptPolitiElites
 
-**These fields are unfilled and must be completed before circulation.** No DOI
-has been minted, no repository deposit has been made, and authorship has not
-been asserted by this repository. Cite the underlying source separately:
+Two fields remain to be filled once the dataset is deposited: a **persistent
+identifier** (DOI), which no repository has yet minted for it, and the
+**archive** holding the deposit, which should replace the GitHub URL as the
+citation target. Until then the URL above is the address of record.
 
-> Politi, Élie I. *Annuaire des sociétés égyptiennes par actions*. Alexandria:
-> L'Informateur financier et commercial, 3e éd. 1932; 9e éd. 1938; 13e éd.
-> 1942; 18e éd. 1947; 21e éd. 1950. Digitised by the Centre d'Études
-> Alexandrines.
+The volumes the dataset is derived from are described in §3 and in
+`docs/SOURCES.md`.
 
 ---
 
@@ -59,8 +58,16 @@ widens over time: the directors' roster runs 19 printed pages in 1932 and 79 in
 
 ## 3. Source and provenance
 
-All five volumes were digitised by the Centre d'Études Alexandrines and
-retrieved from its *Études rares et anciennes sur Alexandrie* collection.
+The dataset is derived from five volumes of a single annual company register:
+
+> Politi, Élie I. *Annuaire des sociétés égyptiennes par actions*. Alexandria:
+> L'Informateur financier et commercial. 3e éd. 1932; 9e éd. 1938; 13e éd.
+> 1942; 18e éd. 1947; 21e éd. 1950.
+
+All five were digitised by the Centre d'Études Alexandrines and retrieved from
+its *Études rares et anciennes sur Alexandrie* collection. Work using this
+dataset should cite the dataset; work quoting or reproducing the volumes
+themselves should also cite Politi and credit CEAlex for the digitisation.
 
 | Wave | Édition | Place | CEAlex id | Size | SHA-256 (first 16) |
 |---|---|---|---|---|---|
@@ -246,5 +253,8 @@ deposited with a minted identifier.
 
 ## 11. Contact
 
-Repository: <https://github.com/MedDhia/EgyptPolitiElites>. Maintainer contact
-to be supplied.
+Mohamed Dhia Hammami — compiler and maintainer.
+Repository: <https://github.com/MedDhia/EgyptPolitiElites>
+
+An ORCID iD and a correspondence address should be added here before deposit;
+most archives require both.
