@@ -88,6 +88,20 @@ def _cmd_drive_import(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_figures(args: argparse.Namespace) -> int:
+    """Render the network figures from the built dataset."""
+    from .viz import build_figures
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    if not (processed / "affiliations.csv").exists():
+        print(f"no dataset at {processed}. Run `politi build --roster` first.",
+              file=sys.stderr)
+        return 1
+    for path in build_figures(processed, Path(args.out) if args.out else None):
+        print(f"wrote {path}")
+    return 0
+
+
 def _cmd_build(args: argparse.Namespace) -> int:
     from .build import (build_from_rosters, build_tables, parse_available,
                         parse_rosters)
@@ -188,6 +202,11 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--include-bodies", action="store_true",
                    help="keep councils, chambers and commissions alongside firms")
     b.set_defaults(func=_cmd_build)
+
+    f = sub.add_parser("figures", help="render the network figures")
+    f.add_argument("--processed", help="dataset directory (default data/processed)")
+    f.add_argument("--out", help="output directory (default figures/)")
+    f.set_defaults(func=_cmd_figures)
 
     args = ap.parse_args(argv)
     return args.func(args)

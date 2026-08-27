@@ -97,3 +97,22 @@ def test_export_writes_the_expected_artefacts(tables, tmp_path):
     assert (tmp_path / "graphs" / "company_interlocks_1932.gexf").exists()
     assert (tmp_path / "graphs" / "affiliation_1932.graphml").exists()
     assert written["tables"] and written["graphs"]
+
+
+def test_figures_render(tmp_path):
+    """The figures must build from the shipped tables without a display."""
+    import pandas as pd
+
+    from politi.viz import figure_snapshots, figure_structure
+
+    aff = pd.DataFrame([
+        {"year": y, "person_id": f"P{p}", "person_label": f"Person {p}",
+         "company_id": f"C{c}", "company_label": f"Firm {c}", "role": "director",
+         "rank": "", "order": 0, "city": "", "capital_amount": None}
+        for y in (1932, 1938)
+        for p, c in ((1, 1), (1, 2), (2, 2), (3, 3))
+    ])
+    a = figure_snapshots(aff, tmp_path / "snap.png")
+    b = figure_structure(aff, tmp_path / "struct.png")
+    assert a.exists() and a.stat().st_size > 5000
+    assert b.exists() and b.stat().st_size > 5000
