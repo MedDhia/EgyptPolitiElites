@@ -55,3 +55,43 @@ def test_non_persons_are_excluded(junk):
 ])
 def test_real_directors_survive_the_filter(real):
     assert is_person(real)
+
+
+def test_the_journal_figure_set_builds(tmp_path):
+    """Every figure in the manuscript's appendix has a counterpart here."""
+    import warnings
+
+    import numpy as np
+    import pandas as pd
+
+    from politi.figures_journal import build_all
+
+    rng = np.random.default_rng(0)
+    n = 240
+    panel = pd.DataFrame({
+        "year": rng.choice([1932, 1938, 1942, 1947, 1950], n),
+        "person_id": [f"P{i:04d}" for i in range(n)],
+        "person_label": [f"Person {i}" for i in range(n)],
+        "betweenness": np.where(rng.random(n) < 0.6, 0.0, rng.random(n) * 0.05),
+        "degree": rng.integers(1, 6, n),
+        "closeness": rng.random(n),
+        "clustering": rng.random(n),
+        "origin": pd.Categorical(
+            rng.choice(["arab_egyptian", "european", "local_minority"], n),
+            categories=["arab_egyptian", "european", "local_minority", "unknown"]),
+    })
+    panel["bc_scaled"] = panel.betweenness * 1000
+    panel["bc_count"] = panel.bc_scaled.round().astype(int)
+    panel["bc_log"] = np.log1p(panel.bc_scaled)
+    for col in ("degree", "closeness", "clustering"):
+        panel[f"{col}_z"] = panel.groupby("year")[col].transform(
+            lambda s: (s - s.mean()) / (s.std(ddof=0) or 1.0))
+    panel["deg_proj_z"] = panel.degree_z
+    panel["bcp_log"] = panel.bc_log
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        made = build_all(panel, tmp_path, n_perm=200)
+    assert len(made) == 10
+    for path in made:
+        assert path.exists() and path.stat().st_size > 1000

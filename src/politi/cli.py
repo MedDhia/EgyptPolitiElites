@@ -92,6 +92,7 @@ def _cmd_origin(args: argparse.Namespace) -> int:
     """Positional advantage by community of origin, across the waves."""
     import warnings
 
+    from .figures_journal import build_all
     from .positional import build_panel, by_wave, concentration, permutation_test
     from .viz import figure_positional
 
@@ -110,10 +111,15 @@ def _cmd_origin(args: argparse.Namespace) -> int:
         concentration(panel).to_csv(processed / "origin_concentration.csv", index=False)
         fig = figure_positional(panel, (config.ROOT / "figures" /
                                         "positional_advantage.png"))
+        journal = build_all(panel, config.ROOT / "figures" / "journal",
+                            n_perm=args.permutations)
     counts = panel.groupby("origin", observed=True).size()
     for grp, n in counts.items():
         print(f"  {grp:<16} {n:,} person-wave observations")
-    print(f"\nwrote 4 tables to {processed} and {fig}")
+    print(f"\nwrote 4 tables to {processed}")
+    print(f"wrote {fig}")
+    print(f"wrote {len(journal)} journal figures to "
+          f"{config.ROOT / 'figures' / 'journal'}")
     return 0
 
 
