@@ -245,3 +245,53 @@ def test_entry_head_stops_at_the_next_entry():
     head = entry_head("Spetseropoulo Georges D",
                       "Administrateur de X. S.E. Sir C. W. Spinks, Major General")
     assert "Spinks" not in head
+
+
+def test_position_by_group_holds_the_wave_composition_fixed():
+    """The null must redraw inside waves, or a group concentrated in one
+    wave looks central purely because that wave is small."""
+    import numpy as np
+
+    from politi.politics import position_by_group
+
+    rng = np.random.default_rng(4)
+    # Wave A is small and its directors are central by construction; the
+    # group sits entirely inside it and is otherwise typical of it.
+    rows = []
+    for i in range(40):
+        rows.append({"year": 1938, "pct_x": rng.uniform(60, 100),
+                     "grp": i < 10})
+    for i in range(400):
+        rows.append({"year": 1950, "pct_x": rng.uniform(0, 100), "grp": False})
+    panel = pd.DataFrame(rows)
+    out = position_by_group(panel, ["grp"], measures=("pct_x",), n_perm=400,
+                            seed=1)
+    assert out.difference.iloc[0] > 10      # raw gap is large
+    assert out.p_perm.iloc[0] > 0.05        # and entirely compositional
+
+
+def test_position_by_group_finds_a_real_within_wave_gap():
+    import numpy as np
+
+    from politi.politics import position_by_group
+
+    rng = np.random.default_rng(6)
+    panel = pd.DataFrame({
+        "year": [1938] * 200,
+        "grp": [True] * 40 + [False] * 160,
+    })
+    panel["pct_x"] = np.where(panel.grp, rng.uniform(55, 100, 200),
+                              rng.uniform(0, 60, 200))
+    out = position_by_group(panel, ["grp"], measures=("pct_x",), n_perm=400,
+                            seed=1)
+    assert out.difference.iloc[0] > 20
+    assert out.p_perm.iloc[0] < 0.01
+
+
+def test_position_by_group_skips_groups_that_are_too_small():
+    from politi.politics import position_by_group
+
+    panel = pd.DataFrame({"year": [1938] * 20, "pct_x": range(20),
+                          "grp": [True] + [False] * 19})
+    assert position_by_group(panel, ["grp"], measures=("pct_x",),
+                             n_perm=50).empty

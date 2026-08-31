@@ -937,3 +937,76 @@ def military_position(panel: pd.DataFrame, n_perm: int = 5000,
                      "null_hi": float(np.percentile(draws, 97.5)),
                      "n": int(flag.sum())})
     return pd.DataFrame(rows)
+
+
+def office_panel(processed=None) -> pd.DataFrame:
+    """The positional panel with within-wave percentiles and the office flags.
+
+    Built on :func:`military_panel`, so the percentile columns and the seat
+    count are the same ones the military figure uses and the two are directly
+    comparable.
+    """
+    from pathlib import Path
+
+    from . import config
+
+    processed = Path(processed) if processed else config.PROCESSED
+    panel = military_panel(processed)
+    path = processed / "person_political.csv"
+    cols = [*OFFICES, "political", "national", "all_former"]
+    if not path.exists():
+        for c in cols:
+            panel[c] = False
+        return panel
+    flags = pd.read_csv(path)
+    panel = panel.merge(flags[["year", "person_id", *cols]],
+                        on=["year", "person_id"], how="left")
+    for c in cols:
+        panel[c] = panel[c].fillna(False).astype(bool)
+    return panel
+
+
+def position_by_group(panel: pd.DataFrame, groups: list[str],
+                      measures: tuple[str, ...] = ("pct_seats", "pct_btw_proj"),
+                      n_perm: int = 4000, seed: int = 9,
+                      min_n: int = 3) -> pd.DataFrame:
+    """Each group's mean within-wave percentile against a within-wave null.
+
+    The null redraws the same number of members inside each wave, so wave size
+    and the group's distribution across waves are held fixed. Read the width
+    of the null interval before reading the estimate: `provincial` has ten
+    members and a null nearly three times as wide as `parliament`'s.
+
+    Associational. Office and directorship are printed in the same entry, so
+    nothing here orders them.
+    """
+    rng = np.random.default_rng(seed)
+    by_year = {y: np.where(panel.year.to_numpy() == y)[0]
+               for y in panel.year.unique()}
+    rows = []
+    for group in groups:
+        flag = panel[group].to_numpy().astype(bool)
+        if flag.sum() < min_n:
+            continue
+        for measure in measures:
+            values = panel[measure].to_numpy()
+
+            def gap(mark: np.ndarray, v=values) -> float:
+                return v[mark].mean() - v[~mark].mean()
+
+            observed = gap(flag)
+            draws = np.empty(n_perm)
+            for i in range(n_perm):
+                mark = np.zeros(len(panel), bool)
+                for indices in by_year.values():
+                    k = int(flag[indices].sum())
+                    if k:
+                        mark[rng.choice(indices, k, replace=False)] = True
+                draws[i] = gap(mark)
+            rows.append({"group": group, "measure": measure, "n": int(flag.sum()),
+                         "mean": values[flag].mean(),
+                         "others": values[~flag].mean(), "difference": observed,
+                         "p_perm": float(np.mean(np.abs(draws) >= abs(observed))),
+                         "null_lo": float(np.percentile(draws, 2.5)),
+                         "null_hi": float(np.percentile(draws, 97.5))})
+    return pd.DataFrame(rows)

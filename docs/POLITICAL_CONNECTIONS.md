@@ -87,6 +87,7 @@ Rendered by `python -m politi politics` into `figures/politics/`.
 | `firm_persistence.png` | Connected firms reappear more often in the raw data, and the gap is accounted for by how many directors the register records for them |
 | `firm_survival.png` | Discrete-time survivor function and hazard of leaving the register: the hazard falls steeply with tenure, and connection is not distinguishable from none once coverage is held constant |
 | `military_officers.png` | Every director with a military rank, by within-wave brokerage percentile: officers sit at the middle of the distribution |
+| `office_centrality.png` | Each civil office against a within-wave null: every office is ~20 points up on seats, but only some are up on brokerage, and the bench is not |
 
 ## Are politically connected firms more likely to persist?
 
@@ -195,6 +196,50 @@ volumes:
   downstream of the same editorial choice that records the office, so it is a
   collider risk as much as a confounder. It is used because leaving it out
   guarantees an artefact; that does not make conditioning on it clean.
+
+## Where office holders sit in the network
+
+`office_panel()` puts the office flags beside the within-wave centrality
+percentiles, and `position_by_group()` tests each office against a null that
+redraws the same number of holders inside each wave — so wave size and the
+office's distribution across waves are held fixed.
+
+Percentile points above the rest of the wave, 4,000 permutations:
+
+| Office | n | Board seats | p | Brokerage | p |
+|---|---|---|---|---|---|
+| Cabinet | 76 | +20 | <0.001 | +11 | <0.001 |
+| Parliament | 96 | +22 | <0.001 | +16 | <0.001 |
+| Diplomatic service | 24 | +29 | <0.001 | +18 | <0.001 |
+| Provincial administration | 10 | +28 | 0.001 | +32 | <0.001 |
+| Bench and state legal service | 25 | +20 | <0.001 | **+4** | **0.35** |
+| Municipal government | 16 | +21 | 0.002 | +19 | 0.001 |
+| **Any office** | **205** | **+22** | **<0.001** | **+13** | **<0.001** |
+
+Two things to take from it.
+
+**Every office sits about twenty points above its wave on seats held.** That
+is the same fact the seat-count figures show, now visible for each office
+separately rather than only in aggregate.
+
+**On brokerage the offices separate, and the bench is the exception.**
+Parliamentarians, diplomats, provincial governors and municipal councillors
+are 16 to 32 points above the rest; judges and state legal officers are 4
+points above, inside the null. The arithmetic behind it: judicial office
+holders average 2.9 board seats against 1.8 for directors with no office, but
+only 4.3 co-directors against 3.8 — **1.5 co-directors per seat against 2.2**
+for the unoffice-holding. They sat on more boards, and on smaller ones.
+
+**Read the null width before the estimate.** Provincial administration has ten
+person-waves and a null nearly three times as wide as parliament's; its +32 is
+the least precise number in the table.
+
+**A past office is not a lesser one.** Among holders, those whose every office
+is printed as past sit at the 65th percentile of brokerage against the 62nd
+for those holding one at the time — no separation worth reporting.
+
+Nothing here orders office and directorship: they are printed in the same
+entry. See **Wording** below.
 
 ## Military officers
 

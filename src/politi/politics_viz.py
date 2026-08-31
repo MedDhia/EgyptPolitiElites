@@ -30,6 +30,7 @@ from .politics import (OFFICE_LABEL, OFFICES, baseline_connection, life_table,
                        persistence_models, persistence_panel,
                        persistence_stratified, political_panel,
                        military_panel, military_position, MILITARY_TIER_LABEL,
+                       office_panel, position_by_group,
                        survival_models, survival_panel, survival_ph_test)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
@@ -619,6 +620,65 @@ def fig_military(panel: pd.DataFrame, out: Path, n_perm: int = 5000) -> Path:
     return _save(fig, out, rect=(0, 0.14, 1, 0.86))
 
 
+# --- 10. where office holders sit ---------------------------------------------
+
+def fig_office_centrality(panel: pd.DataFrame, out: Path,
+                          n_perm: int = 4000) -> Path:
+    """The military figure's question, asked of civil office.
+
+    Two measures per office, because they separate: every office goes with
+    more board seats, but only some go with a more central position.
+    """
+    _style()
+    groups = [*OFFICES, "political"]
+    test = position_by_group(panel, groups, n_perm=n_perm)
+    order = (test[test.measure == "pct_btw_proj"]
+             .sort_values("difference").group.tolist())
+    order = [g for g in order if g != "political"] + ["political"]
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.4), sharey=True,
+                             gridspec_kw={"width_ratios": [1, 1]})
+    labels = {**OFFICE_LABEL, "political": "Any office"}
+
+    for ax, measure, title, colour in (
+            (axes[0], "pct_seats", "Board seats held", BLUE),
+            (axes[1], "pct_btw_proj", "Brokerage", ORANGE)):
+        d = (test[test.measure == measure].set_index("group")
+             .reindex(order).reset_index())
+        y = np.arange(len(d))[::-1]
+        ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+        for i, (_, r) in enumerate(d.iterrows()):
+            ax.plot([r.null_lo, r.null_hi], [y[i], y[i]], color="#d5d2ca",
+                    linewidth=9, solid_capstyle="butt", zorder=2)
+            face = colour if r.p_perm < 0.05 else "#b8c8d8"
+            ax.plot([r.difference], [y[i]], "D", color=face, markersize=10,
+                    markeredgecolor=SURFACE, markeredgewidth=1.5, zorder=3)
+            ax.annotate(f"{r.difference:+.0f}" + ("" if r.p_perm < 0.05 else " n.s."),
+                        (r.difference, y[i]), xytext=(0, 12),
+                        textcoords="offset points", ha="center", fontsize=9.2,
+                        color=INK_SOFT)
+        ax.set_yticks(y, [f"{labels[g]}  ({int(d.n.iloc[list(d.group).index(g)])})"
+                          for g in d.group])
+        ax.set_ylim(-0.7, len(d) - 0.25)
+        ax.set_xlim(-14, 42)
+        ax.set_xlabel("percentile points above the rest of the wave")
+        ax.set_title(title, fontsize=12, color=INK, loc="left", pad=12)
+        _frame(ax, xgrid=True)
+    axes[0].tick_params(labelsize=9.6)
+
+    _caption(fig, "Office goes with more seats everywhere, but not with a central place everywhere",
+             "Each office holder's mean percentile within his own wave, minus everyone else's. Grey bars are the middle 95%\n"
+             "of a null that redraws the same number of holders inside each wave. Counts of person-waves in brackets.",
+             "Every office sits some twenty points above the rest of its wave on seats held. On brokerage they separate: "
+             "parliamentarians, diplomats, provincial governors and municipal councillors are well above the rest, while the "
+             "bench is not distinguishable from it — judges hold more boards than average but smaller ones, 1.5 co-directors "
+             "per seat against 2.2 for directors with no office at all.\n"
+             "Read the grey bars before the diamonds: provincial administration has ten person-waves and a null three times "
+             "as wide as parliament's. Association only — office and directorship are printed in the same entry, so neither "
+             "is shown to precede the other, and offices are coded only where Politi printed them.")
+    return _save(fig, out, rect=(0, 0.16, 1, 0.85))
+
+
 def build_all(processed: Path, outdir: Path) -> list[Path]:
     aff = real_directors(pd.read_csv(processed / "affiliations.csv"))
     flags = pd.read_csv(processed / "person_political.csv")
@@ -637,5 +697,7 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
                              outdir / "firm_persistence.png"),
         fig_survival(survival_panel(processed), outdir / "firm_survival.png"),
         fig_military(military_panel(processed), outdir / "military_officers.png"),
+        fig_office_centrality(office_panel(processed),
+                              outdir / "office_centrality.png"),
     ]
     return made

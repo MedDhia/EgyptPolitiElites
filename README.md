@@ -234,7 +234,7 @@ python -m politi politics   # political-connection figures
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 149 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 152 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 
