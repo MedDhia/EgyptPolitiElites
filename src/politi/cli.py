@@ -161,7 +161,7 @@ def _cmd_politics(args: argparse.Namespace) -> int:
 
     processed = Path(args.processed) if args.processed else config.PROCESSED
     missing = [f for f in ("affiliations.csv", "person_political.csv",
-                           "firm_political.csv")
+                           "firm_political.csv", "military_officers.csv")
                if not (processed / f).exists()]
     if missing:
         print(f"missing {', '.join(missing)} in {processed}. "

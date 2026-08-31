@@ -198,3 +198,50 @@ def test_baseline_connection_is_fixed_at_entry():
         "connected": [True, False, False],
     })
     assert list(baseline_connection(panel)) == [True, True, False]
+
+
+@pytest.mark.parametrize("entry,expected", [
+    # Ranks printed as an apposition on the name.
+    ("Harari Ralph A, Colonel, Membre du Conseil", "field_officer"),
+    ("Flower Edmund W, Lient-Colonel, President", "field_officer"),
+    ("Abdel Hamid Kamal Bey Miralai, Adm.", "field_officer"),
+    ("Ahmed Hamdi Pacha Lewa, President", "general_officer"),
+    ("Malcolm Major Gen. Sir Neil, K.B.E.", "general_officer"),
+    ("Rolo Simon E, Captain, Administrateur", "junior_officer"),
+    ("Susu Pacha Major General Dr. Basile J, Ex Medecin en Chef de "
+     "l'Armee Egyptienne", "general_officer"),
+    # Service named without a rank.
+    ("Untel Jean, Ancien de l'Armee Egyptienne", "service_no_rank"),
+    # The three things that carry a rank word without the rank.
+    ("Cattaui Rene Bey, Directeur General de la S.A. du Wadi Kom Ombo", None),
+    ("Salama Salvatore, Ancien Consul General de Bulgarie", None),
+    ("Shama Elie F, Commandeur de l'Ordre du Nil", None),
+    # The Afghan Order of Sardar-i-Ala is a decoration, not the Sirdar.
+    ("Soliman Abdel Hamid Pacha, Grand Cordon Sirdar Ali d'Afghanistan", None),
+    ("Adda Achille, Administrateur de la Ste. X", None),
+])
+def test_find_military(entry, expected):
+    from politi.politics import find_military
+
+    assert find_military(entry) == expected
+
+
+def test_rank_after_a_firm_name_belongs_to_the_neighbour():
+    """The entry splitter merges entries; the rank must not travel."""
+    from politi.politics import entry_head, find_military
+
+    # Marryat's rank, printed after the previous director's directorships.
+    body = ("Agent General de l'Adriatica; Membre du Conseil de la Compagnie "
+            "Egyptienne des Petroles COGEP, S.A.E. Marryat, Lt. Col. J. R.")
+    assert find_military(entry_head("Mariotti Vittorio Carlo", body)) is None
+    # The same rank on its own entry is read.
+    assert find_military(entry_head("Marryat J. R.", "Lt. Col., D.S.O.")) \
+        == "field_officer"
+
+
+def test_entry_head_stops_at_the_next_entry():
+    from politi.politics import entry_head
+
+    head = entry_head("Spetseropoulo Georges D",
+                      "Administrateur de X. S.E. Sir C. W. Spinks, Major General")
+    assert "Spinks" not in head

@@ -720,3 +720,220 @@ def survival_sensitivity(processed=None, term: str = "connected") -> pd.DataFram
         rows.append({"variant": label, "hr": m.hr, "lo": m.lo, "hi": m.hi,
                      "p": m.p, "n": m.n, "events": m.events})
     return pd.DataFrame(rows)
+
+
+# --- military service ---------------------------------------------------------
+#
+# Kept out of `OFFICES` deliberately. Military rank is a different kind of tie
+# to the state from a portfolio or a seat in parliament, and folding it into
+# `political` would silently change every published rate. It is coded here as
+# its own variable; the overlap with civil office is reported, not merged.
+
+#: Ranks by tier. Egyptian ranks are Ottoman: a *ferik* is a lieutenant-general,
+#: a *lewa* a major-general, a *miralai* a colonel, a *kaimakam* a
+#: lieutenant-colonel, a *bimbachi* a major.
+#:
+#: *Sirdar* — commander-in-chief of the Egyptian Army — is deliberately absent.
+#: Its one occurrence in this corpus is "Grand Cordon Sirdar Ali d'Afghanistan",
+#: the Afghan Order of Sardar-i-Ala, which is a decoration.
+MILITARY_RANKS: dict[str, re.Pattern[str]] = {
+    "general_officer": re.compile(
+        r"(?i)\b(?:major|maj|lt|lieut|lieutenant|brigadier|brig)[\.\- ]*gen(?:eral)?\b|"
+        r"\bferik\b|\blewa\b|\bliwa\b|\bamiral\b|\badmiral\b"),
+    "field_officer": re.compile(
+        r"(?i)\b(?:lt|lieut|lieutenant|lient)[\.\- ]*col(?:onel)?\b|\bcolonel\b|"
+        r"\bmiralai\b|\bmiralay\b|\bkaimaka[mn]\b|\bbimbach?i\b|\bbimbashi\b|"
+        r"\bcommandant\s+(?:de\s+)?(?:l[ae']|the)?\s*\w*\s*(?:armee|army|"
+        r"regiment|bataillon)\b"),
+    "junior_officer": re.compile(
+        r"(?i)\bcapitaine\b|\bcaptain\b|\bbinbachi\b"),
+}
+
+#: Service in the armed forces named without a rank.
+MILITARY_SERVICE = re.compile(
+    r"(?i)\b(?:l['\s]?)?arm[ée]e\s+(?:egyptienne|royale)\b|\begyptian\s+army\b|"
+    r"\bforces?\s+fronti[eè]res?\b|\bfrontier\s+districts?\s+administration\b|"
+    r"\bminist[eè]re\s+de\s+la\s+guerre\b|\bwar\s+office\b")
+
+#: Phrases that carry a rank word without the rank. "Général" is the whole
+#: problem here: in this source it is nearly always *Directeur*, *Consul* or
+#: *Secrétaire Général*, and "Commandeur" is a grade of an order, not a
+#: command. A captain may also be a ship's master rather than an officer.
+MILITARY_EXCLUSIONS = re.compile(
+    r"(?i)(?:directeur|consul|secretaire|inspecteur|administrateur|agent|"
+    r"assemblee|sequestre|procureur|caisse|president)[\s\-]*gener(?:al|aux)\b|"
+    r"\bcommandeur\b|\bcapitaine\s+(?:du\s+port|de\s+navire|marchand)\b")
+
+MILITARY_TIER_LABEL = {
+    "general_officer": "General officer",
+    "field_officer": "Field officer",
+    "junior_officer": "Junior officer",
+    "service_no_rank": "Service, no rank printed",
+}
+
+#: Tiers ordered from most to least senior.
+MILITARY_ORDER = ["general_officer", "field_officer", "junior_officer",
+                  "service_no_rank"]
+
+
+#: Where a following entry evidently begins inside a merged one. Politi prints
+#: a rank as an apposition right after the name — "Harari Ralph A, Colonel," —
+#: never several directorships later, so a rank beyond this point belongs to
+#: the neighbour and not to this director.
+_NEXT_ENTRY = re.compile(
+    r"(?:\bS\.\s?E\.\s|(?<=\.)\s+(?=[A-Z][a-z]*\s?[a-z]+\s*,))")
+
+
+def entry_head(name: str, body: str) -> str:
+    """The name plus the run of qualifications printed before any directorship.
+
+    Politi prints a military rank as an apposition on the name — "Harari
+    Ralph A, Colonel," — among the degrees and decorations, and always before
+    the board seats. So the entry is cut at whichever comes first: the point
+    where a following entry evidently begins, or the first role word, after
+    which everything is directorships and company names.
+
+    **Only for military rank.** Civil office is read from the whole body,
+    because Politi writes offices with role words inside them — "Président du
+    Sénat", "Vice-Président de la Chambre des Députés" — so this window would
+    throw them away.
+    """
+    from .biographies import _ROLE_RE
+
+    cuts = [m.start() for m in (_NEXT_ENTRY.search(body), _ROLE_RE.search(body))
+            if m is not None]
+    return f"{name}, {body[:min(cuts)] if cuts else body}"
+
+
+def find_military(entry: str) -> str | None:
+    """The most senior military rank named in one roster entry, or None.
+
+    Returns a tier from :data:`MILITARY_ORDER`. Exclusions are applied first,
+    so "Directeur Général", "Commandeur de l'Ordre du Nil" and a harbour
+    captain do not code as officers.
+    """
+    from .biographies import _COMPANY_MARKER
+
+    text = _fold(entry)
+    blocked = [(m.start(), m.end()) for m in MILITARY_EXCLUSIONS.finditer(text)]
+    # Once a firm name has appeared we are among directorships, and a rank
+    # after that point belongs to a neighbouring entry the splitter merged in.
+    firm = _COMPANY_MARKER.search(text)
+    limit = firm.start() if firm else len(text)
+
+    def live(pattern: re.Pattern[str]) -> bool:
+        return any(m.start() < limit
+                   and not any(a <= m.start() < b for a, b in blocked)
+                   for m in pattern.finditer(text))
+
+    for tier in ("general_officer", "field_officer", "junior_officer"):
+        if live(MILITARY_RANKS[tier]):
+            return tier
+    return "service_no_rank" if live(MILITARY_SERVICE) else None
+
+
+def military_frame(rosters: dict[int, list[Biography]]) -> pd.DataFrame:
+    """One row per (wave, printed entry) with a military rank or service."""
+    from .biographies import _COMPANY_MARKER
+    from .origin import is_person
+
+    rows = []
+    for year, bios in sorted(rosters.items()):
+        for bio in bios:
+            # A fragment of a firm name captured as an entry sits directly
+            # above a real director and would otherwise take his rank.
+            if not bio.name or not is_person(bio.name) \
+                    or _COMPANY_MARKER.search(bio.name):
+                continue
+            tier = find_military(entry_head(bio.name, bio.body))
+            if tier is None:
+                continue
+            printed_name = f"{bio.honorific + ' ' if bio.honorific else ''}{bio.name}"
+            rows.append({"year": year, "printed_name": printed_name,
+                         "tier": tier, "source_page": bio.page,
+                         "entry": entry_head(bio.name, bio.body)[:200]})
+    return pd.DataFrame(rows, columns=["year", "printed_name", "tier",
+                                       "source_page", "entry"])
+
+
+def attach_military(military: pd.DataFrame, crosswalk: pd.DataFrame) -> pd.DataFrame:
+    """Resolve the military rows onto `person_id` using the person crosswalk."""
+    cols = ["year", "person_id", "tier", "source_page"]
+    if military.empty or crosswalk.empty:
+        return pd.DataFrame(columns=cols)
+    key = (crosswalk[["year", "printed_name", "person_id"]]
+           .drop_duplicates(["year", "printed_name"]))
+    out = military.merge(key, on=["year", "printed_name"], how="inner")
+    return (out[cols].drop_duplicates(["year", "person_id"])
+            .sort_values(["year", "person_id"], ignore_index=True))
+
+
+def military_panel(processed=None) -> pd.DataFrame:
+    """The positional panel with military rank and within-wave percentiles.
+
+    Percentiles are computed inside each wave, since a raw centrality is not
+    comparable across networks of different size. `military` is False for
+    every director with no rank printed, which is a floor in exactly the sense
+    the office coding is.
+    """
+    from pathlib import Path
+
+    from . import config
+    from .positional import build_panel
+
+    processed = Path(processed) if processed else config.PROCESSED
+    panel = build_panel(processed)
+    path = processed / "military_officers.csv"
+    if path.exists():
+        mil = pd.read_csv(path)
+        panel = panel.merge(mil[["year", "person_id", "tier"]],
+                            on=["year", "person_id"], how="left")
+    else:
+        panel["tier"] = np.nan
+    panel["military"] = panel.tier.notna()
+
+    aff = pd.read_csv(processed / "affiliations.csv")
+    seats = (aff.groupby(["year", "person_id"]).company_id.nunique()
+             .rename("seats"))
+    panel = panel.merge(seats, on=["year", "person_id"], how="left")
+    for col in ("btw_proj", "deg_proj", "seats"):
+        panel[f"pct_{col}"] = panel.groupby("year")[col].rank(pct=True) * 100
+    return panel
+
+
+def military_position(panel: pd.DataFrame, n_perm: int = 5000,
+                      seed: int = 5) -> pd.DataFrame:
+    """Officers' mean within-wave percentile against a within-wave null.
+
+    The null redraws the same number of officers inside each wave, so wave
+    size and the concentration of officers in 1950 are held fixed. With
+    nineteen officers the null interval is roughly ±10 percentile points:
+    read a result inside it as "too few to tell", never as "no difference".
+    """
+    rng = np.random.default_rng(seed)
+    flag = panel.military.to_numpy()
+    by_year = {y: np.where(panel.year.to_numpy() == y)[0]
+               for y in panel.year.unique()}
+    rows = []
+    for col in ("pct_seats", "pct_deg_proj", "pct_btw_proj"):
+        values = panel[col].to_numpy()
+
+        def gap(mark: np.ndarray, v=values) -> float:
+            return v[mark].mean() - v[~mark].mean()
+
+        observed = gap(flag)
+        draws = np.empty(n_perm)
+        for i in range(n_perm):
+            mark = np.zeros(len(panel), bool)
+            for indices in by_year.values():
+                k = int(flag[indices].sum())
+                if k:
+                    mark[rng.choice(indices, k, replace=False)] = True
+            draws[i] = gap(mark)
+        rows.append({"measure": col, "officers": values[flag].mean(),
+                     "others": values[~flag].mean(), "difference": observed,
+                     "p_perm": float(np.mean(np.abs(draws) >= abs(observed))),
+                     "null_lo": float(np.percentile(draws, 2.5)),
+                     "null_hi": float(np.percentile(draws, 97.5)),
+                     "n": int(flag.sum())})
+    return pd.DataFrame(rows)

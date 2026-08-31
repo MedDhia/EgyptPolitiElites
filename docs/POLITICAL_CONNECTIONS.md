@@ -86,6 +86,7 @@ Rendered by `python -m politi politics` into `figures/politics/`.
 | `origin_adjusted.png` | The origin coefficients are essentially unchanged by holding office constant |
 | `firm_persistence.png` | Connected firms reappear more often in the raw data, and the gap is accounted for by how many directors the register records for them |
 | `firm_survival.png` | Discrete-time survivor function and hazard of leaving the register: the hazard falls steeply with tenure, and connection is not distinguishable from none once coverage is held constant |
+| `military_officers.png` | Every director with a military rank, by within-wave brokerage percentile: officers sit at the middle of the distribution |
 
 ## Are politically connected firms more likely to persist?
 
@@ -194,6 +195,64 @@ volumes:
   downstream of the same editorial choice that records the office, so it is a
   collider risk as much as a confounder. It is used because leaving it out
   guarantees an artefact; that does not make conditioning on it clean.
+
+## Military officers
+
+Rank is coded **separately from civil office**, in `military_officers.csv`.
+Folding it into `political` would silently change every rate above, and a
+commission is a different kind of tie to the state from a portfolio.
+
+`politics.find_military` codes three tiers — general officer (*ferik*, *lewa*,
+major-general, brigadier, admiral), field officer (*miralai*, *kaimakam*,
+*bimbachi*, colonel, lieutenant-colonel) and junior officer (captain,
+lieutenant) — plus `service_no_rank` for service named without one.
+
+### What has to be excluded, and why
+
+`Général` in this source is almost never a general. It is *Directeur
+Général*, *Consul Général*, *Secrétaire Général*, *Assemblée Générale*, or
+half of a firm's name. Matching it naively yields 297 hits, of which four are
+military. `MILITARY_EXCLUSIONS` therefore blocks the whole family, together
+with *Commandeur* (a grade of an order, not a command) and a harbour captain.
+*Sirdar* — commander-in-chief of the Egyptian Army — is not in the vocabulary
+at all: its one occurrence is "Grand Cordon Sirdar Ali d'Afghanistan", the
+Afghan Order of Sardar-i-Ala.
+
+Two further guards handle the entry splitter. Politi prints a rank as an
+apposition on the name, before the directorships, so `entry_head` cuts the
+entry at whichever comes first — the point where a following entry begins, or
+the first role word — and `find_military` additionally discards any rank that
+appears after a firm-name marker. Without them, Marryat's *Lt. Col.* attaches
+to Mariotti, and Spinks Pacha's *Major General* to whoever the splitter has
+merged him with. Six of the 28 raw matches are bleeds of this kind.
+
+### What the coding finds
+
+**22 person-wave records, 19 distinct men; 19 of the 22 hold a board seat.**
+The other three sit on a *conseil de surveillance*, which is not a board and
+so is not in the network.
+
+Officers sit at the **middle** of their wave: the 51st percentile of board
+seats, the 52nd of co-directors, the 56th of brokerage. Against a null that
+redraws the same number of officers inside each wave, every difference falls
+inside the null interval (permutation p 0.21 to 0.88).
+
+**That is too few to tell, not a demonstration of no difference.** With
+nineteen officers the null interval is roughly ±10 percentile points wide, so
+anything smaller is invisible here.
+
+One split is worth recording, with the same caution. The five men holding
+Ottoman-Egyptian rank — *lewa*, *miralai* — hold exactly one board seat each
+and sit at the 41st percentile of brokerage. The fourteen holding British or
+European commissions average 2.1 seats and the 61st percentile. Several of the
+latter are businessmen with wartime or honorary commissions rather than career
+soldiers — Ralph Harari, a Cairo banker, is the most central director in the
+whole officer group — which is a caution against reading the group as an
+officer corps at all.
+
+Eleven of the 22 records are in 1950 alone. Read that as the annuaire printing
+more, as much as anything else: it is the same floor caveat as the civil
+offices.
 
 ## Wording
 

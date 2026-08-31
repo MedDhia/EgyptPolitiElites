@@ -163,7 +163,8 @@ _ENTRY_RE = re.compile(
 _COMPANY_MARKER = re.compile(
     r"(?i)(?:^|\s)(?:c[oy]|ltd|limited|works|usines|s\.?a\.?e|soci[eé]t[eé]|"
     r"compagnie|banque|bank|company|industries|insurance|assurance|trading|"
-    r"navigation|hotels?|mining|filature|textiles?|petroleum|theatres?|"
+    r"navigation|hotels?|mining|filature|textiles?|petroleum|p[eé]troles?|"
+    r"theatres?|"
     r"pressing|propri[eé]taire|land)(?:\s|\.|,|$)|&")
 
 

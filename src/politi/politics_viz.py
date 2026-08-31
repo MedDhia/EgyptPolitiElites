@@ -29,6 +29,7 @@ from .politics import (OFFICE_LABEL, OFFICES, baseline_connection, life_table,
                        office_by_wave, origin_with_political,
                        persistence_models, persistence_panel,
                        persistence_stratified, political_panel,
+                       military_panel, military_position, MILITARY_TIER_LABEL,
                        survival_models, survival_panel, survival_ph_test)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
@@ -533,6 +534,91 @@ def fig_survival(panel: pd.DataFrame, out: Path) -> Path:
     return out
 
 
+# --- 9. military officers -----------------------------------------------------
+
+TIER_COLOR = {"general_officer": "#1f4e8c", "field_officer": "#2a78d6",
+              "junior_officer": "#9dc0e8", "service_no_rank": "#c9d7e8"}
+
+
+def fig_military(panel: pd.DataFrame, out: Path, n_perm: int = 5000) -> Path:
+    """Where the directors with a military rank sit, one dot each.
+
+    Nineteen officers hold a board seat across five volumes. That is far too
+    few for a model, so the left panel is the roster itself and the right
+    panel says how wide the null is.
+    """
+    _style()
+    officers = panel[panel.military].sort_values(
+        ["year", "pct_btw_proj"], ascending=[True, True]).reset_index(drop=True)
+    test = military_position(panel, n_perm=n_perm)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.6),
+                             gridspec_kw={"width_ratios": [1.45, 1]})
+
+    ax = axes[0]
+    y = np.arange(len(officers))
+    ax.axvline(50, color="#b8b5ac", linewidth=1.2, zorder=1)
+    ax.annotate("median director\nof the wave", (50, len(officers) - 0.4),
+                xytext=(6, 0), textcoords="offset points", fontsize=8.6,
+                color=INK_SOFT, va="top")
+    for tier, group in officers.groupby("tier"):
+        ax.scatter(group.pct_btw_proj, group.index, s=110, zorder=3,
+                   color=TIER_COLOR.get(tier, "#b8c8d8"),
+                   edgecolor=SURFACE, linewidth=1.4,
+                   label=MILITARY_TIER_LABEL.get(tier, str(tier)))
+    labels = [f"{r.person_label[:30]}  ·{int(r.year)}  {int(r.seats)}"
+              f"{' seats' if r.seats != 1 else ' seat'}"
+              for _, r in officers.iterrows()]
+    ax.set_yticks(y, labels, fontsize=8.8)
+    ax.set_ylim(-0.8, len(officers) - 0.2)
+    ax.set_xlim(0, 108)
+    ax.set_xlabel("percentile of brokerage within the wave")
+    ax.set_title("Every director with a military rank", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    # The dots fall in two clumps, near the 40th percentile and above the
+    # 85th, leaving a clear band between them for the key.
+    ax.legend(frameon=False, fontsize=9, labelcolor=INK_SOFT, loc="center",
+              bbox_to_anchor=(0.66, 0.46), handlelength=1.0)
+    _frame(ax, xgrid=True)
+
+    ax = axes[1]
+    names = {"pct_seats": "Board seats", "pct_deg_proj": "Co-directors",
+             "pct_btw_proj": "Brokerage"}
+    ypos = np.arange(len(test))[::-1]
+    ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    for i, (_, r) in enumerate(test.iterrows()):
+        ax.plot([r.null_lo, r.null_hi], [ypos[i], ypos[i]], color="#d5d2ca",
+                linewidth=9, solid_capstyle="butt", zorder=2)
+        ax.plot([r.difference], [ypos[i]], "D", color=BLUE, markersize=10,
+                markeredgecolor=SURFACE, markeredgewidth=1.5, zorder=3)
+        ax.annotate(f"{r.difference:+.1f}  p={r.p_perm:.2f}",
+                    (max(r.null_hi, r.difference), ypos[i]), xytext=(9, 0),
+                    textcoords="offset points", va="center", fontsize=9.5,
+                    color=INK_SOFT)
+    ax.set_yticks(ypos, [names[m] for m in test.measure])
+    ax.set_ylim(-0.7, len(test) - 0.3)
+    ax.set_xlim(-20, 26)
+    ax.set_xlabel("officers' mean percentile minus everyone else's")
+    ax.set_title("Against a within-wave null", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    _frame(ax, xgrid=True)
+
+    ottoman = officers.person_label.str.contains(
+        r"Lewa|Miralai|Hamdi Pacha|Susu Pacha", case=False, na=False)
+    _caption(fig, "Officers sit in the middle of the network, not at its centre",
+             "Left: each director recorded with a military rank, placed by his percentile of brokerage among the directors of\n"
+             "his own wave. Right: the officers' mean percentile against a null that redraws the same number inside each wave.",
+             f"The grey bars are the middle 95% of that null. Every observed difference falls inside one, so nothing here "
+             f"separates officers from the rest — but with {int(test.n.iloc[0])} officers the null is about ±10 percentile "
+             "points wide, so this is too few to tell, not a demonstration that they were ordinary.\n"
+             f"The {int(ottoman.sum())} men holding Ottoman-Egyptian rank — lewa, miralai — average "
+             f"{officers.seats[ottoman].mean():.1f} board seat and the {int((~ottoman).sum())} holding British or European "
+             f"commissions average {officers.seats[~ottoman].mean():.1f}. Several of the latter are businessmen with wartime "
+             "or honorary commissions rather than career soldiers, which is a caution about reading the group as an "
+             "officer corps at all. Rank is coded only where Politi printed it (docs/POLITICAL_CONNECTIONS.md).")
+    return _save(fig, out, rect=(0, 0.14, 1, 0.86))
+
+
 def build_all(processed: Path, outdir: Path) -> list[Path]:
     aff = real_directors(pd.read_csv(processed / "affiliations.csv"))
     flags = pd.read_csv(processed / "person_political.csv")
@@ -550,5 +636,6 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
         fig_firm_persistence(persistence_panel(processed),
                              outdir / "firm_persistence.png"),
         fig_survival(survival_panel(processed), outdir / "firm_survival.png"),
+        fig_military(military_panel(processed), outdir / "military_officers.png"),
     ]
     return made

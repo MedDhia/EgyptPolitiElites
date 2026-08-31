@@ -11,8 +11,8 @@ from . import config
 from .biographies import Biography, parse_roster
 from .names import parse_person
 from .parse import Company, parse_volume
-from .politics import (attach_offices, firm_flags, office_frame,
-                       person_flags)
+from .politics import (attach_military, attach_offices, firm_flags,
+                       military_frame, office_frame, person_flags)
 from .resolve import Mention, cluster_companies, cluster_persons
 
 
@@ -217,7 +217,8 @@ def build_from_rosters(rosters: dict[int, list[Biography]],
         return {k: pd.DataFrame() for k in
                 ("affiliations", "persons", "companies",
                  "person_crosswalk", "company_crosswalk",
-                 "political_offices", "person_political", "firm_political")}
+                 "political_offices", "military_officers",
+                 "person_political", "firm_political")}
 
     m2p, people = cluster_persons(mentions, threshold=person_threshold)
     pairs = [(m.year, m.company) for m in mentions]
@@ -272,6 +273,7 @@ def build_from_rosters(rosters: dict[int, list[Biography]],
     # Political office is read from the same roster entries and resolved onto
     # the person identifiers the linkage just assigned.
     offices = attach_offices(office_frame(rosters), person_crosswalk)
+    military = attach_military(military_frame(rosters), person_crosswalk)
     flags = person_flags(offices)
     firm_political = firm_flags(aff, flags)
 
@@ -279,5 +281,6 @@ def build_from_rosters(rosters: dict[int, list[Biography]],
             "person_crosswalk": person_crosswalk,
             "company_crosswalk": company_crosswalk,
             "political_offices": offices,
+            "military_officers": military,
             "person_political": flags,
             "firm_political": firm_political}

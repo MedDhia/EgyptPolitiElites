@@ -4,7 +4,7 @@ A person–firm affiliation dataset covering the boards of Egyptian joint-stock
 companies at five points between 1932 and 1950, machine-extracted from Élie I.
 Politi's *Annuaire des sociétés égyptiennes par actions*.
 
-**7,365 directorships · 2,337 directors · 1,987 firms · 5 waves**
+**7,366 directorships · 2,338 directors · 1,985 firms · 5 waves**
 
 ---
 
@@ -112,11 +112,11 @@ The pipeline is deterministic and fully re-runnable; see §8.
 
 | File | Rows | Description |
 |---|---|---|
-| `affiliations.csv` | 7,365 | **Primary file.** One row per printed directorship, with resolved person and company identifiers, role, rank, and page-level provenance |
-| `persons.csv` | 2,333 | Director register: canonical label, highest rank held, waves present, every printed name variant merged into the record |
-| `companies.csv` | 1,987 | Firm register: canonical label, waves present, printed name variants |
-| `person_crosswalk.csv` | 7,365 | Every person mention and the identifier assigned to it — the audit trail for record linkage |
-| `company_crosswalk.csv` | 5,503 | The same for firms |
+| `affiliations.csv` | 7,366 | **Primary file.** One row per printed directorship, with resolved person and company identifiers, role, rank, and page-level provenance |
+| `persons.csv` | 2,338 | Director register: canonical label, highest rank held, waves present, every printed name variant merged into the record |
+| `companies.csv` | 1,985 | Firm register: canonical label, waves present, printed name variants |
+| `person_crosswalk.csv` | 7,366 | Every person mention and the identifier assigned to it — the audit trail for record linkage |
+| `company_crosswalk.csv` | 5,505 | The same for firms |
 | `network_summary.csv` | 15 | Wave-level structure: nodes, edges, density, components, mean degree |
 | `node_metrics.csv` | 6,272 | Per-node degree, weighted degree, betweenness, eigenvector, closeness |
 | `origin_panel.csv` | 3,325 | Person-wave panel with imputed community of origin and per-wave centrality |
@@ -125,7 +125,8 @@ The pipeline is deterministic and fully re-runnable; see §8.
 | `origin_permutation.csv` | 5 | Within-wave permutation results |
 | `political_offices.csv` | 270 | One row per public office a director is recorded in, with whether it is printed as past |
 | `person_political.csv` | 225 | Person-wave office flags: seven office types, count, any-office, national-office, all-past |
-| `firm_political.csv` | 3,270 | Firm-wave political connection: connected directors, their share, and whether the firm has any |
+| `military_officers.csv` | 22 | Person-waves with a military rank printed, by tier — coded separately from civil office |
+| `firm_political.csv` | 3,269 | Firm-wave political connection: connected directors, their share, and whether the firm has any |
 
 ### Network files (`data/processed/graphs/`)
 
@@ -233,7 +234,7 @@ python -m politi politics   # political-connection figures
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 134 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 149 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 

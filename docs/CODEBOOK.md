@@ -165,6 +165,25 @@ its board size (see **Known limitations**). `share_political` therefore has a
 denominator set by the register's coverage, and a firm recorded through one
 director is either 0 or 1.
 
+### `military_officers.csv` — one row per person-wave with a rank
+
+| Variable | Type | Definition |
+|---|---|---|
+| `year` | int | Wave |
+| `person_id` | str | Resolved director |
+| `tier` | str | `general_officer`, `field_officer`, `junior_officer`, `service_no_rank` |
+| `source_page` | int | Scan page the entry was read from |
+
+Coded **separately from civil office** and deliberately not folded into
+`political`: a commission is a different tie to the state from a portfolio,
+and merging the two would change every rate in `person_political.csv`.
+
+22 person-waves, 19 distinct men, of whom 19 person-waves hold a board seat —
+the other three sit on a *conseil de surveillance*, which is not a board and
+so is absent from the network. Construction and its exclusions are in
+`POLITICAL_CONNECTIONS.md`; the short version is that *Général* in this source
+is nearly always *Directeur Général*.
+
 ## Network files (`graphs/`)
 
 Per wave, in GEXF, GraphML and CSV:
