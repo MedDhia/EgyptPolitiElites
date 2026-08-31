@@ -88,6 +88,7 @@ Rendered by `python -m politi politics` into `figures/politics/`.
 | `firm_survival.png` | Discrete-time survivor function and hazard of leaving the register: the hazard falls steeply with tenure, and connection is not distinguishable from none once coverage is held constant |
 | `military_officers.png` | Every director with a military rank, by within-wave brokerage percentile: officers sit at the middle of the distribution |
 | `office_centrality.png` | Each civil office against a within-wave null: every office is ~20 points up on seats, but only some are up on brokerage, and the bench is not |
+| `financiers.png` | Directors on banks, insurers and credit houses, before and after holding seat count fixed, and their overlap with office (`SECTORS.md`) |
 
 ## Are politically connected firms more likely to persist?
 

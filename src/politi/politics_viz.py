@@ -1,4 +1,4 @@
-"""Figures on political connection, one file each.
+"""Figures on directors' ties to the state and to finance, one file each.
 
 Every figure here rests on offices Politi chose to print, so all of them carry
 the same caveat and several state it on the page: **the coding is a floor.** A
@@ -32,6 +32,8 @@ from .politics import (OFFICE_LABEL, OFFICES, baseline_connection, life_table,
                        military_panel, military_position, MILITARY_TIER_LABEL,
                        office_panel, position_by_group,
                        survival_models, survival_panel, survival_ph_test)
+from .sectors import (financier_panel, financier_rate_by_seats,
+                      firm_side, stratified_gap)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
 #: Ordered for reading, densest office first.
@@ -679,6 +681,95 @@ def fig_office_centrality(panel: pd.DataFrame, out: Path,
     return _save(fig, out, rect=(0, 0.16, 1, 0.85))
 
 
+# --- 11. financiers -----------------------------------------------------------
+
+def fig_financiers(panel: pd.DataFrame, out: Path, facts: dict,
+                   n_perm: int = 3000) -> Path:
+    """Directors on a bank, insurer or credit house.
+
+    A financier is defined by the firms he sits on, so the raw comparison is
+    contaminated by seat count in a way the office comparisons are not. Both
+    numbers are on the page: the raw gap, and what is left inside wave ×
+    seat-count cells.
+    """
+    _style()
+    measures = [("pct_deg_proj", "Co-directors"), ("pct_btw_proj", "Brokerage")]
+    tested = [stratified_gap(panel, m, n_perm=n_perm) for m, _ in measures]
+    rates = financier_rate_by_seats(panel)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.2),
+                             gridspec_kw={"width_ratios": [1.1, 1]})
+
+    ax = axes[0]
+    y = np.arange(len(measures))[::-1]
+    ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    for i, (r, (_, label)) in enumerate(zip(tested, measures)):
+        ax.plot([r["null_lo"], r["null_hi"]], [y[i] - 0.16, y[i] - 0.16],
+                color="#d5d2ca", linewidth=9, solid_capstyle="butt", zorder=2)
+        ax.plot([r["raw"]], [y[i] + 0.16], "o", color="#b8c8d8", markersize=11,
+                markeredgecolor=SURFACE, markeredgewidth=1.5, zorder=3)
+        face = AQUA if r["p_perm"] < 0.05 else "#b8c8d8"
+        ax.plot([r["within_cells"]], [y[i] - 0.16], "D", color=face,
+                markersize=10, markeredgecolor=SURFACE, markeredgewidth=1.5,
+                zorder=3)
+        ax.annotate(f"{r['raw']:+.0f}  raw", (r["raw"], y[i] + 0.16),
+                    xytext=(0, 12), textcoords="offset points", ha="center",
+                    fontsize=9.2, color=INK_SOFT)
+        ax.annotate(f"{r['within_cells']:+.1f}"
+                    + ("" if r["p_perm"] < 0.05 else " n.s."),
+                    (r["within_cells"], y[i] - 0.16), xytext=(0, -20),
+                    textcoords="offset points", ha="center", fontsize=9.2,
+                    color=INK_SOFT)
+    ax.set_yticks(y, [label for _, label in measures])
+    ax.set_ylim(-0.75, len(measures) - 0.25)
+    ax.set_xlim(-6, 24)
+    ax.set_xlabel("percentile points above the rest of the wave")
+    ax.set_title("Before and after holding seat count fixed", fontsize=12,
+                 color=INK, loc="left", pad=12)
+    ax.legend(handles=[
+        plt.Line2D([], [], marker="o", linestyle="", color="#b8c8d8",
+                   markersize=10, label="Raw"),
+        plt.Line2D([], [], marker="D", linestyle="", color=AQUA,
+                   markersize=9, label="Within wave × seat count"),
+    ], frameon=False, fontsize=9.5, labelcolor=INK_SOFT, loc="lower right")
+    _frame(ax, xgrid=True)
+
+    ax = axes[1]
+    x = np.arange(len(rates))
+    ax.bar(x - 0.19, rates.without_term, width=0.36, color="#b8c8d8",
+           label="No office recorded")
+    ax.bar(x + 0.19, rates.with_term, width=0.36, color=ORANGE,
+           label="Public office recorded")
+    for i, r in rates.iterrows():
+        ax.annotate(f"{r.without_term:.0f}", (i - 0.19, r.without_term),
+                    xytext=(0, 5), textcoords="offset points", ha="center",
+                    fontsize=9, color=INK_SOFT)
+        ax.annotate(f"{r.with_term:.0f}", (i + 0.19, r.with_term),
+                    xytext=(0, 5), textcoords="offset points", ha="center",
+                    fontsize=9, color=INK_SOFT)
+    ax.set_xticks(x, [f"{int(s)}" if s < 5 else "5 or more" for s in rates.seats])
+    ax.set_ylim(0, max(rates.with_term) * 1.2)
+    ax.set_xlabel("board seats held in the wave")
+    ax.set_ylabel("share holding a financial seat (%)")
+    ax.set_title("Office holders hold financial seats at every seat count",
+                 fontsize=12, color=INK, loc="left", pad=12)
+    ax.legend(frameon=False, fontsize=9.5, labelcolor=INK_SOFT, loc="upper left")
+    _frame(ax)
+
+    _caption(fig, "A bank seat is a bigger room, not a more between one",
+             f"A financier is a director recorded on at least one bank, insurer or credit house — {facts['financial_share']*100:.0f}% of firm-waves\n"
+             f"and {facts['directorship_share']*100:.0f}% of directorships. Grey bars are the middle 95% of a null that permutes inside each seat-count cell.",
+             "Because one directorship in eight is financial, a director with five seats is likelier to hold one than a "
+             "director with one, whatever else is true of him — so the raw gaps are largely seat count and the comparison "
+             "has to be made inside seat-count cells. What survives is co-directors, not brokerage: financial boards are "
+             "larger, so a bank seat puts a director among more people, but those people already sit with each other, and "
+             "the position between them does not follow.\n"
+             "Right: the overlap with political office is not seat-count arithmetic either — office holders are about twice "
+             "as likely to hold a financial seat at one seat, and more likely at every count. Association only, in neither "
+             "direction. Sector is coded from the firm's printed name (docs/SECTORS.md).")
+    return _save(fig, out, rect=(0, 0.165, 1, 0.85))
+
+
 def build_all(processed: Path, outdir: Path) -> list[Path]:
     aff = real_directors(pd.read_csv(processed / "affiliations.csv"))
     flags = pd.read_csv(processed / "person_political.csv")
@@ -699,5 +790,7 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
         fig_military(military_panel(processed), outdir / "military_officers.png"),
         fig_office_centrality(office_panel(processed),
                               outdir / "office_centrality.png"),
+        fig_financiers(financier_panel(processed), outdir / "financiers.png",
+                       firm_side(processed)),
     ]
     return made
