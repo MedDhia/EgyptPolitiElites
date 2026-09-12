@@ -14,6 +14,11 @@ data/processed/*
 data/processed/graphs/*
 !data/processed/graphs/*.gexf
 data/processed/graphs/*_pooled.gexf
+# The TERGM panel directories are inputs to scripts/tergm.R and regenerate in
+# seconds from `politi tergm`, so they are not tracked. The script errors with
+# the command to run if they are absent.
+data/processed/tergm/
+data/processed/tergm_from1938/
 
 # data/incoming/ is NOT ignored: it is the drop point for volumes delivered
 # through git when the pipeline host cannot reach the source directly.

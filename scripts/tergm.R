@@ -7,11 +7,16 @@
 # b2star(2) on the two-mode graph, which is the same quantity without the
 # manufactured dependence.
 #
-# Composition change is handled by restricting each transition to the dyads
-# whose BOTH endpoints are present in consecutive waves. Anything else is
-# coded NA and dropped from the pseudolikelihood. This matters: coding an
-# absent node's dyads as zero would tell the memory term that a firm which did
-# not yet exist had "no tie", which is not the same statement.
+# Composition change is handled by btergm's own adjustment. Each wave's network
+# is built on the nodes present in that wave, and btergm intersects the series
+# so that memory() compares like with like. That is more conservative than the
+# pairwise at-risk restriction used by the Python fit in `politi.tergm`:
+# btergm keeps the nodes shared by ALL waves in range, the Python fit keeps
+# those shared by each consecutive pair. The script prints the node set it
+# actually uses, and the two are not expected to give identical numbers.
+#
+# The union-plus-NA alternative was tried and abandoned: masking ~4.4 million
+# non-existent dyads per wave stores them as missing edges and exhausts memory.
 #
 # Inputs are written by `politi.tergm.export_for_r`:
 #   data/processed/tergm/tergm_edges.csv    year, person_id, company_id
@@ -47,21 +52,15 @@ waves <- waves[waves >= first_wave]
 cat(sprintf("waves: %s   bootstrap replications: %d\n",
             paste(waves, collapse = ", "), n_boot))
 
-# --- a common node set -------------------------------------------------------
-# Every wave's network is built on the union of nodes, so the matrices line up
-# and btergm's memory term compares like with like. Presence is tracked
-# separately and used to mask.
+# --- node attributes ---------------------------------------------------------
+# Attributes are held on the union of nodes and indexed into each wave, so a
+# director carries the same origin in every volume he appears in.
 all_p <- sort(unique(persons$person_id[persons$year %in% waves]))
 all_f <- sort(unique(firms$company_id[firms$year %in% waves]))
 np <- length(all_p); nf <- length(all_f)
 cat(sprintf("union node set: %d directors x %d firms\n", np, nf))
 
-present_p <- lapply(waves, function(y) all_p %in% persons$person_id[persons$year == y])
-present_f <- lapply(waves, function(y) all_f %in% firms$company_id[firms$year == y])
-names(present_p) <- names(present_f) <- as.character(waves)
-
-# Attributes are fixed at the union level. Origin is a property of the man;
-# rank is the highest recorded; office is TRUE if recorded in any wave in
+# Origin is a property of the man. Office is TRUE if recorded in any wave in
 # range, which is the floor the annuaire supports.
 attr_of <- function(ids, frame, key, column, fallback) {
   sub <- frame[frame$year %in% waves, ]
@@ -71,7 +70,6 @@ attr_of <- function(ids, frame, key, column, fallback) {
   out
 }
 p_origin <- attr_of(all_p, persons, "person_id", "origin", "unknown")
-p_rank <- attr_of(all_p, persons, "person_id", "rank", "untitled")
 f_sector <- attr_of(all_f, firms, "company_id", "sector", "other")
 office_ids <- unique(persons$person_id[persons$year %in% waves & persons$political == "True"])
 if (!length(office_ids)) {
@@ -82,38 +80,31 @@ p_office <- ifelse(all_p %in% office_ids, "office", "none")
 cat(sprintf("office holders in the union set: %d\n", sum(p_office == "office")))
 
 # --- one bipartite network per wave -----------------------------------------
-make_net <- function(y, mask_prev = NULL) {
-  m <- matrix(0L, nrow = np, ncol = nf, dimnames = list(all_p, all_f))
+# Built on the nodes present in that wave. btergm conforms the series itself.
+make_net <- function(y) {
+  p <- sort(unique(persons$person_id[persons$year == y]))
+  f <- sort(unique(firms$company_id[firms$year == y]))
+  m <- matrix(0L, nrow = length(p), ncol = length(f), dimnames = list(p, f))
   e <- edges[edges$year == y, ]
-  m[cbind(match(e$person_id, all_p), match(e$company_id, all_f))] <- 1L
-  # A dyad is at risk only if both endpoints exist in this wave, and — when a
-  # previous wave is given — in that one too, so memory() is defined.
-  ok_p <- present_p[[as.character(y)]]
-  ok_f <- present_f[[as.character(y)]]
-  if (!is.null(mask_prev)) {
-    ok_p <- ok_p & present_p[[mask_prev]]
-    ok_f <- ok_f & present_f[[mask_prev]]
-  }
-  m[!ok_p, ] <- NA
-  m[, !ok_f] <- NA
-  n <- network(m, bipartite = np, directed = FALSE, matrix.type = "bipartite")
-  set.vertex.attribute(n, "origin", c(p_origin, rep("firm", nf)))
-  set.vertex.attribute(n, "rank", c(p_rank, rep("firm", nf)))
-  set.vertex.attribute(n, "office", c(p_office, rep("firm", nf)))
-  set.vertex.attribute(n, "sector", c(rep("person", np), f_sector))
+  m[cbind(match(e$person_id, p), match(e$company_id, f))] <- 1L
+  n <- network(m, bipartite = length(p), directed = FALSE,
+               matrix.type = "bipartite")
+  set.vertex.attribute(n, "origin",
+                       c(p_origin[match(p, all_p)], rep("firm", length(f))))
+  set.vertex.attribute(n, "office",
+                       c(p_office[match(p, all_p)], rep("firm", length(f))))
+  set.vertex.attribute(n, "sector",
+                       c(rep("person", length(p)), f_sector[match(f, all_f)]))
   n
 }
 
-nets <- list()
-for (i in seq_along(waves)) {
-  prev <- if (i == 1) NULL else as.character(waves[i - 1])
-  nets[[i]] <- make_net(waves[i], prev)
-}
+nets <- lapply(waves, make_net)
 names(nets) <- as.character(waves)
 for (i in seq_along(nets)) {
-  cat(sprintf("  %s: %d ties on %d dyads at risk\n", names(nets)[i],
-              network.edgecount(nets[[i]]),
-              sum(!is.na(as.matrix(nets[[i]], matrix.type = "bipartite")))))
+  cat(sprintf("  %s: %d directors x %d firms, %d ties\n", names(nets)[i],
+              nets[[i]] %n% "bipartite",
+              network.size(nets[[i]]) - (nets[[i]] %n% "bipartite"),
+              network.edgecount(nets[[i]])))
 }
 
 # --- the model ---------------------------------------------------------------
@@ -127,7 +118,7 @@ model <- btergm(
     b1star(2) +                                # a director holding two seats
     b2star(2) +                                # two directors sharing a firm
     b1factor("office", base = 2) +             # office holders
-    b1nodematch("origin") +                    # sharing a board with one's own
+    b1nodematch("origin", keep = which(sort(unique(p_origin)) != "unknown")) +
     b2factor("sector", base = 4),              # finance / land / agriculture
   R = n_boot, parallel = "no", verbose = TRUE
 )

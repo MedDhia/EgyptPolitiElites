@@ -170,7 +170,11 @@ def _cmd_tergm(args: argparse.Namespace) -> int:
     print("\nThe model is estimated on dyads whose both endpoints appear in "
           "consecutive waves.\nSee docs/TERGM.md before reading any "
           "coefficient.")
-    out = Path(args.out) if args.out else processed / "tergm"
+    # --from-1938 is a different panel and must not overwrite the other:
+    # the R script reads whatever is in the directory, and would label a
+    # 1938-only fit as the full series.
+    default = processed / ("tergm_from1938" if args.from_1938 else "tergm")
+    out = Path(args.out) if args.out else default
     for path in export_for_r(panel, out):
         print(f"wrote {path}")
 
