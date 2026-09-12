@@ -895,6 +895,17 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
         fig_agrarian(financier_panel(processed), outdir / "agrarian.png",
                      firm_side(processed)),
     ]
+    coefficients = {}
+    for key, name in (("all", "tergm_mple.csv"),
+                      ("from1938", "tergm_mple_from1938.csv")):
+        if (processed / name).exists():
+            coefficients[key] = pd.read_csv(processed / name)
+    if "all" in coefficients:
+        from .tergm import network_panel, transition_table
+
+        made.append(fig_tergm(coefficients,
+                              transition_table(network_panel(processed)),
+                              outdir / "tergm.png"))
     return made
 
 
@@ -917,78 +928,102 @@ def fig_tergm(coefficients: dict[str, pd.DataFrame], transitions: pd.DataFrame,
               out: Path) -> Path:
     """Coefficients beside the at-risk restriction that produced them.
 
-    The right panel is not decoration. A TERGM on this data is estimated on
-    the dyads whose both endpoints survive into the next volume, and that is a
-    small and unevenly distributed part of the register — which is the first
-    thing a reader of the coefficients needs to know.
+    Memory gets its own axis. At +6.7 against everything else inside ±0.5 it
+    would otherwise flatten the terms the reader is there to compare, and a
+    single scale that hides eight coefficients to show one is not a saving.
+
+    The right panel is not decoration either. A TERGM on this data is
+    estimated on the dyads whose both endpoints survive into the next volume,
+    and that is a small and unevenly distributed part of the register — which
+    is the first thing a reader of the coefficients needs to know.
     """
     _style()
-    order = [t for t in TERGM_LABEL if t != "edges"]
+    rest = [t for t in TERGM_LABEL if t not in ("edges", "memory")]
     specs = [("all", "All five waves", BLUE), ("from1938", "From 1938", ORANGE)]
     specs = [(k, lab, c) for k, lab, c in specs if k in coefficients]
 
-    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.6),
-                             gridspec_kw={"width_ratios": [1.5, 1]})
+    fig = plt.figure(figsize=(13.5, 7.6))
+    grid = fig.add_gridspec(2, 2, width_ratios=[1.5, 1],
+                            height_ratios=[1, 5.6], hspace=0.42, wspace=0.3)
+    ax_mem = fig.add_subplot(grid[0, 0])
+    ax = fig.add_subplot(grid[1, 0])
+    ax_right = fig.add_subplot(grid[:, 1])
 
-    ax = axes[0]
-    y = np.arange(len(order))[::-1]
+    def draw(axis, terms, ypos):
+        offsets = np.linspace(0.17, -0.17, len(specs))
+        for (key, label, colour), dy in zip(specs, offsets):
+            d = coefficients[key].set_index("term").reindex(terms)
+            for i, (_, r) in enumerate(d.iterrows()):
+                face = "#c9cbc4" if r.lo <= 0 <= r.hi else colour
+                axis.plot([r.lo, r.hi], [ypos[i] + dy] * 2, color=face,
+                          linewidth=2.2, zorder=2, solid_capstyle="round")
+                axis.plot([r.estimate], [ypos[i] + dy], "D", color=face,
+                          markersize=8, markeredgecolor=SURFACE,
+                          markeredgewidth=1.3, zorder=3)
+
+    mem_y = np.array([0])
+    ax_mem.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    draw(ax_mem, ["memory"], mem_y)
+    ax_mem.set_yticks(mem_y, [TERGM_LABEL["memory"]], fontsize=9.8)
+    ax_mem.set_ylim(-0.45, 0.45)
+    m = coefficients["all"].set_index("term").loc["memory"]
+    ax_mem.set_xlim(m.estimate - 1.1, m.estimate + 1.1)
+    ax_mem.set_title("Its own scale: everything else lies inside ±0.5",
+                     fontsize=10, color=INK_SOFT, loc="left", pad=8)
+    _frame(ax_mem, xgrid=True)
+
+    y = np.arange(len(rest))[::-1]
     ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
-    offsets = np.linspace(0.17, -0.17, len(specs))
-    for (key, label, colour), dy in zip(specs, offsets):
-        d = coefficients[key].set_index("term").reindex(order)
-        for i, (term, r) in enumerate(d.iterrows()):
-            crosses = r.lo <= 0 <= r.hi
-            face = "#c9cbc4" if crosses else colour
-            ax.plot([r.lo, r.hi], [y[i] + dy, y[i] + dy], color=face,
-                    linewidth=2.2, zorder=2, solid_capstyle="round")
-            ax.plot([r.estimate], [y[i] + dy], "D", color=face, markersize=8,
-                    markeredgecolor=SURFACE, markeredgewidth=1.3, zorder=3)
+    draw(ax, rest, y)
+    for key, label, colour in specs:
         ax.plot([], [], "D", color=colour, markersize=8, label=label)
-    ax.set_yticks(y, [TERGM_LABEL[t] for t in order], fontsize=9.8)
-    ax.set_ylim(-0.7, len(order) - 0.3)
+    ax.set_yticks(y, [TERGM_LABEL[t] for t in rest], fontsize=9.8)
+    ax.set_ylim(-0.7, len(rest) - 0.3)
     ax.set_xlabel("change in the log odds of a directorship")
-    ax.set_title("Coefficients, with bootstrap intervals", fontsize=12,
-                 color=INK, loc="left", pad=12)
     ax.legend(frameon=False, fontsize=9.5, labelcolor=INK_SOFT,
               loc="lower right")
     _frame(ax, xgrid=True)
 
-    ax = axes[1]
-    labels = [f"{a}→{b}\n{g}y" for a, b, g in
+    labels = [f"{a}\u2192{b}\n{g} years" for a, b, g in
               zip(transitions["from"], transitions.to, transitions.gap_years)]
     x = np.arange(len(transitions))
     bottom = np.zeros(len(transitions))
     for column, colour, name in (("stable", "#1f4e8c", "Held again"),
                                  ("formed", AQUA, "Newly taken"),
                                  ("dissolved", "#c9cbc4", "Given up")):
-        ax.bar(x, transitions[column], bottom=bottom, width=0.6, color=colour,
-               label=name)
+        ax_right.bar(x, transitions[column], bottom=bottom, width=0.6,
+                     color=colour, label=name)
         bottom += transitions[column].to_numpy()
     for xi, (risk, total) in enumerate(zip(transitions.dyads_at_risk, bottom)):
-        ax.annotate(f"{risk:,}\ndyads at risk", (xi, total), xytext=(0, 6),
-                    textcoords="offset points", ha="center", fontsize=8.4,
-                    color=INK_SOFT)
-    ax.set_xticks(x, labels, fontsize=9.2)
-    ax.set_ylim(0, bottom.max() * 1.3)
-    ax.set_ylabel("seats among dyads at risk")
-    ax.set_title("What each transition contributes", fontsize=12, color=INK,
-                 loc="left", pad=12)
-    ax.legend(frameon=False, fontsize=9, labelcolor=INK_SOFT, ncol=3,
-              loc="upper center", bbox_to_anchor=(0.5, -0.10), handlelength=1.1)
-    _frame(ax)
+        ax_right.annotate(f"{risk:,}\ndyads at risk", (xi, total),
+                          xytext=(0, 6), textcoords="offset points",
+                          ha="center", fontsize=8.4, color=INK_SOFT)
+    ax_right.set_xticks(x, labels, fontsize=9.2)
+    ax_right.set_ylim(0, bottom.max() * 1.42)
+    ax_right.set_ylabel("seats among dyads at risk")
+    ax_right.set_title("What each transition contributes", fontsize=12,
+                       color=INK, loc="left", pad=12)
+    # The 1932 bar is short, so the key sits over it rather than under the
+    # axis where it would collide with the note.
+    ax_right.legend(frameon=False, fontsize=9, labelcolor=INK_SOFT,
+                    loc="upper left", handlelength=1.1)
+    _frame(ax_right)
 
-    memory = coefficients["all"].set_index("term").loc["memory"]
+    fig.subplots_adjust(left=0.205, right=0.985, top=0.80, bottom=0.275)
     _caption(fig, "The network is held together by seats being kept",
              "Temporal ERGM on the two-mode network, fitted by pseudolikelihood with a bootstrap over directors. Intervals\n"
              "that cross zero are drawn grey. Terms are change statistics; see docs/TERGM.md for the specification.",
              f"Memory dominates everything else: a seat held in the previous volume raises the log odds of holding it again "
-             f"by {memory.estimate:.1f} ({np.exp(memory.estimate):,.0f}-fold in odds). Net of that and of both degree terms, "
-             "two things survive — a director who already holds seats takes more, and a director is likelier to join a board "
-             "already holding men of his own community. Firms show no matching tendency to accumulate directors, so the "
-             "interlocking in this network is built by directors and not by boards.\\n"
-             "Right: the model is estimated only on dyads whose both endpoints appear in consecutive volumes. That is 4,796 "
-             "dyads across 1932→1938 and 195,993 across 1947→1950, so the early transitions carry little of the estimate, "
-             "and 1932 is a selection of prominent administrators rather than a full roster — which is why the model is "
-             "reported with and without it. The intervals are 6, 4, 5 and 3 years and the model has no offset for that, so "
-             "memory is an average over four gaps and not a per-year rate.")
-    return _save(fig, out, rect=(0, 0.215, 1, 0.85))
+             f"by {m.estimate:.1f}. Net of that and of both degree terms, three things survive — a director who already "
+             "holds seats takes more, a director holding public office is likelier to hold a seat at all, and a director is "
+             "likelier to join a board already seating men of his own community. Firms show no matching tendency to "
+             "accumulate directors, so the interlocking here is built by directors and not by boards.\n"
+             "Right: the model is estimated only on dyads whose both endpoints appear in consecutive volumes — 4,796 across "
+             "1932\u21921938 against 195,993 across 1947\u21921950, so the early transitions carry little of the estimate. "
+             "1932 is a selection of prominent administrators rather than a full roster, which is why the model is reported "
+             "with and without it; only land and property changes, losing its interval. The gaps are 6, 4, 5 and 3 years and "
+             "the model has no offset for that, so memory is an average over four intervals and not a per-year rate.")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=170)
+    plt.close(fig)
+    return out

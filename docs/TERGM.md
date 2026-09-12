@@ -95,6 +95,54 @@ Rscript scripts/tergm.R --from 1938 --boot 500
 
 Coefficients land in `data/processed/tergm_coefficients.csv`.
 
+## Results
+
+326,317 at-risk dyads carrying 1,544 seats; pseudolikelihood with 300
+bootstrap replications over directors.
+
+| Term | All five waves | 95% interval | From 1938 | 95% interval |
+|---|---|---|---|---|
+| Density (intercept) | −6.67 | −6.85, −6.52 | −6.75 | −6.92, −6.62 |
+| **Seat held in the previous wave** | **+6.72** | +6.45, +7.05 | **+6.82** | +6.56, +7.10 |
+| Director already holds seats | +0.13 | +0.09, +0.17 | +0.12 | +0.09, +0.16 |
+| Firm already has directors | −0.00 | −0.06, +0.06 | +0.02 | −0.04, +0.07 |
+| Director holds public office | +0.40 | +0.19, +0.61 | +0.41 | +0.17, +0.63 |
+| **Board-mate of the same community** | **+0.30** | +0.21, +0.40 | +0.31 | +0.21, +0.40 |
+| Firm is a bank or insurer | +0.11 | −0.09, +0.30 | +0.08 | −0.16, +0.31 |
+| Firm is in land or property | +0.29 | +0.03, +0.50 | +0.26 | −0.01, +0.47 |
+| Firm is in agriculture | +0.02 | −0.31, +0.29 | +0.04 | −0.28, +0.32 |
+
+**Memory dominates.** A seat held in the previous volume raises the log odds of
+holding it again by 6.7, against a density intercept of −6.7. Whatever else
+this network is doing, it is mostly keeping people where they were.
+
+Net of memory and of both degree terms, three things survive:
+
+* **A director who already holds seats takes more** (+0.13). Cumulative
+  advantage on the person side.
+* **A director holding public office is likelier to hold a seat at all**
+  (+0.40). Consistent with the office results elsewhere, now with tie
+  persistence and both degree distributions held constant.
+* **A director is likelier to join a board already seating men of his own
+  community** (+0.30). This is the homophily finding from the permutation test
+  in `FIGURES_EXPLORE.md` — same-origin pairing 11 to 17 points above a
+  random-mixing null — surviving in a model that also controls degree and
+  memory. It is the most robust result in this repository.
+
+And one negative worth as much as the positives: **firms show no tendency to
+accumulate directors** (−0.00, interval straddling zero). Directors accumulate
+seats; boards do not accumulate directors. The interlocking in this network is
+built from the person side.
+
+Finance is null here, which agrees with `SECTORS.md`: its apparent advantage
+was seat count, and seat count is in the model. Land and property is the only
+term that moves when 1932 is dropped, losing its interval — treat it as
+fragile.
+
+Nothing here is a direction. Office is printed in the same entry as the
+directorships; the coefficient says office holders were likelier to hold
+seats, not that office produced them.
+
 ## What this cannot settle
 
 Bootstrapped pseudolikelihood is not MCMC-MLE. It is the estimator `btergm`
