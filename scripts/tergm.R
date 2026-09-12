@@ -7,16 +7,19 @@
 # b2star(2) on the two-mode graph, which is the same quantity without the
 # manufactured dependence.
 #
-# Composition change is handled by btergm's own adjustment. Each wave's network
-# is built on the nodes present in that wave, and btergm intersects the series
-# so that memory() compares like with like. That is more conservative than the
-# pairwise at-risk restriction used by the Python fit in `politi.tergm`:
-# btergm keeps the nodes shared by ALL waves in range, the Python fit keeps
-# those shared by each consecutive pair. The script prints the node set it
-# actually uses, and the two are not expected to give identical numbers.
+# Composition change is handled by btergm's own adjustment, which conforms each
+# time step to the nodes it shares with the previous one. It arrives at exactly
+# the pairwise at-risk sets the Python fit in `politi.tergm` constructs by hand
+# — 44x109, 152x228, 307x296, 459x427 — so the two are fitted to the same
+# dyads and their coefficients are directly comparable.
 #
 # The union-plus-NA alternative was tried and abandoned: masking ~4.4 million
 # non-existent dyads per wave stores them as missing edges and exhausts memory.
+#
+# Every term emits exactly one statistic. Factor terms are avoided because a
+# level absent from one adjusted time step makes them emit different numbers
+# of statistics per step, and btergm then fails in rbind. Binary covariates do
+# not have that problem.
 #
 # Inputs are written by `politi.tergm.export_for_r`:
 #   data/processed/tergm/tergm_edges.csv    year, person_id, company_id
@@ -77,6 +80,10 @@ if (!length(office_ids)) {
                                          as.logical(persons$political)])
 }
 p_office <- ifelse(all_p %in% office_ids, "office", "none")
+#: Origin levels the homophily term counts. "unknown" is excluded: directors
+#: whose origin could not be imputed are not a community and must not be
+#: allowed to match each other.
+origin_levels <- c("arab_egyptian", "european", "local_minority")
 cat(sprintf("office holders in the union set: %d\n", sum(p_office == "office")))
 
 # --- one bipartite network per wave -----------------------------------------
@@ -89,12 +96,18 @@ make_net <- function(y) {
   m[cbind(match(e$person_id, p), match(e$company_id, f))] <- 1L
   n <- network(m, bipartite = length(p), directed = FALSE,
                matrix.type = "bipartite")
+  pi <- match(p, all_p); fi <- match(f, all_f)
+  # Origin stays categorical: homophily needs it. Everything else is binary,
+  # so each term contributes one statistic in every time step.
   set.vertex.attribute(n, "origin",
-                       c(p_origin[match(p, all_p)], rep("firm", length(f))))
+                       c(p_origin[pi], rep("firm", length(f))))
   set.vertex.attribute(n, "office",
-                       c(p_office[match(p, all_p)], rep("firm", length(f))))
-  set.vertex.attribute(n, "sector",
-                       c(rep("person", length(p)), f_sector[match(f, all_f)]))
+                       c(as.integer(p_office[pi] == "office"),
+                         rep(0L, length(f))))
+  for (sec in c("finance", "land_property", "agriculture")) {
+    set.vertex.attribute(n, sec, c(rep(0L, length(p)),
+                                   as.integer(f_sector[fi] == sec)))
+  }
   n
 }
 
@@ -117,9 +130,9 @@ model <- btergm(
     memory(type = "autoregression") +          # a seat held again
     b1star(2) +                                # a director holding two seats
     b2star(2) +                                # two directors sharing a firm
-    b1factor("office", base = 2) +             # office holders
-    b1nodematch("origin", keep = which(sort(unique(p_origin)) != "unknown")) +
-    b2factor("sector", base = 4),              # finance / land / agriculture
+    b1cov("office") +                          # office holders
+    b1nodematch("origin", levels = I(origin_levels)) +
+    b2cov("finance") + b2cov("land_property") + b2cov("agriculture"),
   R = n_boot, parallel = "no", verbose = TRUE
 )
 
