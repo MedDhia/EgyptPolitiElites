@@ -32,7 +32,8 @@ from .politics import (OFFICE_LABEL, OFFICES, baseline_connection, life_table,
                        military_panel, military_position, MILITARY_TIER_LABEL,
                        office_panel, position_by_group,
                        survival_models, survival_panel, survival_ph_test)
-from .sectors import (financier_panel, financier_rate_by_seats,
+from .sectors import (AGRARIAN, SECTOR_LABEL, SECTOR_ORDER,
+                      financier_panel, financier_rate_by_seats,
                       firm_side, stratified_gap)
 from .viz import INK, INK_SOFT, SURFACE, _dodge_labels, _style
 
@@ -770,6 +771,105 @@ def fig_financiers(panel: pd.DataFrame, out: Path, facts: dict,
     return _save(fig, out, rect=(0, 0.165, 1, 0.85))
 
 
+# --- 12. land and agriculture -------------------------------------------------
+
+SECTOR_COLOR = {"finance": AQUA, "land_property": "#8a6d3b",
+                "agriculture": "#c9a227"}
+
+
+def fig_agrarian(panel: pd.DataFrame, out: Path, facts: dict,
+                 n_perm: int = 3000) -> Path:
+    """Land and agriculture beside finance, and who was exposed to them.
+
+    The headline is a negative and the title says so: this source does not
+    record landownership. What it records is seats on land and agricultural
+    companies, which is a different thing.
+    """
+    _style()
+    groups = ["finance", "land_property", "agriculture"]
+    tested = {g: stratified_gap(panel, "pct_deg_proj", term=g, n_perm=n_perm)
+              for g in groups}
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.2),
+                             gridspec_kw={"width_ratios": [1.05, 1]})
+
+    ax = axes[0]
+    y = np.arange(len(groups))[::-1]
+    ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    for i, g in enumerate(groups):
+        r = tested[g]
+        ax.plot([r["null_lo"], r["null_hi"]], [y[i] - 0.16, y[i] - 0.16],
+                color="#d5d2ca", linewidth=9, solid_capstyle="butt", zorder=2)
+        ax.plot([r["raw"]], [y[i] + 0.16], "o", color="#c9cbc4", markersize=11,
+                markeredgecolor=SURFACE, markeredgewidth=1.5, zorder=3)
+        face = SECTOR_COLOR[g] if r["p_perm"] < 0.05 else "#c9cbc4"
+        ax.plot([r["within_cells"]], [y[i] - 0.16], "D", color=face,
+                markersize=10, markeredgecolor=SURFACE, markeredgewidth=1.5,
+                zorder=3)
+        ax.annotate(f"{r['raw']:+.0f}  raw", (r["raw"], y[i] + 0.16),
+                    xytext=(0, 12), textcoords="offset points", ha="center",
+                    fontsize=9.2, color=INK_SOFT)
+        ax.annotate(f"{r['within_cells']:+.1f}"
+                    + ("" if r["p_perm"] < 0.05 else " n.s."),
+                    (r["within_cells"], y[i] - 0.16), xytext=(0, -20),
+                    textcoords="offset points", ha="center", fontsize=9.2,
+                    color=INK_SOFT)
+    ax.set_yticks(y, [f"{SECTOR_LABEL[g]}\n({int(panel[g].sum())} directors)"
+                      for g in groups], fontsize=9.6)
+    ax.set_ylim(-0.8, len(groups) - 0.2)
+    ax.set_xlim(-6, 22)
+    ax.set_xlabel("co-directors: percentile points above the rest of the wave")
+    ax.set_title("Most of each raw gap is seat count", fontsize=12,
+                 color=INK, loc="left", pad=12)
+    ax.legend(handles=[
+        plt.Line2D([], [], marker="o", linestyle="", color="#c9cbc4",
+                   markersize=10, label="Raw"),
+        plt.Line2D([], [], marker="D", linestyle="", color=AQUA,
+                   markersize=9, label="Within wave × seat count"),
+    ], frameon=False, fontsize=9.5, labelcolor=INK_SOFT, loc="lower right")
+    _frame(ax, xgrid=True)
+
+    ax = axes[1]
+    coded = panel[panel.origin != "unknown"]
+    shares = (coded.groupby("origin", observed=True)
+              [[f"share_{g}" for g in groups]].mean() * 100)
+    origins = [o for o in ORIGIN_COLOR if o in shares.index]
+    x = np.arange(len(groups))
+    width = 0.26
+    for j, origin in enumerate(origins):
+        vals = [shares.loc[origin, f"share_{g}"] for g in groups]
+        pos = x + (j - (len(origins) - 1) / 2) * width
+        ax.bar(pos, vals, width=width * 0.92, color=ORIGIN_COLOR[origin],
+               label=ORIGIN_LABEL[origin])
+        for xi, v in zip(pos, vals):
+            ax.annotate(f"{v:.0f}", (xi, v), xytext=(0, 4), ha="center",
+                        textcoords="offset points", fontsize=8.8,
+                        color=INK_SOFT)
+    ax.set_xticks(x, [SECTOR_LABEL[g].replace(" and ", " &\n") for g in groups],
+                  fontsize=9.6)
+    ax.set_ylim(0, shares.to_numpy().max() * 1.25)
+    ax.set_ylabel("mean share of a director's own seats (%)")
+    ax.set_title("Who was exposed to what", fontsize=12, color=INK, loc="left",
+                 pad=12)
+    ax.legend(frameon=False, fontsize=9, labelcolor=INK_SOFT, loc="upper right")
+    _frame(ax)
+
+    _caption(fig, "Landowners are not in this source; land companies are",
+             "Politi indexes joint-stock companies, and Egyptian land was held directly. Three men in five volumes are printed\n"
+             "as landowners. What can be measured is seats on land and agricultural firms — a different thing.",
+             f"Land and property is {facts['land_property_share']*100:.0f}% of firm-waves and agriculture "
+             f"{facts['agriculture_share']*100:.0f}%, against {facts['finance_share']*100:.0f}% for finance. Left: the raw gaps "
+             "are alike across all three and are mostly seat count. Inside wave × seat-count cells finance keeps a clear "
+             "position (+6.8, p < 0.001); land and property does not (+2.2, p = 0.18); agriculture sits on the boundary "
+             "(+3.5, p = 0.03) and is one of six tests run here, so treat it as unresolved. Brokerage survives in none of "
+             "the three. A seat on a land company looks much like any other seat of the same rarity.\n"
+             "Right: the exposures invert the usual expectation. Egyptianised minorities — Jewish, Greek, Syro-Lebanese — "
+             "give the largest share of their seats to land and agriculture and the smallest to finance, while Arab/Egyptian "
+             "directors are the most finance-exposed. Permuting origin within waves, the agrarian spread is far outside the "
+             "null (p < 0.001). Origin is imputed from the name; sector from the firm's printed name (docs/SECTORS.md).")
+    return _save(fig, out, rect=(0, 0.175, 1, 0.85))
+
+
 def build_all(processed: Path, outdir: Path) -> list[Path]:
     aff = real_directors(pd.read_csv(processed / "affiliations.csv"))
     flags = pd.read_csv(processed / "person_political.csv")
@@ -792,5 +892,7 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
                               outdir / "office_centrality.png"),
         fig_financiers(financier_panel(processed), outdir / "financiers.png",
                        firm_side(processed)),
+        fig_agrarian(financier_panel(processed), outdir / "agrarian.png",
+                     firm_side(processed)),
     ]
     return made

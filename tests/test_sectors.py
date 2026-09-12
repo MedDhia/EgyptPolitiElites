@@ -78,3 +78,44 @@ def test_financier_rate_by_seats_drops_thin_rows():
     })
     out = financier_rate_by_seats(panel)
     assert list(out.seats) == [1]
+
+
+@pytest.mark.parametrize("label,expected", [
+    # Finance takes precedence: these lend against land, they do not hold it.
+    ("Crédit Foncier Egyptien", "finance"),
+    ("Land Bank of Egypt", "finance"),
+    ("The Agricultural Bank of Egypt", "finance"),
+    ("Crédit Immobilier Suisse-Egyptien", "finance"),
+    # Land and property.
+    ("Société Foncière d'Egypte", "land_property"),
+    ("Dakahlieh Land Co", "land_property"),
+    ("Société Générale Immobilière d'Egypte", "land_property"),
+    ("S.A.I. des Terrains Ghizeh et Rodah", "land_property"),
+    ("Société Anonyme Immobilière du Domaine de Siouf", "land_property"),
+    # Agriculture and the processing of what it grows.
+    ("Société Générale des Sucreries", "agriculture"),
+    ("The National Ginning Co. of Egypt, S.A.E", "agriculture"),
+    ("Société Générale d'Irrigation", "agriculture"),
+    ("Rosetta & Alexandria Rice Mills", "agriculture"),
+    ("S.A. Agricole et Industrielle d'Egypte", "agriculture"),
+    # Bodies are not firms whatever their name carries.
+    ("Consultatif de l'Agriculture", "other"),
+    ("Union des Agriculteurs d'Egypte", "other"),
+    # Everything else.
+    ("Filature Nationale d'Egypte", "other"),
+    ("The Egyptian Delta Light Railways Co", "other"),
+])
+def test_sector(label, expected):
+    from politi.sectors import sector
+
+    assert sector(label) == expected
+
+
+def test_sector_precedence_is_load_bearing():
+    """Reversing the order would make a mortgage bank a landholder."""
+    from politi.sectors import AGRICULTURE, FINANCIAL, LAND_PROPERTY
+
+    text = "Credit Foncier Egyptien"
+    assert FINANCIAL.search(text) and LAND_PROPERTY.search(text)
+    text = "Banque du Credit Agricole d'Egypte"
+    assert FINANCIAL.search(text) and AGRICULTURE.search(text)

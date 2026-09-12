@@ -34,43 +34,96 @@ FINANCIAL = re.compile(
     r"\bfinanci[eè]re?s?\b|\bfinance\b|\bfinancial\b|"
     r"\bhypothecaire\b|\bmortgage\b|\bcaisse\b")
 
-#: Public and professional bodies whose names carry a financial word — a
-#: ministry of finance, a committee on reinsurance — and which are not firms.
+#: Public and professional bodies whose names carry a sector word — a ministry
+#: of finance, a committee on reinsurance, a consultative council on
+#: agriculture — and which are not firms.
 NOT_A_FIRM = re.compile(
     r"(?i)\bminist[eè]re\b|\bcomit[eé]\b|\bcommission\b|"
-    r"\bconseil\s+(?:sup|cons)|\bchambre\b|\bsyndicat\b|\bassociation\b|"
-    r"\bfederation\b")
+    r"\bconseil\s+(?:sup|cons)|\bconsultatif\b|\bchambre\b|\bsyndicat\b|"
+    r"\bassociation\b|\bfederation\b|\bunion\s+des\b")
 
-#: Words left out of :data:`FINANCIAL` on purpose.
-#:
-#: *Foncier* and *immobilier* are land and property, not credit — "Société
-#: Foncière d'Égypte" is a land company, while "Crédit Foncier Égyptien" is a
-#: mortgage bank and is caught by *crédit*. *Bourse* and *exchange* are market
-#: institutions, and the commodity exchanges cannot be told from the
-#: securities exchange reliably enough in these labels to be worth coding.
-EXCLUDED_VOCABULARY = ("foncier", "immobilier", "land", "estates", "bourse",
-                       "exchange")
+#: Land and property: firms that hold, develop or let ground.
+LAND_PROPERTY = re.compile(
+    r"(?i)\bfonci[eè]re?\b|\bimmobili[eè]re?s?\b|\bimmobili\b|\blands?\b|"
+    r"\bestates?\b|\bdomaines?\b|\bterrains?\b|\blotissement\b|"
+    r"\bproprietes\b|\bgerance\s+immobili")
+
+#: Agriculture and the processing of what it grows.
+AGRICULTURE = re.compile(
+    r"(?i)\bagricole\b|\bagriculture\b|\bagricultural\b|\bagraire\b|"
+    r"\begrenage\b|\bginning\b|\bsucreries?\b|\bsugar\b|\brizeries?\b|"
+    r"\brice\s+mills?\b|\bhuileries?\b|\bmoulins?\b|\bvignobles?\b|"
+    r"\belevage\b|\birrigation\b|\bplantations?\b|\bfermes?\b")
+
+#: Sectors in the order :func:`sector` tries them. **Finance comes first on
+#: purpose.** A mortgage bank and an agricultural bank lend against land; they
+#: do not hold it. Putting land or agriculture first would move 25 firms and
+#: 19 firms respectively out of finance, and would count the Crédit Foncier
+#: Égyptien and the Land Bank of Egypt as landholders.
+SECTOR_ORDER = ("finance", "land_property", "agriculture")
+
+#: Words left out of every sector on purpose. *Bourse* and *exchange* are
+#: market institutions, and these labels do not separate the securities
+#: exchange from the cotton exchange reliably enough to be worth coding.
+#: *Coton* and *cotton* are left out because they span growing, ginning,
+#: pressing, broking and export, and the name rarely says which.
+EXCLUDED_VOCABULARY = ("bourse", "exchange", "coton", "cotton")
 
 
 def is_financial(label: str) -> bool:
     """Does this company name belong to a bank, insurer or credit house?"""
+    return sector(label) == "finance"
+
+
+def sector(label: str) -> str:
+    """The firm's sector from its printed name: the first rule that matches.
+
+    Returns ``finance``, ``land_property``, ``agriculture`` or ``other``.
+    ``other`` is not a residual claim about the firm — it means none of the
+    three vocabularies matched, which for most industrial and trading firms it
+    will not.
+    """
     text = unidecode(str(label))
-    return bool(FINANCIAL.search(text)) and not NOT_A_FIRM.search(text)
+    if NOT_A_FIRM.search(text):
+        return "other"
+    patterns = {"finance": FINANCIAL, "land_property": LAND_PROPERTY,
+                "agriculture": AGRICULTURE}
+    for name in SECTOR_ORDER:
+        if patterns[name].search(text):
+            return name
+    return "other"
+
+
+#: Land and agriculture together: the nearest thing this source has to an
+#: agrarian interest, and not the same thing as landownership. See
+#: `docs/SECTORS.md`.
+AGRARIAN = ("land_property", "agriculture")
+
+SECTOR_LABEL = {
+    "finance": "Finance",
+    "land_property": "Land and property",
+    "agriculture": "Agriculture and processing",
+    "other": "Everything else",
+}
 
 
 def firm_sectors(companies: pd.DataFrame) -> pd.DataFrame:
-    """One row per firm with the sector flag."""
+    """One row per firm with its sector."""
     out = companies[["company_id", "label"]].copy()
-    out["financial"] = out.label.map(is_financial)
+    out["sector"] = out.label.map(sector)
+    out["financial"] = out.sector == "finance"
     return out
 
 
 def financier_panel(processed=None) -> pd.DataFrame:
-    """The office panel with the financial-sector columns merged in.
+    """The office panel with one set of columns per sector merged in.
 
-    Adds `n_fin` (financial seats held in the wave), `financier` (any), and
-    `fin_share` (the share of this director's seats that are financial), plus
-    `seat_cat`, the stratifying variable every comparison here needs.
+    For each sector: `n_<sector>` seats held in the wave, a boolean, and a
+    share of the director's own seats. `financier` and `fin_share` are the
+    finance pair, kept under those names because the finance figure and its
+    tests use them. `agrarian` is land and agriculture together.
+
+    Also adds `seat_cat`, the stratifying variable every comparison here needs.
     """
     from pathlib import Path
 
@@ -79,16 +132,24 @@ def financier_panel(processed=None) -> pd.DataFrame:
 
     processed = Path(processed) if processed else config.PROCESSED
     aff = pd.read_csv(processed / "affiliations.csv")
-    aff["financial"] = aff.company_label.map(is_financial)
-    counts = (aff[aff.financial].groupby(["year", "person_id"]).company_id
-              .nunique().rename("n_fin").reset_index())
+    aff["sector"] = aff.company_label.map(sector)
 
-    panel = office_panel(processed).merge(counts, on=["year", "person_id"],
-                                          how="left")
-    panel["n_fin"] = panel.n_fin.fillna(0).astype(int)
-    panel["financier"] = panel.n_fin > 0
-    panel["fin_share"] = panel.n_fin / panel.seats
-    #: Capped so the top cell is not one director.
+    panel = office_panel(processed)
+    for name in SECTOR_ORDER:
+        counts = (aff[aff.sector == name].groupby(["year", "person_id"])
+                  .company_id.nunique().rename(f"n_{name}").reset_index())
+        panel = panel.merge(counts, on=["year", "person_id"], how="left")
+        panel[f"n_{name}"] = panel[f"n_{name}"].fillna(0).astype(int)
+        panel[name] = panel[f"n_{name}"] > 0
+        panel[f"share_{name}"] = panel[f"n_{name}"] / panel.seats
+
+    panel["n_agrarian"] = panel[[f"n_{s}" for s in AGRARIAN]].sum(axis=1)
+    panel["agrarian"] = panel.n_agrarian > 0
+    panel["share_agrarian"] = panel.n_agrarian / panel.seats
+    # The finance figure and its tests were written against these names.
+    panel["n_fin"] = panel.n_finance
+    panel["financier"] = panel.finance
+    panel["fin_share"] = panel.share_finance
     panel["seat_cat"] = panel.seats.clip(upper=5)
     return panel
 
@@ -107,18 +168,28 @@ def firm_side(processed=None) -> dict[str, float]:
     processed = Path(processed) if processed else config.PROCESSED
     aff = pd.read_csv(processed / "affiliations.csv")
     aff = aff[aff.person_label.map(is_person)]
-    aff["financial"] = aff.company_label.map(is_financial)
+    aff["sector"] = aff.company_label.map(sector)
     board = (aff.groupby(["year", "company_id"])
              .agg(directors=("person_id", "nunique"),
-                  financial=("financial", "first")).reset_index())
-    return {
-        "firm_waves": len(board),
-        "financial_firm_waves": int(board.financial.sum()),
-        "financial_share": float(board.financial.mean()),
-        "directors_financial": float(board.directors[board.financial].mean()),
-        "directors_other": float(board.directors[~board.financial].mean()),
-        "directorship_share": float(aff.financial.mean()),
-    }
+                  sector=("sector", "first")).reset_index())
+    facts = {"firm_waves": len(board)}
+    for name in (*SECTOR_ORDER, "other"):
+        mask = board.sector == name
+        facts[f"{name}_firm_waves"] = int(mask.sum())
+        facts[f"{name}_share"] = float(mask.mean())
+        facts[f"{name}_directors"] = float(board.directors[mask].mean())
+        facts[f"{name}_directorship_share"] = float((aff.sector == name).mean())
+    agrarian = board.sector.isin(AGRARIAN)
+    facts["agrarian_firm_waves"] = int(agrarian.sum())
+    facts["agrarian_share"] = float(agrarian.mean())
+    facts["agrarian_directors"] = float(board.directors[agrarian].mean())
+    facts["agrarian_directorship_share"] = float(aff.sector.isin(AGRARIAN).mean())
+    # Names the finance figure was written against.
+    facts["financial_share"] = facts["finance_share"]
+    facts["directorship_share"] = facts["finance_directorship_share"]
+    facts["directors_financial"] = facts["finance_directors"]
+    facts["directors_other"] = float(board.directors[~(board.sector == "finance")].mean())
+    return facts
 
 
 def stratified_gap(panel: pd.DataFrame, measure: str, term: str = "financier",
