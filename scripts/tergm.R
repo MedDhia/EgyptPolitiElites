@@ -144,9 +144,15 @@ model <- btergm(
 cat("\n==================== TERGM ====================\n")
 print(summary(model))
 
+# btergm's confint returns four columns — Estimate, Boot mean, 2.5%, 97.5% —
+# so the interval must be selected by name. Taking the first two columns
+# silently writes the estimate and the bootstrap mean as if they were bounds.
 ci <- confint(model)
+pct <- grep("%", colnames(ci))
+stopifnot(length(pct) == 2)
 out <- data.frame(term = rownames(ci), estimate = coef(model),
-                  lo = ci[, 1], hi = ci[, 2], row.names = NULL)
+                  boot_mean = ci[, "Boot mean"],
+                  lo = ci[, pct[1]], hi = ci[, pct[2]], row.names = NULL)
 outdir <- file.path(root, "data", "processed")
 tag <- if (first_wave > 1932) sprintf("_from%d", first_wave) else ""
 write.csv(out, file.path(outdir, sprintf("tergm_coefficients%s.csv", tag)),
