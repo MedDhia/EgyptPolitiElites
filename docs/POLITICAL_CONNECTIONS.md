@@ -302,6 +302,52 @@ Eleven of the 22 records are in 1950 alone. Read that as the annuaire printing
 more, as much as anything else: it is the same floor caveat as the civil
 offices.
 
+## Does political connection predict persistence?
+
+The question can mean three things in this dataset, and all three were tested.
+**None of them comes back positive.**
+
+### Does a connected *firm* stay in the register?
+
+No. Raw odds 1.84; 1.03 once the number of directors the register records is
+held constant (95% CI 0.80–1.33, p = 0.83). The discrete-time hazard model
+agrees: HR 0.69 raw, 0.93 controlled. Comparing firms only with firms in the
+same wave recorded through the same number of directors leaves +0.4 percentage
+points, permutation p = 0.88. Full detail above and in the survival section.
+
+### Does a connected *director* reappear in the next volume?
+
+No. 51.1% against 46.3% raw, but office holders hold more seats and seats
+predict reappearance, so the comparison has to be made inside wave ×
+seat-count cells. There it is **−3.8 percentage points, permutation p = 0.53**,
+against a null interval of ±11. With 133 office-holder waves the test is weak,
+so read it as "not detected" rather than "shown equal".
+
+### Does a connected director keep a *particular seat*?
+
+No, and this one is precise. Among ties held at t−1, **63.9% of office
+holders' seats were held again against 63.5% of everyone else's** — 158 and
+1,270 ties respectively. Adding a memory × office interaction to the TERGM
+gives −0.98 (p < 0.001) against an office main effect that rises to +0.65:
+the model is reconciling a higher baseline propensity to hold seats with
+identical persistence, which is exactly what those two percentages say.
+
+`politi.tergm.change_statistics` computes the interaction term, so this is
+reproducible: pass `INTERACTIONS` to `fit_mple` alongside `TERMS`.
+
+### What office does predict
+
+Reach, not durability. Office holders sit about 20 percentile points above
+their wave on seats held, are roughly twice as likely to hold a financial seat
+at every seat count, and carry a +0.40 coefficient on holding a seat at all in
+the TERGM. What none of that becomes is a better grip on what they already
+hold.
+
+The floor caveat applies throughout: a director with no office recorded may
+have held one Politi did not print, and such men sit in the comparison group.
+That biases every one of these tests toward zero, so the nulls are the weaker
+half of the evidence and the positive reach findings the stronger.
+
 ## Wording
 
 The office variables support **associations, not directions**. Office and

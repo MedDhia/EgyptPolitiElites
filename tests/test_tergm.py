@@ -87,8 +87,12 @@ def test_change_statistics_are_the_right_shape(panel):
 
     design = change_statistics(panel)
     table = transition_table(panel).set_index("to")
+    from politi.tergm import INTERACTIONS
+
     assert set(design.columns) == {"year", "person_id", "company_id", "tie",
-                                   *TERMS}
+                                   *TERMS, *INTERACTIONS}
+    # The interaction is the product of its parts, by construction.
+    assert (design.memory_x_office == design.memory * design.office).all()
     assert (design.edges == 1).all()          # the intercept
     for year, chunk in design.groupby("year"):
         assert len(chunk) == table.loc[year, "dyads_at_risk"]

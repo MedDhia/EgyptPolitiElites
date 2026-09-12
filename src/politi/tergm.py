@@ -185,6 +185,12 @@ def export_for_r(panel: dict, outdir: Path) -> list[Path]:
 TERMS = ["edges", "memory", "b1star2", "b2star2", "office", "origin_match",
          "sector_finance", "sector_land_property", "sector_agriculture"]
 
+#: Also computed, but not in the default specification. Pass it to
+#: :func:`fit_mple` to ask whether an office holder's seat persists better
+#: than anyone else's — which is a different question from whether he holds
+#: more seats, and has a different answer. See `docs/TERGM.md`.
+INTERACTIONS = ["memory_x_office"]
+
 
 def change_statistics(panel: dict) -> pd.DataFrame:
     """One row per at-risk dyad per transition, with each term's change stat.
@@ -255,9 +261,10 @@ def change_statistics(panel: dict) -> pd.DataFrame:
                     int(sectors.get(firm) == "finance"),
                     int(sectors.get(firm) == "land_property"),
                     int(sectors.get(firm) == "agriculture"),
+                    int((person, firm) in before) * int(has_office),
                 ))
     return pd.DataFrame(rows, columns=["year", "person_id", "company_id",
-                                       "tie", *TERMS])
+                                       "tie", *TERMS, *INTERACTIONS])
 
 
 def fit_mple(design: pd.DataFrame, terms: list[str] | None = None,

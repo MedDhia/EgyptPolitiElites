@@ -217,6 +217,28 @@ one this analysis actually supports; the office and person-degree results are
 suggestive but estimator-dependent, and the sector terms should not be leaned
 on at all.
 
+## Office predicts reach, not persistence
+
+The office coefficient is often misread as a persistence result. It is not:
+`memory` and `office` are separate terms, and the model as specified says
+nothing about whether a connected director's seat lasts longer.
+
+Asked directly, with a memory × office interaction:
+
+| Term | Estimate | p |
+|---|---|---|
+| memory | +6.83 | <0.001 |
+| office | **+0.65** | <0.001 |
+| memory × office | **−0.98** | <0.001 |
+
+The raw numbers behind that: of ties held at t−1, **63.9% of office holders'
+seats were held again against 63.5% of everyone else's** (158 and 1,270 ties).
+The negative interaction reconciles a higher baseline propensity to hold seats
+with identical persistence — it is not office holders losing seats faster.
+
+`change_statistics` computes `memory_x_office`; pass `INTERACTIONS` to
+`fit_mple` with `TERMS` to reproduce it.
+
 ## What this cannot settle
 
 Neither fit is MCMC-MLE: bootstrapped pseudolikelihood is what `btergm` uses
