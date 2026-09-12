@@ -127,27 +127,101 @@ Net of memory and of both degree terms, three things survive:
   community** (+0.30). This is the homophily finding from the permutation test
   in `FIGURES_EXPLORE.md` — same-origin pairing 11 to 17 points above a
   random-mixing null — surviving in a model that also controls degree and
-  memory. It is the most robust result in this repository.
+  memory. It is the only term significant in every cell of the estimator
+  comparison below, and the one result here worth leaning on.
 
 And one negative worth as much as the positives: **firms show no tendency to
 accumulate directors** (−0.00, interval straddling zero). Directors accumulate
 seats; boards do not accumulate directors. The interlocking in this network is
 built from the person side.
 
-Finance is null here, which agrees with `SECTORS.md`: its apparent advantage
-was seat count, and seat count is in the model. Land and property is the only
-term that moves when 1932 is dropped, losing its interval — treat it as
-fragile.
+Finance is null in this fit, which agrees with `SECTORS.md`: its apparent
+advantage was seat count, and seat count is in the model. But btergm finds an
+interval for it and the two estimators disagree — see the comparison below
+before quoting either. Land and property loses its interval when 1932 is
+dropped, so treat it as fragile too.
 
 Nothing here is a direction. Office is printed in the same entry as the
 directorships; the coefficient says office holders were likelier to hold
 seats, not that office produced them.
 
+## The two estimators side by side
+
+`scripts/tergm.R` (btergm 1.11.1 / ergm 4.12.0) and `politi tergm --fit` are
+fitted to the same dyads: btergm's composition adjustment conforms each time
+step to the nodes it shares with the previous one, arriving at exactly the
+pairwise at-risk sets the Python code builds by hand. The comparison is
+therefore a real check, and worth reading for where it fails as much as where
+it holds.
+
+All five waves. `*` marks an interval excluding zero.
+
+| Term | btergm | 95% | Python | 95% |
+|---|---|---|---|---|
+| Density | −6.719 | −6.84, −6.18 * | −6.669 | −6.85, −6.52 * |
+| Memory | 6.723 | 5.76, 7.35 * | 6.721 | 6.45, 7.05 * |
+| b1star(2) | 0.126 | −0.01, 0.19 | 0.126 | 0.09, 0.17 * |
+| b2star(2) | −0.004 | −0.19, 0.08 | −0.004 | −0.06, 0.06 |
+| Office | 0.409 | 0.03, 0.53 * | 0.403 | 0.19, 0.61 * |
+| Origin match | 0.281 | 0.21, 0.54 * | 0.299 | 0.21, 0.40 * |
+| Finance | 0.192 | 0.06, 0.62 * | 0.111 | −0.09, 0.30 |
+| Land and property | 0.259 | 0.03, 0.37 * | 0.294 | 0.03, 0.50 * |
+| Agriculture | −0.227 | −0.87, 0.04 | 0.023 | −0.31, 0.29 |
+
+From 1938.
+
+| Term | btergm | 95% | Python | 95% |
+|---|---|---|---|---|
+| Density | −6.807 | −6.85, −6.49 * | −6.752 | −6.92, −6.62 * |
+| Memory | 6.816 | 6.13, 7.29 * | 6.817 | 6.57, 7.10 * |
+| b1star(2) | 0.118 | 0.01, 0.18 * | 0.118 | 0.09, 0.16 * |
+| b2star(2) | 0.019 | −0.08, 0.08 | 0.018 | −0.04, 0.07 |
+| Office | 0.414 | −0.09, 0.52 | 0.407 | 0.17, 0.63 * |
+| Origin match | 0.286 | 0.22, 0.59 * | 0.306 | 0.21, 0.40 * |
+| Finance | 0.106 | 0.03, 0.29 * | 0.081 | −0.16, 0.31 |
+| Land and property | 0.237 | 0.05, 0.36 * | 0.259 | −0.01, 0.47 |
+| Agriculture | −0.108 | −0.60, 0.04 | 0.037 | −0.28, 0.32 |
+
+**Point estimates agree closely on seven of nine terms** — memory to three
+decimals, both degree terms and office to two or three, origin match and land
+and property within 0.04. That is a genuine check on the change-statistic
+implementation, which is the part most likely to be wrong.
+
+**They diverge on the two thinnest covariates.** Finance and agriculture are
+4.5% and 12% of firm-waves, and in the 1932→1938 step there are only 109 firms
+at risk in total; agriculture even changes sign between the two, though it is
+inside the interval in all four cells and so is null throughout.
+
+**The intervals differ more than the estimates.** btergm's node bootstrap is
+markedly wider and right-skewed — its lower bound often sits close to or above
+the point estimate — and it is the more conservative of the two. Significance
+therefore moves for four terms depending on which estimator is read.
+
+**One term is significant in every cell: origin homophily.** Both estimators,
+both wave sets, 0.28 to 0.31. Memory likewise, trivially. Everything else is
+contingent on the estimator, the wave set, or both:
+
+| Term | Robust? |
+|---|---|
+| Memory | Yes — both estimators, both wave sets |
+| **Origin match** | **Yes — both estimators, both wave sets** |
+| Density | Yes |
+| b1star(2) | No — Python both, btergm only from 1938 |
+| Office | No — both for all waves, btergm loses it from 1938 |
+| Finance | No — btergm both, Python neither |
+| Land and property | No — btergm both, Python only all waves |
+| b2star(2), Agriculture | Null everywhere |
+
+Read that table before any single coefficient. The homophily finding is the
+one this analysis actually supports; the office and person-degree results are
+suggestive but estimator-dependent, and the sector terms should not be leaned
+on at all.
+
 ## What this cannot settle
 
-Bootstrapped pseudolikelihood is not MCMC-MLE. It is the estimator `btergm`
-uses by default and it is consistent for these purposes, but the usual ERGM
-warnings apply: the degree terms are the ones most likely to be misspecified
+Neither fit is MCMC-MLE: bootstrapped pseudolikelihood is what `btergm` uses
+by default, and the Python implementation matches it. The usual ERGM warnings
+apply: the degree terms are the ones most likely to be misspecified
 in a network this sparse (densities run from 1.23% in 1932 down to 0.19% in
 1950), and a goodness-of-fit check on the degree distributions of both modes
 is part of the script rather than an afterthought.
