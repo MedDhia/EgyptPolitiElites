@@ -155,6 +155,28 @@ def _cmd_explore(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_tergm(args: argparse.Namespace) -> int:
+    """Export the network panel a temporal ERGM is fitted to."""
+    from .tergm import export_for_r, network_panel, transition_table
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    if not (processed / "affiliations.csv").exists():
+        print(f"no dataset at {processed}. Run `politi build --roster` first.",
+              file=sys.stderr)
+        return 1
+    panel = network_panel(processed, drop_1932=args.from_1938)
+    table = transition_table(panel)
+    print(table.to_string(index=False))
+    print("\nThe model is estimated on dyads whose both endpoints appear in "
+          "consecutive waves.\nSee docs/TERGM.md before reading any "
+          "coefficient.")
+    out = Path(args.out) if args.out else processed / "tergm"
+    for path in export_for_r(panel, out):
+        print(f"wrote {path}")
+    print("\nNow: Rscript scripts/tergm.R")
+    return 0
+
+
 def _cmd_politics(args: argparse.Namespace) -> int:
     """Render the political-connection figures, one file each."""
     from .politics_viz import build_all
@@ -290,6 +312,14 @@ def main(argv: list[str] | None = None) -> int:
     pol.add_argument("--processed", help="dataset directory (default data/processed)")
     pol.add_argument("--out", help="output directory (default figures/politics/)")
     pol.set_defaults(func=_cmd_politics)
+
+    tg = sub.add_parser("tergm",
+                        help="export the network panel for the temporal ERGM")
+    tg.add_argument("--processed", help="dataset directory (default data/processed)")
+    tg.add_argument("--out", help="output directory (default <processed>/tergm)")
+    tg.add_argument("--from-1938", dest="from_1938", action="store_true",
+                    help="drop 1932, whose roster is a selection")
+    tg.set_defaults(func=_cmd_tergm)
 
     o = sub.add_parser("origin",
                        help="positional advantage by community of origin")
