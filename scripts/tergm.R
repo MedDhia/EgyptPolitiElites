@@ -74,17 +74,21 @@ attr_of <- function(ids, frame, key, column, fallback) {
 }
 p_origin <- attr_of(all_p, persons, "person_id", "origin", "unknown")
 f_sector <- attr_of(all_f, firms, "company_id", "sector", "other")
-office_ids <- unique(persons$person_id[persons$year %in% waves & persons$political == "True"])
-if (!length(office_ids)) {
-  office_ids <- unique(persons$person_id[persons$year %in% waves &
-                                         as.logical(persons$political)])
-}
-p_office <- ifelse(all_p %in% office_ids, "office", "none")
+# Office is WAVE-SPECIFIC, not a property of the man: a director recorded in
+# office in 1947 was not necessarily in office in 1938. Collapsing it to
+# "ever held office" both widens the group and would no longer match the
+# Python fit the R run exists to check.
+persons$office <- as.integer(persons$political %in% c("True", "TRUE", "true"))
 #: Origin levels the homophily term counts. "unknown" is excluded: directors
 #: whose origin could not be imputed are not a community and must not be
 #: allowed to match each other.
 origin_levels <- c("arab_egyptian", "european", "local_minority")
-cat(sprintf("office holders in the union set: %d\n", sum(p_office == "office")))
+in_range <- persons$year %in% waves
+cat(sprintf("office holders by wave: %s\n",
+            paste(sprintf("%d:%d", sort(unique(persons$year[in_range])),
+                          tapply(persons$office[in_range],
+                                 persons$year[in_range], sum)),
+                  collapse = " ")))
 
 # --- one bipartite network per wave -----------------------------------------
 # Built on the nodes present in that wave. btergm conforms the series itself.
@@ -101,8 +105,9 @@ make_net <- function(y) {
   # so each term contributes one statistic in every time step.
   set.vertex.attribute(n, "origin",
                        c(p_origin[pi], rep("firm", length(f))))
+  wave_office <- persons[persons$year == y, ]
   set.vertex.attribute(n, "office",
-                       c(as.integer(p_office[pi] == "office"),
+                       c(wave_office$office[match(p, wave_office$person_id)],
                          rep(0L, length(f))))
   for (sec in c("finance", "land_property", "agriculture")) {
     set.vertex.attribute(n, sec, c(rep(0L, length(p)),
