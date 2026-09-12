@@ -896,3 +896,99 @@ def build_all(processed: Path, outdir: Path) -> list[Path]:
                      firm_side(processed)),
     ]
     return made
+
+
+# --- 13. temporal ERGM --------------------------------------------------------
+
+TERGM_LABEL = {
+    "edges": "Density (intercept)",
+    "memory": "Seat held in the previous wave",
+    "b1star2": "Director already holds seats",
+    "b2star2": "Firm already has directors",
+    "office": "Director holds public office",
+    "origin_match": "Board-mate of the same community",
+    "sector_finance": "Firm is a bank or insurer",
+    "sector_land_property": "Firm is in land or property",
+    "sector_agriculture": "Firm is in agriculture",
+}
+
+
+def fig_tergm(coefficients: dict[str, pd.DataFrame], transitions: pd.DataFrame,
+              out: Path) -> Path:
+    """Coefficients beside the at-risk restriction that produced them.
+
+    The right panel is not decoration. A TERGM on this data is estimated on
+    the dyads whose both endpoints survive into the next volume, and that is a
+    small and unevenly distributed part of the register — which is the first
+    thing a reader of the coefficients needs to know.
+    """
+    _style()
+    order = [t for t in TERGM_LABEL if t != "edges"]
+    specs = [("all", "All five waves", BLUE), ("from1938", "From 1938", ORANGE)]
+    specs = [(k, lab, c) for k, lab, c in specs if k in coefficients]
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.6),
+                             gridspec_kw={"width_ratios": [1.5, 1]})
+
+    ax = axes[0]
+    y = np.arange(len(order))[::-1]
+    ax.axvline(0, color="#b8b5ac", linewidth=1.2, zorder=1)
+    offsets = np.linspace(0.17, -0.17, len(specs))
+    for (key, label, colour), dy in zip(specs, offsets):
+        d = coefficients[key].set_index("term").reindex(order)
+        for i, (term, r) in enumerate(d.iterrows()):
+            crosses = r.lo <= 0 <= r.hi
+            face = "#c9cbc4" if crosses else colour
+            ax.plot([r.lo, r.hi], [y[i] + dy, y[i] + dy], color=face,
+                    linewidth=2.2, zorder=2, solid_capstyle="round")
+            ax.plot([r.estimate], [y[i] + dy], "D", color=face, markersize=8,
+                    markeredgecolor=SURFACE, markeredgewidth=1.3, zorder=3)
+        ax.plot([], [], "D", color=colour, markersize=8, label=label)
+    ax.set_yticks(y, [TERGM_LABEL[t] for t in order], fontsize=9.8)
+    ax.set_ylim(-0.7, len(order) - 0.3)
+    ax.set_xlabel("change in the log odds of a directorship")
+    ax.set_title("Coefficients, with bootstrap intervals", fontsize=12,
+                 color=INK, loc="left", pad=12)
+    ax.legend(frameon=False, fontsize=9.5, labelcolor=INK_SOFT,
+              loc="lower right")
+    _frame(ax, xgrid=True)
+
+    ax = axes[1]
+    labels = [f"{a}→{b}\n{g}y" for a, b, g in
+              zip(transitions["from"], transitions.to, transitions.gap_years)]
+    x = np.arange(len(transitions))
+    bottom = np.zeros(len(transitions))
+    for column, colour, name in (("stable", "#1f4e8c", "Held again"),
+                                 ("formed", AQUA, "Newly taken"),
+                                 ("dissolved", "#c9cbc4", "Given up")):
+        ax.bar(x, transitions[column], bottom=bottom, width=0.6, color=colour,
+               label=name)
+        bottom += transitions[column].to_numpy()
+    for xi, (risk, total) in enumerate(zip(transitions.dyads_at_risk, bottom)):
+        ax.annotate(f"{risk:,}\ndyads at risk", (xi, total), xytext=(0, 6),
+                    textcoords="offset points", ha="center", fontsize=8.4,
+                    color=INK_SOFT)
+    ax.set_xticks(x, labels, fontsize=9.2)
+    ax.set_ylim(0, bottom.max() * 1.3)
+    ax.set_ylabel("seats among dyads at risk")
+    ax.set_title("What each transition contributes", fontsize=12, color=INK,
+                 loc="left", pad=12)
+    ax.legend(frameon=False, fontsize=9, labelcolor=INK_SOFT, ncol=3,
+              loc="upper center", bbox_to_anchor=(0.5, -0.10), handlelength=1.1)
+    _frame(ax)
+
+    memory = coefficients["all"].set_index("term").loc["memory"]
+    _caption(fig, "The network is held together by seats being kept",
+             "Temporal ERGM on the two-mode network, fitted by pseudolikelihood with a bootstrap over directors. Intervals\n"
+             "that cross zero are drawn grey. Terms are change statistics; see docs/TERGM.md for the specification.",
+             f"Memory dominates everything else: a seat held in the previous volume raises the log odds of holding it again "
+             f"by {memory.estimate:.1f} ({np.exp(memory.estimate):,.0f}-fold in odds). Net of that and of both degree terms, "
+             "two things survive — a director who already holds seats takes more, and a director is likelier to join a board "
+             "already holding men of his own community. Firms show no matching tendency to accumulate directors, so the "
+             "interlocking in this network is built by directors and not by boards.\\n"
+             "Right: the model is estimated only on dyads whose both endpoints appear in consecutive volumes. That is 4,796 "
+             "dyads across 1932→1938 and 195,993 across 1947→1950, so the early transitions carry little of the estimate, "
+             "and 1932 is a selection of prominent administrators rather than a full roster — which is why the model is "
+             "reported with and without it. The intervals are 6, 4, 5 and 3 years and the model has no offset for that, so "
+             "memory is an average over four gaps and not a per-year rate.")
+    return _save(fig, out, rect=(0, 0.215, 1, 0.85))

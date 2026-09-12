@@ -78,3 +78,57 @@ def test_no_network_derived_covariate_is_exported(panel):
     for year in panel["waves"]:
         for frame in (panel["persons"][year], panel["firms"][year]):
             assert not banned & set(frame.columns)
+
+
+def test_change_statistics_are_the_right_shape(panel):
+    """One row per at-risk dyad, and the memory term must count the ties that
+    existed at t-1 among exactly those dyads."""
+    from politi.tergm import TERMS, change_statistics, transition_table
+
+    design = change_statistics(panel)
+    table = transition_table(panel).set_index("to")
+    assert set(design.columns) == {"year", "person_id", "company_id", "tie",
+                                   *TERMS}
+    assert (design.edges == 1).all()          # the intercept
+    for year, chunk in design.groupby("year"):
+        assert len(chunk) == table.loc[year, "dyads_at_risk"]
+        assert chunk.tie.sum() == table.loc[year, "edges_to"]
+        assert chunk.memory.sum() == table.loc[year, "edges_from"]
+    # 1932 is only a lag: the first modelled wave is the second in the panel.
+    assert sorted(design.year.unique()) == panel["waves"][1:]
+
+
+def test_degree_change_statistics_exclude_the_focal_tie():
+    """The change statistic of a two-star is the partner count the new tie
+    would join, which must not include the tie itself."""
+    from politi.tergm import change_statistics
+
+    # One director on two firms in both waves; one firm with two directors.
+    panel = {
+        "waves": [1, 2],
+        "edges": {y: pd.DataFrame({"person_id": ["p1", "p1", "p2"],
+                                   "company_id": ["c1", "c2", "c1"]})
+                  for y in (1, 2)},
+        "persons": {y: pd.DataFrame({"person_id": ["p1", "p2"],
+                                     "origin": ["european", "european"],
+                                     "political": [False, False]})
+                    for y in (1, 2)},
+        "firms": {y: pd.DataFrame({"company_id": ["c1", "c2"],
+                                   "sector": ["other", "other"]})
+                  for y in (1, 2)},
+    }
+    d = change_statistics(panel).set_index(["person_id", "company_id"])
+    # p1 holds c1 and c2, so toggling either leaves one other seat.
+    assert d.loc[("p1", "c1"), "b1star2"] == 1
+    # c1 already has p1 and p2; toggling p2-c1 leaves one other director.
+    assert d.loc[("p2", "c1"), "b2star2"] == 1
+    # p2 does not hold c2. Adding it would join p2's one existing seat, and
+    # on the firm side would join p1, who already sits on c2.
+    assert d.loc[("p2", "c2"), "b1star2"] == 1
+    assert d.loc[("p2", "c2"), "b2star2"] == 1
+    # Same-origin board-mates, excluding ego: p1 and p2 share c1, and c2
+    # holds only p1, so ego there has nobody to match.
+    assert d.loc[("p2", "c1"), "origin_match"] == 1
+    assert d.loc[("p1", "c2"), "origin_match"] == 0
+    # Adding p2 to c2 would seat him beside p1, of the same origin.
+    assert d.loc[("p2", "c2"), "origin_match"] == 1

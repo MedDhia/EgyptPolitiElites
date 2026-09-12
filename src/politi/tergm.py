@@ -168,3 +168,143 @@ def export_for_r(panel: dict, outdir: Path) -> list[Path]:
         pd.concat(frames, ignore_index=True).to_csv(path, index=False)
         written.append(path)
     return written
+
+
+# --- estimation ---------------------------------------------------------------
+#
+# `btergm`'s default estimator is maximum pseudolikelihood with bootstrapped
+# confidence intervals (Desmarais and Cranmer 2012; Leifeld, Cranmer and
+# Desmarais 2018). That is a logistic regression on the at-risk dyads with
+# each term's change statistic as a regressor, and a bootstrap that resamples
+# *nodes* rather than dyads. Both are implemented here so the model can be
+# fitted without R, and so the R result has something to be checked against.
+#
+# What this is not: MCMC-MLE. For that, use `scripts/tergm.R`.
+
+#: Change statistics computed by :func:`change_statistics`, in order.
+TERMS = ["edges", "memory", "b1star2", "b2star2", "office", "origin_match",
+         "sector_finance", "sector_land_property", "sector_agriculture"]
+
+
+def change_statistics(panel: dict) -> pd.DataFrame:
+    """One row per at-risk dyad per transition, with each term's change stat.
+
+    The change statistic of a term is how much the network statistic moves
+    when the dyad is toggled on, holding the rest of the observed network
+    fixed — which is exactly what conditioning on the rest of the network
+    means, and what makes this a pseudolikelihood rather than a likelihood.
+
+    Only dyads whose both endpoints appear in the wave *and* the one before it
+    are included, so `memory` distinguishes "no tie" from "did not exist".
+    """
+    waves = panel["waves"]
+    rows = []
+    for previous, current in zip(waves, waves[1:]):
+        persons = panel["persons"][current]
+        firms = panel["firms"][current]
+        prev_p = set(panel["persons"][previous].person_id)
+        prev_f = set(panel["firms"][previous].company_id)
+
+        at_risk_p = persons[persons.person_id.isin(prev_p)].reset_index(drop=True)
+        at_risk_f = firms[firms.company_id.isin(prev_f)].reset_index(drop=True)
+        if at_risk_p.empty or at_risk_f.empty:
+            continue
+
+        now = set(map(tuple, panel["edges"][current].to_numpy()))
+        before = set(map(tuple, panel["edges"][previous].to_numpy()))
+
+        origin = dict(zip(at_risk_p.person_id, at_risk_p.origin))
+        office = dict(zip(at_risk_p.person_id, at_risk_p.political))
+        sectors = dict(zip(at_risk_f.company_id, at_risk_f.sector))
+
+        # Degrees and the origin composition of each board, on the observed
+        # network at t, restricted to the at-risk node set.
+        p_ids = list(at_risk_p.person_id)
+        f_ids = list(at_risk_f.company_id)
+        p_set, f_set = set(p_ids), set(f_ids)
+        p_degree = dict.fromkeys(p_ids, 0)
+        f_degree = dict.fromkeys(f_ids, 0)
+        board_origins: dict[str, dict[str, int]] = {f: {} for f in f_ids}
+        for person, firm in now:
+            if person in p_set and firm in f_set:
+                p_degree[person] += 1
+                f_degree[firm] += 1
+                who = origin.get(person, "unknown")
+                if who != "unknown":
+                    board_origins[firm][who] = board_origins[firm].get(who, 0) + 1
+
+        for person in p_ids:
+            ego = origin.get(person, "unknown")
+            has_office = bool(office.get(person, False))
+            for firm in f_ids:
+                tie = (person, firm) in now
+                # Degrees excluding the focal tie: the change statistic of a
+                # two-star is the partner count the new tie would join.
+                deg_p = p_degree[person] - (1 if tie else 0)
+                deg_f = f_degree[firm] - (1 if tie else 0)
+                same = 0
+                if ego != "unknown":
+                    same = board_origins[firm].get(ego, 0) - (1 if tie else 0)
+                rows.append((
+                    current, person, firm, int(tie),
+                    1,                                        # edges
+                    int((person, firm) in before),            # memory
+                    deg_p, deg_f,
+                    int(has_office),
+                    same,
+                    int(sectors.get(firm) == "finance"),
+                    int(sectors.get(firm) == "land_property"),
+                    int(sectors.get(firm) == "agriculture"),
+                ))
+    return pd.DataFrame(rows, columns=["year", "person_id", "company_id",
+                                       "tie", *TERMS])
+
+
+def fit_mple(design: pd.DataFrame, terms: list[str] | None = None,
+             n_boot: int = 200, seed: int = 20260912) -> pd.DataFrame:
+    """Pseudolikelihood fit with a node bootstrap, as `btergm` does by default.
+
+    The bootstrap resamples **directors** with replacement and refits, which
+    respects the fact that a director's dyads are not independent of each
+    other. Resampling dyads would treat them as if they were and would give
+    intervals that are far too narrow.
+    """
+    import warnings
+
+    import statsmodels.api as sm
+
+    terms = list(terms or TERMS)
+    y = design.tie.to_numpy()
+    X = design[terms].to_numpy(dtype=float)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        fit = sm.Logit(y, X).fit(disp=0, maxiter=200)
+
+    rng = np.random.default_rng(seed)
+    people = design.person_id.to_numpy()
+    unique = np.unique(people)
+    index: dict[str, np.ndarray] = {p: np.where(people == p)[0] for p in unique}
+    draws = np.full((n_boot, len(terms)), np.nan)
+    for b in range(n_boot):
+        picked = rng.choice(unique, size=unique.size, replace=True)
+        rows = np.concatenate([index[p] for p in picked])
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            try:
+                draws[b] = sm.Logit(y[rows], X[rows]).fit(disp=0,
+                                                          maxiter=200).params
+            except Exception:            # a draw with no variation on a term
+                continue
+
+    ok = ~np.isnan(draws).any(axis=1)
+    return pd.DataFrame({
+        "term": terms,
+        "estimate": fit.params,
+        "boot_se": np.nanstd(draws[ok], axis=0, ddof=1),
+        "lo": np.nanpercentile(draws[ok], 2.5, axis=0),
+        "hi": np.nanpercentile(draws[ok], 97.5, axis=0),
+        "n_dyads": len(design),
+        "n_ties": int(y.sum()),
+        "n_boot": int(ok.sum()),
+    })

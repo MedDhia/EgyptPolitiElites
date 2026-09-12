@@ -173,7 +173,23 @@ def _cmd_tergm(args: argparse.Namespace) -> int:
     out = Path(args.out) if args.out else processed / "tergm"
     for path in export_for_r(panel, out):
         print(f"wrote {path}")
-    print("\nNow: Rscript scripts/tergm.R")
+
+    if args.fit:
+        from .tergm import change_statistics, fit_mple
+
+        design = change_statistics(panel)
+        print(f"\nfitting on {len(design):,} at-risk dyads, "
+              f"{int(design.tie.sum())} ties "
+              f"({args.bootstrap} bootstrap replications)")
+        table = fit_mple(design, n_boot=args.bootstrap)
+        print(table.round(3).to_string(index=False))
+        tag = "_from1938" if args.from_1938 else ""
+        path = processed / f"tergm_mple{tag}.csv"
+        table.to_csv(path, index=False)
+        print(f"\nwrote {path}")
+    else:
+        print("\nNow: Rscript scripts/tergm.R, or --fit for the "
+              "pseudolikelihood fit in Python")
     return 0
 
 
@@ -319,6 +335,10 @@ def main(argv: list[str] | None = None) -> int:
     tg.add_argument("--out", help="output directory (default <processed>/tergm)")
     tg.add_argument("--from-1938", dest="from_1938", action="store_true",
                     help="drop 1932, whose roster is a selection")
+    tg.add_argument("--fit", action="store_true",
+                    help="also fit by pseudolikelihood with a node bootstrap")
+    tg.add_argument("--bootstrap", type=int, default=200,
+                    help="bootstrap replications for --fit (default 200)")
     tg.set_defaults(func=_cmd_tergm)
 
     o = sub.add_parser("origin",

@@ -232,13 +232,13 @@ python -m politi figures    # network figures
 python -m politi origin     # origin analysis and its figure set
 python -m politi explore    # descriptive figures, one file each
 python -m politi politics   # political-connection figures
-python -m politi tergm      # export the panel for the temporal ERGM
+python -m politi tergm --fit   # export the panel and fit the temporal ERGM
 Rscript scripts/tergm.R     # fit it (needs R with btergm)
 ```
 
 Python ≥3.10; dependencies pinned in `pyproject.toml`. Re-OCR of the 1942
 volume takes roughly 30 minutes; the remaining stages run in minutes. The test
-suite (`python -m pytest`, 198 tests) covers name normalisation, parsing
+suite (`python -m pytest`, 200 tests) covers name normalisation, parsing
 against a synthetic volume in the source's layout, record linkage, network
 construction, and figure generation.
 
