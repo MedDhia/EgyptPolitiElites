@@ -239,6 +239,81 @@ with identical persistence — it is not office holders losing seats faster.
 `change_statistics` computes `memory_x_office`; pass `INTERACTIONS` to
 `fit_mple` with `TERMS` to reproduce it.
 
+## What the model contributes: sorting happens at the door
+
+This is the one thing a TERGM does that nothing else in this repository can.
+Every other analysis here measures a **state** — who is central, who sits with
+whom, who holds what. A TERGM measures **transitions**, and so can be split
+into the two processes a cross-section necessarily conflates: what draws a
+director onto a board he was not on, and what keeps him on one he was.
+
+`formation_vs_retention` fits the same terms to the dyads empty at t−1 and to
+those filled at t−1. `memory` is dropped: it is what defines the two subsets.
+
+| Term | Formation | 95% | Retention | 95% |
+|---|---|---|---|---|
+| Intercept | −6.996 | −7.17, −6.83 | 0.674 | 0.44, 0.87 |
+| Director already holds seats | **+0.199** | 0.17, 0.25 | −0.022 | −0.07, 0.02 |
+| Firm already has directors | −0.007 | −0.08, 0.06 | −0.005 | −0.08, 0.08 |
+| Director holds public office | **+0.481** | 0.18, 0.74 | 0.083 | −0.30, 0.59 |
+| Board-mate of same community | **+0.409** | 0.32, 0.51 | −0.011 | −0.13, 0.12 |
+| Firm is a bank or insurer | **+0.378** | 0.16, 0.57 | −0.244 | −0.52, 0.08 |
+| Firm in land or property | **+0.460** | 0.18, 0.73 | −0.071 | −0.51, 0.45 |
+| Firm in agriculture | 0.211 | −0.20, 0.50 | −0.270 | −0.80, 0.31 |
+
+324,889 dyads carrying 636 new ties; 1,428 dyads carrying 908 retained ones.
+Node bootstrap, 100 replications.
+
+**Every covariate that does anything, does it on formation. None does anything
+on retention.** Office, homophily, the person-side degree term, finance and
+land all carry intervals clear of zero when a seat is taken, and every one of
+them collapses to nothing when the question is whether a seat is kept.
+
+The retention nulls are not underpowered. The interval on homophily there is
+[−0.13, +0.12], which excludes the formation estimate of +0.41 comfortably;
+the person-degree interval is [−0.07, +0.02] against +0.20. These are nulls
+with power behind them, not small subsets failing to reach significance.
+
+### What that means
+
+**The elite sorted at the door and not after.** Who got onto a board was
+structured by political office, by community, by the seats a man already held
+and by what kind of firm it was. Who *stayed* was structured by none of those
+things: retention runs at a flat baseline — the intercept of 0.674 is about
+two ties kept in three — that no attribute in this model moves.
+
+Three things follow, and they are the contribution:
+
+1. **It dissolves the persistence question.** Office predicts reach and not
+   durability (`POLITICAL_CONNECTIONS.md`) because office operates on entry
+   only. The same is true of every other covariate. That is not a separate
+   finding about office; it is one property of the whole system.
+2. **It reconciles the estimator disagreement on finance.** The pooled model
+   averaged a formation effect of +0.38 with a retention effect of −0.24 and
+   landed near zero with an unstable interval. Split, both halves are legible.
+3. **Homophily governs entry, not survival.** The permutation test in
+   `FIGURES_EXPLORE.md` established that same-origin *co-presence* exceeds
+   chance. It could not say whether same-origin boards form or merely last.
+   This says they form.
+
+Note what the retention result does **not** say. Those ties were formed before
+t−1, in some cases before 1932, so nothing here shows homophily was absent
+when they formed. The claim is narrower: sharing an origin with one's
+board-mates does nothing for whether the seat is kept.
+
+### The person–firm asymmetry
+
+`b2star(2)` is null in both halves. **Directors accumulate seats; firms never
+accumulate directors**, at entry or afterwards. Whatever produced the
+interlocking structure of this network worked through individuals and not
+through boards recruiting the well-connected — which is the distinction
+between a person-centred and a firm-centred account of interlocking
+directorates, and here the data fall on the person side.
+
+This is also the claim that most needs the two-mode network. On a one-mode
+projection it could not be asked at all: the projection makes a clique of
+every board, so firm-side accumulation is imposed by the construction.
+
 ## What this cannot settle
 
 Neither fit is MCMC-MLE: bootstrapped pseudolikelihood is what `btergm` uses
