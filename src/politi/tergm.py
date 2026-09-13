@@ -315,3 +315,26 @@ def fit_mple(design: pd.DataFrame, terms: list[str] | None = None,
         "n_ties": int(y.sum()),
         "n_boot": int(ok.sum()),
     })
+
+
+def formation_vs_retention(design: pd.DataFrame, n_boot: int = 100,
+                           seed: int = 20260913) -> pd.DataFrame:
+    """Split the model into the two processes a cross-section cannot separate.
+
+    A TERGM's whole advantage over a cross-sectional ERGM is that it knows
+    which ties are new. Fitting the same terms separately to the dyads that
+    were **empty** at t-1 and to those that were **filled** asks two different
+    questions: what draws a director onto a board he was not on, and what
+    keeps him on one he was.
+
+    `memory` is dropped from both — it is constant within each subset and is
+    what defines them.
+    """
+    terms = [t for t in TERMS if t != "memory"]
+    out = []
+    for label, subset in (("formation", design[design.memory == 0]),
+                          ("retention", design[design.memory == 1])):
+        fitted = fit_mple(subset, terms=terms, n_boot=n_boot, seed=seed)
+        fitted.insert(0, "process", label)
+        out.append(fitted)
+    return pd.concat(out, ignore_index=True)
