@@ -197,6 +197,80 @@ def _cmd_tergm(args: argparse.Namespace) -> int:
     return 0
 
 
+
+def _cmd_holes(args: argparse.Namespace) -> int:
+    """Embeddedness against structural holes, in both halves."""
+    import pandas as pd
+
+    from .holes import (brokerage_panel, brokerage_regression, closure_design,
+                        closure_stratified, distance_table, fit_baseline,
+                        fit_closure, returns_to_brokerage)
+    from .tergm import network_panel
+
+    processed = Path(args.processed) if args.processed else config.PROCESSED
+    if not (processed / "affiliations.csv").exists():
+        print(f"no dataset at {processed}. Run `politi build --roster` first.",
+              file=sys.stderr)
+        return 1
+    panel = network_panel(processed, drop_1932=args.from_1938)
+
+    print("=== formation: does a prior board-mate on the board predict "
+          "joining it? ===\n")
+    design = closure_design(panel)
+    print(distance_table(design).round(3).to_string(index=False))
+    baseline = fit_baseline(design, n_boot=args.bootstrap)
+    print("\n-- no closure term, for comparison --")
+    print(baseline.round(3).to_string(index=False))
+    forms = [baseline]
+    for form in ("closure", "closure_any", "closure_log", "closure4"):
+        table = fit_closure(design, closure=form, n_boot=args.bootstrap)
+        forms.append(table)
+        print(f"\n-- {form} --")
+        print(table.round(3).to_string(index=False))
+    fits = pd.concat(forms, ignore_index=True)
+
+    print("\n-- within wave x board-mates x board-size cells, "
+          "with a within-cell permutation null --")
+    strat = closure_stratified(design, n_perm=args.permutations)
+    for key, value in strat.items():
+        print(f"   {key:14s} {value}")
+
+    print("\n=== returns: do brokers gain seats and survive more than "
+          "directors of the same size? ===\n")
+    broker = brokerage_panel(panel)
+    returns = pd.concat([returns_to_brokerage(broker, outcome=o)
+                         for o in ("new_seats", "survives", "growth")],
+                        ignore_index=True)
+    print(returns.round(3).to_string(index=False))
+    print("\n-- the same question with contact volume held fixed, which is "
+          "the test Burt's claim actually needs --")
+    regression = brokerage_regression(broker)
+    print(regression.round(3).to_string(index=False))
+
+    tag = "_from1938" if args.from_1938 else ""
+    written = {
+        f"closure_fits{tag}.csv": fits,
+        f"closure_distance{tag}.csv": distance_table(design),
+        f"closure_stratified{tag}.csv": pd.DataFrame([strat]),
+        f"brokerage_returns{tag}.csv": returns,
+        f"brokerage_regression{tag}.csv": regression,
+        f"brokerage_panel{tag}.csv": broker,
+    }
+    for name, frame in written.items():
+        frame.to_csv(processed / name, index=False)
+        print(f"wrote {processed / name}")
+
+    from .holes_viz import fig_brokerage, fig_closure
+
+    figures = Path(args.figures) if args.figures else config.ROOT / "figures" / "holes"
+    for path in (fig_closure(distance_table(design), fits, strat,
+                             figures / f"closure{tag}.png"),
+                 fig_brokerage(regression, figures / f"brokerage{tag}.png")):
+        print(f"wrote {path}")
+    print("\nSee docs/EMBEDDEDNESS.md before reading any of it.")
+    return 0
+
+
 def _cmd_politics(args: argparse.Namespace) -> int:
     """Render the political-connection figures, one file each."""
     from .politics_viz import build_all
@@ -344,6 +418,17 @@ def main(argv: list[str] | None = None) -> int:
     tg.add_argument("--bootstrap", type=int, default=200,
                     help="bootstrap replications for --fit (default 200)")
     tg.set_defaults(func=_cmd_tergm)
+
+    hl = sub.add_parser("holes",
+                        help="embeddedness against structural holes")
+    hl.add_argument("--processed", help="dataset directory (default data/processed)")
+    hl.add_argument("--from-1938", dest="from_1938", action="store_true",
+                    help="drop 1932, whose roster is a selection")
+    hl.add_argument("--bootstrap", type=int, default=100,
+                    help="bootstrap replications for the formation fit")
+    hl.add_argument("--permutations", type=int, default=2000)
+    hl.add_argument("--figures", help="figure directory (default figures/holes/)")
+    hl.set_defaults(func=_cmd_holes)
 
     o = sub.add_parser("origin",
                        help="positional advantage by community of origin")

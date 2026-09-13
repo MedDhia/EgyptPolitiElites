@@ -149,6 +149,7 @@ serialisation.
 | `POLITICAL_CONNECTIONS.md` | Office coding: the seven offices, their limits, and what they show |
 | `SECTORS.md` | Firm sector: coding finance, the seat-count trap, and where financiers sit |
 | `TERGM.md` | Temporal ERGM: why the two-mode network, what the at-risk restriction costs, and what may be a covariate |
+| `EMBEDDEDNESS.md` | Embeddedness against structural holes: closure in tie formation, and why the brokerage return disappears |
 | `HANDOFF.md` | Transferring source volumes between machines |
 
 ## 6. Variables

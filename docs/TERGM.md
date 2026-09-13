@@ -314,6 +314,26 @@ This is also the claim that most needs the two-mode network. On a one-mode
 projection it could not be asked at all: the projection makes a clique of
 every board, so firm-side accumulation is imposed by the construction.
 
+### What opens the door: see `EMBEDDEDNESS.md`
+
+The specification above holds no closure term, and that is a real omission
+rather than a design choice defended here. Fitted in a strictly lagged design
+against both factors of its own arithmetic — how many board-mates the director
+has and how large the board is — **a prior board-mate already sitting on a
+board is the single largest predictor of joining it in this dataset**: +1.194
+per shared board-mate, or about 5.6 times the odds for any at all, against a
+within-cell permutation null of ±0.016.
+
+That sharpens the result above rather than displacing it. Adding closure moves
+no other coefficient: community homophily goes from +0.311 to +0.297, office
+from +0.638 to +0.641. Office, community and sector are attributes a director
+brings to the door; closure is the mechanism that opens it, and the two are
+additive.
+
+The other half of that document tests Burt's structural holes against the
+same data and finds no return to non-redundant contacts once the number of
+contacts is held fixed. Both halves are run by `politi holes`.
+
 ## What this cannot settle
 
 Neither fit is MCMC-MLE: bootstrapped pseudolikelihood is what `btergm` uses
