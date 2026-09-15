@@ -27,6 +27,7 @@
 #   data/processed/tergm/tergm_firms.csv    year, company_id, sector
 #
 # Usage:  Rscript scripts/tergm.R [--from 1938] [--boot 500]
+#         Rscript scripts/tergm.R --gof yes [--nsim 100]
 
 suppressPackageStartupMessages({
   library(btergm)
@@ -160,11 +161,67 @@ write.csv(out, file.path(outdir, sprintf("tergm_coefficients%s.csv", tag)),
 cat(sprintf("\nwrote %s\n",
             file.path(outdir, sprintf("tergm_coefficients%s.csv", tag))))
 
-# Goodness of fit on the degree distributions of both modes. Reported because
-# a TERGM that misses the degree distribution of an affiliation network is
-# describing something other than this network.
+# --- goodness of fit -----------------------------------------------------------
+# Reported because a TERGM that misses the degree distribution of an affiliation
+# network is describing something other than this network.
+#
+# The statistics are chosen for a BIPARTITE graph:
+#   b1deg, b2deg  the two degree distributions -- how many seats a director
+#                 holds and how many directors a firm has. These are what the
+#                 b1star(2) and b2star(2) terms exist to reproduce, so they are
+#                 the direct test of the terms this model leans on.
+#   dsp           dyadwise shared partners. In a two-mode network this is the
+#                 closure statistic: two directors sharing boards, two firms
+#                 sharing directors. The model has NO closure term, and
+#                 `docs/EMBEDDEDNESS.md` reports that closure is the largest
+#                 predictor of tie formation in this data, so this is where the
+#                 specification is most likely to fail -- which is the reason
+#                 to look rather than a reason not to.
+#   geodesic      the distance distribution, i.e. whether the simulated network
+#                 has this one's reach.
+#   rocpr         tie prediction, ROC and precision-recall. At a density under
+#                 0.5% the PR curve is the informative one; ROC will look good
+#                 whatever the model does.
+#
+# `esp` (edgewise shared partners) is deliberately NOT included. It counts
+# partners shared across an existing edge, which requires a triangle, and a
+# bipartite graph has none: it would report a column of zeros matched by a
+# column of zeros and read as a perfect fit.
 if (identical(opt("--gof", "yes"), "yes")) {
   cat("\n---- goodness of fit ----\n")
-  g <- gof(model, statistics = c(dsp, esp, geodesic), nsim = 100)
+  nsim <- as.integer(opt("--nsim", "100"))
+  set.seed(20260915)
+  g <- gof(model, statistics = c(b1deg, b2deg, dsp, geodesic, rocpr),
+           nsim = nsim)
   print(g)
+
+  gofdir <- file.path(outdir, sprintf("tergm_gof%s", tag))
+  dir.create(gofdir, recursive = TRUE, showWarnings = FALSE)
+  # The distribution statistics carry a $stats data frame: observed and
+  # simulated mean/median/min/max per level, and a p-value. `rocpr` does not --
+  # it holds AUCs and curves instead -- so it is written separately rather than
+  # skipped, which an earlier version of this block did silently.
+  for (stat in names(g)) {
+    entry <- g[[stat]]
+    slug <- gsub("[^a-z0-9]+", "_", tolower(stat))
+    if (!is.null(entry$stats)) {
+      write.csv(data.frame(statistic = stat, level = rownames(entry$stats),
+                           entry$stats, check.names = FALSE),
+                file.path(gofdir, sprintf("%s.csv", slug)), row.names = FALSE)
+    } else if (!is.null(entry$auc.roc)) {
+      # auc.*.rgraph is the same AUC for a random graph of the same density:
+      # the baseline the model has to beat. At this density the PR area is the
+      # informative one; ROC is high for almost any model.
+      write.csv(data.frame(
+        statistic = stat,
+        measure = c("auc.roc", "auc.roc.rgraph", "auc.pr", "auc.pr.rgraph"),
+        value = c(mean(entry$auc.roc), mean(entry$auc.roc.rgraph),
+                  mean(entry$auc.pr), mean(entry$auc.pr.rgraph))),
+        file.path(gofdir, sprintf("%s.csv", slug)), row.names = FALSE)
+    }
+  }
+  pdf(file.path(gofdir, "gof.pdf"), width = 9, height = 6)
+  plot(g)
+  dev.off()
+  cat(sprintf("\nwrote %s\n", gofdir))
 }
