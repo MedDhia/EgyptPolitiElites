@@ -14,6 +14,12 @@ data/processed/*
 data/processed/graphs/*
 !data/processed/graphs/*.gexf
 data/processed/graphs/*_pooled.gexf
+# The goodness-of-fit tables ARE tracked: docs/TERGM.md quotes them, and the
+# run that produces them takes half an hour. The PDF of R's own plots is not —
+# figures/tergm/gof.png is the figure of record.
+!data/processed/tergm_gof/
+data/processed/tergm_gof/*
+!data/processed/tergm_gof/*.csv
 # The TERGM panel directories are inputs to scripts/tergm.R and regenerate in
 # seconds from `politi tergm`, so they are not tracked. The script errors with
 # the command to run if they are absent.

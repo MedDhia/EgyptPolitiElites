@@ -1,0 +1,5 @@
+"statistic","measure","value"
+"Tie prediction","auc.roc",0.79884702928976
+"Tie prediction","auc.roc.rgraph",0.514705034751335
+"Tie prediction","auc.pr",0.54631870746027
+"Tie prediction","auc.pr.rgraph",0.00485244586771698

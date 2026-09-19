@@ -91,7 +91,12 @@ intervals (Desmarais and Cranmer 2012; Leifeld, Cranmer and Desmarais 2018).
 python -m politi tergm            # writes data/processed/tergm/*.csv
 Rscript scripts/tergm.R           # all five waves
 Rscript scripts/tergm.R --from 1938 --boot 500
+Rscript scripts/tergm.R --gof yes --nsim 100 --boot 500
 ```
+
+The fit takes about half an hour at 500 bootstrap replications. Read the
+goodness-of-fit section below before any coefficient: two of the terms do not
+survive it.
 
 Coefficients land in `data/processed/tergm_coefficients.csv`.
 
@@ -334,14 +339,124 @@ The other half of that document tests Burt's structural holes against the
 same data and finds no return to non-redundant contacts once the number of
 contacts is held fixed. Both halves are run by `politi holes`.
 
+## Goodness of fit
+
+Run: `Rscript scripts/tergm.R --gof yes --nsim 100 --boot 500`. 100 networks
+simulated from the fitted model at each of the four transitions — 400 in all —
+compared with the observed ones. Tables in `data/processed/tergm_gof/`, figure
+in `figures/tergm/gof.png`.
+
+**Read the coverage, not the p-values.** Every level below is non-significant
+on btergm's own `Pr(>z)`; the closure statistic is off by two orders of
+magnitude at p = 0.20. At counts this small the test has almost no power. What
+decides the fit is whether the simulated range reaches the observed value at
+all: a feature the model never produced in 400 tries has not been reproduced,
+whatever the p-value says.
+
+The statistics are chosen for a bipartite graph. `esp` is deliberately absent —
+edgewise shared partners requires a triangle, a two-mode network has none, and
+it would report a column of zeros against a column of zeros and read as a
+perfect fit. An earlier version of the script asked for it.
+
+### The degree distributions: the body holds, the tails do not
+
+| Seats per director | Observed | Simulated mean | Simulated range |
+|---|---|---|---|
+| 0 | 37.5 | 56.9 | 8–108 |
+| 1 | **128.3** | **85.5** | 9–177 |
+| 2 | 34.5 | 51.2 | 0–135 |
+| 3 | 18.8 | 23.6 | 0–72 |
+
+The model makes **half again as many men with no seat** as the register holds
+and **a third fewer with exactly one**. Both observed values sit inside the
+simulated range, so this is a bias in central tendency rather than a failure of
+coverage — but it is the shape of the distribution the `b1star(2)` term exists
+to reproduce, and it is wrong in the part of the distribution where almost
+every director sits.
+
+On the firm side the same direction, plus a coverage failure: **the largest
+board in the register has 8 directors and the model simulated boards of 12.**
+It produces board sizes 9 through 12, none of which occur. `b2star(2)` is
+estimated at −0.004 and does nothing to restrain them.
+
+### Shared partners: the failure that was predicted
+
+| Shared partners | Observed | Simulated mean | Simulated range |
+|---|---|---|---|
+| 1 | 731.8 | 835.7 | 73–2,421 |
+| 2 | 40.8 | 14.6 | 0–55 |
+| 3 | **7.3** | 1.3 | 0–7 |
+| 4 | **2.0** | 0.01 | 0–1 |
+| 5 | **0.3** | 0.00 | 0–0 |
+
+In a two-mode network the dyadwise shared partner count **is** the closure
+statistic. The model reproduces dyads sharing one partner and then collapses:
+by three shared partners the simulated range no longer reaches the observed
+count, and **across 400 simulated networks it never once produced a dyad
+sharing five partners**, which the register contains.
+
+This is the failure to expect, and the reason it was worth running. The
+specification has no closure term, and `docs/EMBEDDEDNESS.md` reports closure
+as the largest predictor of tie formation in this data — about 5.6 times the
+odds of joining a board carrying an existing board-mate, against a within-cell
+permutation null of ±0.016. A model without that term cannot manufacture the
+concentration, and does not.
+
+### Reach and prediction
+
+Simulated networks are markedly more connected than the observed ones:
+roughly 79,600 unreachable pairs per wave observed against 39,700 simulated,
+with the excess sitting at distances 5 to 14. Consistent with the board-size
+result — a handful of oversized boards knits the whole register together.
+The geodesic table is the least trustworthy of the four (btergm bins it oddly
+at the top end) and nothing here leans on it.
+
+Tie prediction: ROC area 0.799 against 0.515 for a random graph of the same
+density, precision-recall area 0.546 against 0.005. The PR figure is the
+informative one at a density under 0.5%, and it is high — but `memory` is
+worth +6.72, so most of that is the model knowing that a seat held in the last
+volume is held in this one. It is not evidence for the structural terms.
+
+### A reproducibility note on the refit
+
+This run reproduced the committed coefficients **exactly** — every point
+estimate identical to fifteen digits — which also confirms the panel and the
+composition adjustment are unchanged (the adjustment lands on 44x109, 152x228,
+307x296 and 459x427, the same at-risk sets the Python fit builds by hand).
+
+The bootstrap endpoints moved slightly: the upper bound on `edges` from -6.177
+to -6.036, on `b1cov.office` the lower bound from 0.030 to 0.077. No term
+changed significance. The seed is fixed and set immediately before `btergm()`,
+so the likeliest cause is that the container was rebuilt between the two runs
+and the statnet packages differ in build or version; the RNG stream is
+consumed differently. The tracked file is the newer run.
+
+### What follows
+
+**Do not report `b1star(2)` or `b2star(2)` as findings.** Their intervals
+already straddle zero (−0.006 to 0.189; −0.192 to 0.075) and the fit check
+says the model misses both degree distributions in the tail and one of them in
+the body. They should be read as terms that failed to do their job, not as
+evidence that degree effects are absent.
+
+The covariate terms — office, origin homophily, sector — are less exposed.
+They are node attributes rather than dependence terms, so a misfitting degree
+distribution does not invalidate them, though it does mean they are estimated
+inside a model that generates the wrong network. State them as associations
+and say the fit check is mixed.
+
+The one clean conclusion is the closure omission, and it points somewhere: the
+next specification should carry a four-cycle term. That is not free — closure
+terms are the classic source of degeneracy in ERGMs — which is why it is
+recorded here as the diagnosis rather than quietly added.
+
 ## What this cannot settle
 
 Neither fit is MCMC-MLE: bootstrapped pseudolikelihood is what `btergm` uses
 by default, and the Python implementation matches it. The usual ERGM warnings
-apply: the degree terms are the ones most likely to be misspecified
-in a network this sparse (densities run from 1.23% in 1932 down to 0.19% in
-1950), and a goodness-of-fit check on the degree distributions of both modes
-is part of the script rather than an afterthought.
+apply, and here they bind: the degree terms are the ones most likely to be
+misspecified in a network this sparse (densities run from 1.23% in 1932 down
+to 0.19% in 1950), and the goodness-of-fit section above shows that they are.
 
 And the standing limit of the source does not go away. Ties are directorships
 *as Politi printed them*. A board he did not print is a zero here, and the

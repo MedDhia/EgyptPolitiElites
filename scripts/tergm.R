@@ -203,7 +203,7 @@ if (identical(opt("--gof", "yes"), "yes")) {
   # skipped, which an earlier version of this block did silently.
   for (stat in names(g)) {
     entry <- g[[stat]]
-    slug <- gsub("[^a-z0-9]+", "_", tolower(stat))
+    slug <- gsub("^_|_$", "", gsub("[^a-z0-9]+", "_", tolower(stat)))
     if (!is.null(entry$stats)) {
       write.csv(data.frame(statistic = stat, level = rownames(entry$stats),
                            entry$stats, check.names = FALSE),

@@ -1,0 +1,8 @@
+"statistic","level","obs: mean","median","min","max","sim: mean","median","min","max","Pr(>z)"
+"Dyad-wise shared partners","0",163517,125904.5,11447,390812,163447.3825,126138.5,11494,390115,0.999388087012816
+"Dyad-wise shared partners","1",731.75,763,167,1234,835.72,550,73,2421,0.730886538682921
+"Dyad-wise shared partners","2",40.75,38.5,8,78,14.6275,8,0,55,0.237023853702336
+"Dyad-wise shared partners","3",7.25,6,1,16,1.2575,0,0,7,0.189458409916002
+"Dyad-wise shared partners","4",2,1.5,0,5,0.0125,0,0,1,0.203091218716941
+"Dyad-wise shared partners","5",0.25,0,0,1,0,0,0,0,0.391002218955771
+"Dyad-wise shared partners","6",0,0,0,0,0,0,0,0,1
